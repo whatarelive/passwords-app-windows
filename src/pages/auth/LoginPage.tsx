@@ -5,15 +5,13 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 function LoginPage() {
   const [viewPass, setViewPass] = useState(false);
 
-  const handleClick = () => {
-    setViewPass(!viewPass);
-  }
+  const handleClick = () => setViewPass(!viewPass);
 
   return (
     <section className="w-[340px]">
       <div className="flex flex-col items-center mb-12">
         <img src="/password.svg" alt="Logo" className="w-16 h-16" />
-        <h1 className="text-green-600 font-bold text-2xl">
+        <h1 className="text-green-500 font-bold text-2xl">
           Password Manager
         </h1>
       </div>
@@ -36,7 +34,7 @@ function LoginPage() {
             id="user"
             name="user"
             type="text" 
-            placeholder="Pepe Colon"
+            placeholder="Ingrese su nombre de usuario"
             className="p-2 border border-gray-200 rounded-md bg-transparent focus-visible:border-green-400 focus-visible:outline-none"
           />
         </div>
@@ -51,6 +49,7 @@ function LoginPage() {
               name="password"
               type={viewPass ? "text" : "password"} 
               max={15}
+              placeholder="Ingrese su contraseña"
               className="p-2 w-full rounded-md bg-transparent focus-visible:outline-none"
             />
             <i className="flex items-center justify-center w-12">
@@ -65,7 +64,7 @@ function LoginPage() {
 
         <button 
           type="submit"
-          className="w-full h-10 text-white bg-green-500 hover:bg-green-400 font-bold rounded-md mt-5" >
+          className="w-full h-10 text-white bg-green-500 hover:bg-green-400 font-bold rounded-md mt-5 transition-all" >
           Iniciar Sessión
         </button>
       </form>
