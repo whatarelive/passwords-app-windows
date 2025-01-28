@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
-import AuthLayout from "../layout/AuthLayout";
-import AppLayout from "../layout/AppLayout";
+import AuthLayout from "@/layout/AuthLayout";
+import AppLayout from "@/layout/AppLayout";
 
-import LoginPage from "../pages/auth/LoginPage";
-import RegisterPage from "../pages/auth/RegisterPage";
-import HomePage from "../pages/app/HomePage";
+import LoginPage from "@/pages/auth/LoginPage";
+import RegisterPage from "@/pages/auth/RegisterPage";
+import HomePage from "@/pages/app/HomePage";
 
 function AppRouter() {
   return (
