@@ -8,7 +8,7 @@ function LoginPage() {
   const handleClick = () => setViewPass(!viewPass);
 
   return (
-    <section className="w-[340px]">
+    <section className="flex flex-col justify-center w-[340px] mb-12">
       <div className="flex flex-col items-center mb-12">
         <img src="/password.svg" alt="Logo" className="w-16 h-16" />
         <h1 className="text-green-500 font-bold text-2xl">
@@ -65,7 +65,7 @@ function LoginPage() {
         <button 
           type="submit"
           className="w-full h-10 text-white bg-green-500 hover:bg-green-400 font-bold rounded-md mt-5 transition-all" >
-          Iniciar Sessión
+          Iniciar Sesión
         </button>
       </form>
 
