@@ -1,11 +1,13 @@
-import { NavLink } from "react-router";
+import Search from "@/components/Search";
 
 function HomePage() {
   return (
-    <div>
-      <h1 className="text-green-400">HomePage</h1>
-      <NavLink className="bg-green-400 p-2 rounded font-semibold" to="/auth/login">Login</NavLink>
-    </div>
+    <section className="w-full h-[693px] bg-neutral-100">
+      <div className="flex">
+        <Search/>
+        
+      </div>
+    </section>
   )
 }
 

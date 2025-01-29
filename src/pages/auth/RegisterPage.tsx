@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { NavLink } from "react-router";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 function RegisterPage() {
   const [viewPass, setViewPass] = useState(false);
