@@ -1,19 +1,19 @@
 import { MdSearch } from "react-icons/md";
-import { useSearchParams } from "react-router";
+// import { useSearchParams } from "react-router";
 
 const Search = () => {
-  const [searchParams, setSearchParams ] = useSearchParams();
+  // const [searchParams, setSearchParams ] = useSearchParams();
 
   const handleChange = () => {}
 
   return (
-    <div className="flex p-2 items-center">
-      <MdSearch size={24} className="text-black"/>
+    <div className="flex w-full px-2 items-center text-neutral-400 border border-neutral-400 rounded-md bg-transparent focus-within:border-green-500 focus-within:text-green-500 transition-all">
+      <MdSearch size={18}/>
       <input 
         type="text"
         onChange={handleChange}
         placeholder="Ingrese lo que dessea buscar"
-        className="p-2 border border-gray-200 rounded-md bg-transparent focus-visible:border-green-400 focus-visible:outline-none"
+        className="p-2 w-full focus-visible:outline-none text-white "
       />
     </div>
   )
