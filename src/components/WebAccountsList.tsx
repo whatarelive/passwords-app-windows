@@ -1,6 +1,17 @@
+import { mockData } from "@/data/mockData";
+import WebAccountCard from "./WebAccountCard";
+
 const WebAccountsList = () => {
   return (
-    <div>WebAccountsList</div>
+    <ul>
+      {
+        mockData.map((account) => (
+          <li key={account.id}>
+            <WebAccountCard account={account}/>
+          </li>
+        ))
+      }
+    </ul>
   )
 }
 

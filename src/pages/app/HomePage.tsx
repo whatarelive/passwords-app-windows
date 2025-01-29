@@ -1,10 +1,12 @@
 import { NavLink } from "react-router";
 import { MdAdd } from "react-icons/md";
 import Search from "@/components/Search";
+import WebAccountsList from "@/components/WebAccountsList";
 
 function HomePage() {
   return (
     <section className="w-full h-[693px] px-6 py-8 bg-[#19191c]">
+      {/* Add and Seacrh section */}
       <div className="flex gap-4">
         <Search/>
         <NavLink 
@@ -15,6 +17,9 @@ function HomePage() {
           Agregar
         </NavLink>
       </div>
+
+      {/* Accounts List */}
+      <WebAccountsList/>
     </section>
   )
 }
