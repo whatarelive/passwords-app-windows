@@ -35,7 +35,7 @@ function LoginPage() {
             name="user"
             type="text" 
             placeholder="Ingrese su nombre de usuario"
-            className="p-2 border border-gray-200 rounded-md bg-transparent focus-visible:border-green-400 focus-visible:outline-none"
+            className="p-2 border border-neutral-400 rounded-md bg-transparent focus-visible:border-white focus-visible:outline-none"
           />
         </div>
 
@@ -43,7 +43,7 @@ function LoginPage() {
           <label className="font-semibold mb-1" htmlFor="password">
             Contraseña
           </label>
-          <div className="inline-flex border rounded-md border-gray-200 focus-within:border-green-400">
+          <div className="inline-flex border rounded-md border-neutral-400 focus-within:border-white">
             <input 
               id="password"
               name="password"
@@ -54,7 +54,7 @@ function LoginPage() {
             />
             <i className="flex items-center justify-center w-12">
               { 
-                viewPass 
+                !viewPass 
                   ? <MdVisibility size={24} onClick={handleClick}/> 
                   : <MdVisibilityOff size={24} onClick={handleClick}/> 
               }
