@@ -6,7 +6,7 @@ import WebAccountsList from "@/components/WebAccountsList";
 
 function HomePage() {
   return (
-    <section className="w-full h-[693px] px-6 py-8 bg-[#19191c]">
+    <section className="w-full h-[701px] px-6 py-8 bg-[#19191c]">
       {/* Add and Seacrh section */}
       <div className="flex gap-4 mb-8">
         <Search/>

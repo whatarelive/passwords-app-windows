@@ -16,7 +16,7 @@ function AddAcountPage() {
   return (
     <section className="px-8 py-10">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-2xl font-bold">
           Agregar Nueva Cuenta
         </h1>
 
