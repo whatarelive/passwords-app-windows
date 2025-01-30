@@ -10,6 +10,7 @@ function AddAcountPage() {
   const navigate = useNavigate();
 
   const handleClick = () => setViewPass(!viewPass);
+
   const handleCreateRandomPassword = () => {}
 
   return (
@@ -28,8 +29,8 @@ function AddAcountPage() {
         </NavLink>
       </div>
 
-      <form action="">
-        <div className="flex flex-col mb-4">
+      <form action="" className="mt-12">
+        <div className="flex flex-col mb-5">
           <label className="font-semibold mb-1" htmlFor="webName">
             Sitio web
           </label>
@@ -42,9 +43,9 @@ function AddAcountPage() {
           />
         </div>
 
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-5">
           <label className="font-semibold mb-1" htmlFor="webUrl">
-            Url
+            URL
           </label>
           <input 
             id="webUrl"
@@ -55,7 +56,7 @@ function AddAcountPage() {
           />
         </div>
 
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-5">
           <label className="font-semibold mb-1" htmlFor="webUser">
             Usuario
           </label>
@@ -68,7 +69,7 @@ function AddAcountPage() {
           />
         </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-5">
           <label className="font-semibold mb-1" htmlFor="webPassword">
             Contraseña
           </label>
@@ -100,7 +101,7 @@ function AddAcountPage() {
           </div>
         </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mt-8 mb-2">
           <label htmlFor="passwordlarge" className="font-semibold mb-1">
             Longitud de caracteres: { rangePass }
           </label>
@@ -112,15 +113,16 @@ function AddAcountPage() {
             max={25}
             min={8}
             onChange={(e) => setRangePass(Number(e.target.value))}
+            className="cursor-pointer accent-green-500"
           />
         </div>
 
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mt-6 mb-12">
           <button 
             id="specialCaract"
             onClick={() => setSpecialCaract(!specialCaract)}
             className={clsx(
-              "flex p-1 w-16 rounded-2xl border-2 transition-all duration-1000",
+              "flex p-0.5 w-16 rounded-2xl border-2 transition-all duration-1000",
               {
                 "justify-end bg-green-950 border-green-800": specialCaract,
                 "justify-start bg-red-950 border-red-800" : !specialCaract,
