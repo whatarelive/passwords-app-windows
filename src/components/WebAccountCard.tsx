@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { useState, type FC } from "react";
+import { NavLink } from "react-router";
 import { LuExternalLink } from "react-icons/lu";
-import { MdContentCopy, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { MdContentCopy, MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md";
 import type { WebAccount } from "@/interfaces";
 
 interface Props {
@@ -20,9 +21,15 @@ const WebAccountCard: FC<Props> = ({ account }) => {
           {account.webName}
         </h3>
 
-        <a href={account.webUrl} target="_blank" className="p-1.5 rounded cursor-pointer text-[#19191c] hover:bg-green-500 hover:text-white">
-          <LuExternalLink size={22}/>
-        </a>
+        <div className="flex gap-4">
+          <NavLink to={`/edit/${account.id}`} className="p-1.5 rounded cursor-pointer border border-neutral-100 text-[#19191c] hover:bg-gray-300 hover:border-gray-300">
+            <MdEdit size={20}/>
+          </NavLink>
+
+          <a href={account.webUrl} target="_blank" className="p-1.5 rounded cursor-pointer border border-neutral-100 text-[#19191c] hover:bg-gray-300 hover:border-gray-300">
+            <LuExternalLink size={20}/>
+          </a>
+        </div>
       </div>
 
       {/* Content */}
