@@ -3,7 +3,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { MdVisibility, MdVisibilityOff, MdArrowBack, MdRefresh } from "react-icons/md";
 
-function AddAcountPage() {
+function AddAccountPage() {
   const [viewPass, setViewPass] = useState(false);
   const [rangePass, setRangePass] = useState(15);
   const [specialCaract, setSpecialCaract] = useState(false);
@@ -163,4 +163,4 @@ function AddAcountPage() {
   )
 }
 
-export default AddAcountPage;
+export default AddAccountPage;
