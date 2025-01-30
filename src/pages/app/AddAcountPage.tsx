@@ -130,7 +130,7 @@ function AddAcountPage() {
             )}
           >
             <span className={clsx(
-              "w-6 h-6 rounded-full transition-all duration-1000",
+              "w-6 h-6 cursor-pointer rounded-full transition-all duration-1000",
               {
                 "bg-green-500" : specialCaract,
                 "bg-red-500" : !specialCaract, 
