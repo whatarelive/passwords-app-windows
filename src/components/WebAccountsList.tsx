@@ -3,7 +3,7 @@ import WebAccountCard from "./WebAccountCard";
 
 const WebAccountsList = () => {
   return (
-    <ul>
+    <ul className="space-y-4">
       {
         mockData.map((account) => (
           <li key={account.id}>

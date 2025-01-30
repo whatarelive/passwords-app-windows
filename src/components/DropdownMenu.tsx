@@ -1,12 +1,15 @@
 import clsx from "clsx";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { MdEdit, MdLogout } from "react-icons/md";
 import { useMenuStore } from "@/store/menuStore";
 
 const DropdownMenu = () => {
+    const navigate = useNavigate();
     const { isOpen, setOpen } = useMenuStore();
 
-    const handlerClick = () => {}
+    const handlerClick = () => {
+        navigate("/auth/login");
+    }
 
   return (
     <div 
