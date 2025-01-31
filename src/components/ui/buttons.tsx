@@ -1,21 +1,29 @@
+import clsx from "clsx";
 import { type FC } from "react";
 import { useFormStatus } from "react-dom";
 import { MdRefresh } from "react-icons/md";
 import { useNavigate } from "react-router";
 
-interface IButton extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>{}
+interface IButton extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>{
+  inputChange?: boolean;
+}
 
-const ButtonForm: FC<IButton> = ({ children, className }) => {
+const ButtonForm: FC<IButton> = ({ children, inputChange, className }) => {
   const { pending } =  useFormStatus();
 
   return (
     <button 
       type="submit"
-      disabled={pending}
+      disabled={pending || inputChange}
       children={ children }
-      className={`w-full h-12 disabled:bg-gray-500 disabled:opacity-45 disabled:cursor-progress 
-      cursor-pointer text-white bg-green-500 hover:bg-green-400 font-bold rounded-md
-      transition-all ${className}`}
+      className={clsx(`w-full h-12 disabled:bg-gray-500 disabled:opacity-45
+        cursor-pointer text-white bg-green-500 hover:bg-green-400 font-bold rounded-md
+        transition-all ${className}`,
+        { 
+          "disabled:cursor-no-drop" : inputChange,
+          "disabled:cursor-progress": pending
+        }
+      )}
   />
   )
 }
