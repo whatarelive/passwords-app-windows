@@ -1,15 +1,13 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { MdVisibility, MdVisibilityOff, MdArrowBack, MdRefresh, MdCheck, MdClose } from "react-icons/md";
+import { MdArrowBack, MdRefresh, MdCheck, MdClose } from "react-icons/md";
+import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 
 function AddAccountPage() {
-  const [viewPass, setViewPass] = useState(false);
   const [rangePass, setRangePass] = useState(15);
   const [specialCaract, setSpecialCaract] = useState(false);
   const navigate = useNavigate();
-
-  const handleClick = () => setViewPass(!viewPass);
 
   const handleCreateRandomPassword = () => {}
 
@@ -30,75 +28,20 @@ function AddAccountPage() {
       </div>
 
       <form action="" className="mt-12">
-        <div className="flex flex-col mb-5">
-          <label className="font-semibold mb-1" htmlFor="webName">
-            Sitio web
-          </label>
-          <input 
-            id="webName"
-            name="webName"
-            type="text" 
-            placeholder="Ingrese el nombre del sitio web"
-            className="p-2 border border-neutral-400 rounded-md bg-transparent focus-visible:border-white focus-visible:outline-none"
-          />
-        </div>
-
-        <div className="flex flex-col mb-5">
-          <label className="font-semibold mb-1" htmlFor="webUrl">
-            URL
-          </label>
-          <input 
-            id="webUrl"
-            name="webUrl"
-            type="url" 
-            placeholder="Ingrese la url del sitio web"
-            className="p-2 border border-neutral-400 rounded-md bg-transparent focus-visible:border-white focus-visible:outline-none"
-          />
-        </div>
-
-        <div className="flex flex-col mb-5">
-          <label className="font-semibold mb-1" htmlFor="webUser">
-            Usuario
-          </label>
-          <input 
-            id="webUser"
-            name="webUser"
-            type="text" 
-            placeholder="Ingrese su nombre de usuario"
-            className="p-2 border border-neutral-400 rounded-md bg-transparent focus-visible:border-white focus-visible:outline-none"
-          />
-        </div>
-
-        <div className="flex flex-col mb-5">
-          <label className="font-semibold mb-1" htmlFor="webPassword">
-            Contraseña
-          </label>
-          <div className="flex gap-3">
-            <div className="flex w-full border rounded-md border-neutral-400 focus-within:border-white">
-              <input 
-                id="password"
-                name="password"
-                type={viewPass ? "text" : "password"} 
-                placeholder="Ingrese su contraseña"
-                className="p-2 w-full rounded-md bg-transparent focus-visible:outline-none"
-                />
-              <i className="flex items-center cursor-pointer justify-center w-12">
-                { 
-                  !viewPass 
-                    ? <MdVisibility size={24} onClick={handleClick}/> 
-                    : <MdVisibilityOff size={24} onClick={handleClick}/> 
-                }
-              </i>
-            </div>
-
-            <button 
-              onClick={handleCreateRandomPassword}
-              className={`px-2 rounded border cursor-pointer border-neutral-400 text-neutral-400 
-              hover:bg-white hover:border-white hover:text-[#19191c]`}
-            >
-              <MdRefresh size={20}/>
-            </button>
-          </div>
+        <TextInput label="Sitio Web" name="webName" placeholder="Ingrese el nombre del sitio web"/>
+        <TextInput label="URL" name="webUrl" type="url" placeholder="Ingrese la url del sitio web"/>
+        <TextInput label="Usuario" name="webUser" placeholder="Ingrese su nombre de usuario"/>
+      
+        <div className="flex gap-4">
+          <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
+          
+          <button 
+            onClick={handleCreateRandomPassword}
+            className={`relative top-7 px-2 h-10 rounded border cursor-pointer border-neutral-400 text-neutral-400 
+            hover:bg-white hover:border-white hover:text-[#19191c]`}
+          >
+            <MdRefresh size={20}/>
+          </button>
         </div>
 
         <div className="flex flex-col mt-8 mb-2">

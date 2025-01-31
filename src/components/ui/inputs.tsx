@@ -8,7 +8,7 @@ interface ITextInput extends React.DetailedHTMLProps<React.InputHTMLAttributes<H
 const TextInput: FC<ITextInput> = ({ label, ...props }) => {
   return (
     <div className="flex flex-col mb-4">
-        <label className="font-semibold mb-1" htmlFor={props.id}>
+        <label className="font-semibold mb-1" htmlFor={props.name}>
             { label }
         </label>
         <input
@@ -25,12 +25,13 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
     const [viewPass, setViewPass] = useState(false);
     
   return (
-    <div className="flex flex-col mb-4">
-        <label className="font-semibold mb-1" htmlFor="password">
-        { label }
+    <div className="flex flex-col w-full mb-4">
+        <label className="font-semibold mb-1" htmlFor={props.name}>
+            { label }
         </label>
         <div className="inline-flex border rounded-md border-neutral-400 focus-within:border-white">
             <input 
+                id={props.name}
                 type={viewPass ? "text" : "password"} 
                 className="p-2 w-full rounded-md bg-transparent focus-visible:outline-none"
                 { ...props }
