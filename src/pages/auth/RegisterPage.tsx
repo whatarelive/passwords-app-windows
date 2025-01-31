@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
+import { ButtonForm } from "@/components/ui/buttons";
 
 function RegisterPage() {
   return (
@@ -18,11 +19,7 @@ function RegisterPage() {
         <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
         <TextInputWithPassword label="Confirmar Contraseña" name="passwordConfirm" placeholder="Ingrese su nueva contraseña"/>
 
-        <button 
-          type="submit"
-          className="w-full h-10 text-white bg-green-500 hover:bg-green-400 font-bold rounded-md mt-3 transition-all" >
-          Crear cuenta
-        </button>
+        <ButtonForm children="Crear cuenta"/>
       </form>
 
       <div className="flex flex-col items-center mt-12">
