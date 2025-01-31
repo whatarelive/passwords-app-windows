@@ -26,7 +26,7 @@ function LoginPage() {
 
         <button 
           type="submit"
-          className="w-full h-10 text-white bg-green-500 hover:bg-green-400 font-bold rounded-md mt-5 transition-all" >
+          className="w-full h-10 text-white cursor-pointer bg-green-500 hover:bg-green-400 font-bold rounded-md mt-3 transition-all" >
           Iniciar Sesión
         </button>
       </form>

@@ -25,7 +25,7 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
     const [viewPass, setViewPass] = useState(false);
     
   return (
-    <div className="flex flex-col mb-2">
+    <div className="flex flex-col mb-4">
         <label className="font-semibold mb-1" htmlFor="password">
         { label }
         </label>
