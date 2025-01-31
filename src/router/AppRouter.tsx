@@ -19,7 +19,7 @@ function AppRouter() {
       <Route element={<AppLayout/>}>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/add" element={<AddAccountPage/>}/>
-        <Route path="/edit:id" element={<EditAccountPage/>}/>
+        <Route path="/edit/:id" element={<EditAccountPage/>}/>
       </Route>
     </Routes>
   )

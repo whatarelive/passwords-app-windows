@@ -5,3 +5,5 @@ export interface WebAccount {
     webPassword: string,
     webUrl: string 
 }
+
+export type InputWebAccount = "webPassword" | "webUser" | "webUrl" | "webName";
