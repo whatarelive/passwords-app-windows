@@ -25,7 +25,7 @@ function LoginPage() {
         <TextInput label="Usuario" name="user" placeholder="Ingrese su nombre de usuario"/>
         <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
 
-        <ButtonForm children="Iniciar Sesión"/>
+        <ButtonForm children="Iniciar Sesión" className="text-lg mt-3"/>
       </form>
 
       <div className="flex flex-col items-center mt-12">

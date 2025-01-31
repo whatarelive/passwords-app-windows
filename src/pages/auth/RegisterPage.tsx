@@ -19,7 +19,7 @@ function RegisterPage() {
         <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
         <TextInputWithPassword label="Confirmar Contraseña" name="passwordConfirm" placeholder="Ingrese su nueva contraseña"/>
 
-        <ButtonForm children="Crear cuenta"/>
+        <ButtonForm children="Crear cuenta" className="text-lg mt-3"/>
       </form>
 
       <div className="flex flex-col items-center mt-12">
