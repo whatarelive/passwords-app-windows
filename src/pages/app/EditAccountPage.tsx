@@ -146,7 +146,10 @@ function EditAccountPage() {
         <div className="flex items-center gap-4 mt-6 mb-12">
           <button 
             id="specialCaract"
-            onClick={() => setSpecialCaract(!specialCaract)}
+            onClick={(e) => { 
+              e.preventDefault();
+              setSpecialCaract(!specialCaract);
+            }}
             className={clsx(
               "flex p-0.5 w-16 rounded-2xl border-2 bg-neutral-700 transition-transform duration-1000",
               {

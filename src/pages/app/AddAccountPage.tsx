@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { MdVisibility, MdVisibilityOff, MdArrowBack, MdRefresh } from "react-icons/md";
+import { MdVisibility, MdVisibilityOff, MdArrowBack, MdRefresh, MdCheck, MdClose } from "react-icons/md";
 
 function AddAccountPage() {
   const [viewPass, setViewPass] = useState(false);
@@ -120,22 +120,34 @@ function AddAccountPage() {
         <div className="flex items-center gap-4 mt-6 mb-12">
           <button 
             id="specialCaract"
-            onClick={() => setSpecialCaract(!specialCaract)}
+            onClick={(e) => { 
+              e.preventDefault();
+              setSpecialCaract(!specialCaract);
+            }}
             className={clsx(
-              "flex p-0.5 w-16 rounded-2xl border-2 transition-all duration-1000",
+              "flex p-0.5 w-16 rounded-2xl border-2 bg-neutral-700 transition-transform duration-1000",
               {
-                "justify-end bg-green-950 border-green-800": specialCaract,
-                "justify-start bg-red-950 border-red-800" : !specialCaract,
+                "justify-end": specialCaract,
+                "justify-start" : !specialCaract,
               }
             )}
           >
-            <span className={clsx(
-              "w-6 h-6 cursor-pointer rounded-full transition-all duration-1000",
-              {
-                "bg-green-500" : specialCaract,
-                "bg-red-500" : !specialCaract, 
-              }
-            )}/>
+            <span className="p-0.5 cursor-pointer rounded-full bg-white transition-all duration-1000">
+              <i 
+                className={clsx(
+                  {
+                    "text-green-500" : specialCaract,
+                    "text-red-500" : !specialCaract, 
+                  }
+                )}
+              >
+                {
+                  specialCaract 
+                    ? <MdCheck size={22}/> 
+                    : <MdClose size={22}/>
+                }
+              </i>
+            </span>
           </button>
           <label htmlFor="specialCaract" className="font-semibold">
             Caracteres especiales
