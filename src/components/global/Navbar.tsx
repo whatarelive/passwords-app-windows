@@ -1,6 +1,6 @@
 import { MdPerson } from "react-icons/md";
 import { useMenuStore } from "@/store/menuStore";
-import DropdownMenu from "./DropdownMenu";
+import DropdownMenu from "@/components/global/DropdownMenu";
 
 const Navbar = () => {
   const setOpen = useMenuStore((state) => state.setOpen);

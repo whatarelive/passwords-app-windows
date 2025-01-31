@@ -1,5 +1,5 @@
 import { mockData } from "@/data/mockData";
-import WebAccountCard from "./WebAccountCard";
+import WebAccountCard from "@/components/webs/WebAccountCard";
 
 const WebAccountsList = () => {
   return (

@@ -29,7 +29,7 @@ const DropdownMenu = () => {
         <div className="flex items-center justify-between">
         <p className="text-lg font-medium">Livan Perez</p>
         
-        <NavLink to="/user" className="max-w-max p-1 rounded cursor-pointer hover:bg-white hover:text-[#1F1F27] transition-all">
+        <NavLink to={`/user/${1214}`} className="max-w-max p-1 rounded cursor-pointer hover:bg-white hover:text-[#1F1F27] transition-all">
             <MdEdit size={16}/>
         </NavLink>
         </div>

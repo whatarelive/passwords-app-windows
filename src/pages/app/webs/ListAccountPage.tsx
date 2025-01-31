@@ -1,10 +1,10 @@
 import { NavLink } from "react-router";
 import { MdAdd } from "react-icons/md";
 
-import Search from "@/components/Search";
-import WebAccountsList from "@/components/WebAccountsList";
+import Search from "@/components/global/Search";
+import WebAccountsList from "@/components/webs/WebAccountsList";
 
-function HomePage() {
+function ListAccountPage() {
   return (
     <section className="w-full h-[701px] px-6 py-8 bg-[#19191c]">
       {/* Add and Seacrh section */}
@@ -26,4 +26,4 @@ function HomePage() {
   )
 }
 
-export default HomePage;
+export default ListAccountPage;

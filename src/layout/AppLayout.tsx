@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/global/Navbar";
 
 function AppLayout() {
   const { pathname } = useLocation();
