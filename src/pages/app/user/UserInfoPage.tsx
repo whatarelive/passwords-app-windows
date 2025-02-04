@@ -1,9 +1,11 @@
+import WebFormTitle from "@/components/webs/WebFormTitle";
 
 function UserInfoPage() {
   return (
-    <div>
-       <h1>label</h1>
-    </div>
+    <section className="px-8 py-10">
+      <WebFormTitle title="Perfil de usuario"/>
+      
+    </section>
   )
 }
 
