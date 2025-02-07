@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { MdCalendarToday } from "react-icons/md";
 import type { Activity } from "@/interfaces";
 
 interface Props {
@@ -7,18 +8,21 @@ interface Props {
 
 const UserActivityElement: FC<Props> = ({ activity }) => {
   return (
-    <div className="bg-[#1f1f21] py-2 px-4">
-        <div className="flex justify-between">
-            <h3>
+    <div className="bg-[#1f1f21] rounded-md">
+        <div className="flex bg-white text-black justify-between py-1 px-4 rounded-t-md">
+            <h3 className="text-lg font-bold">
                 { activity.action }
             </h3>
-            <p>
-                { activity.date.toString() }
-            </p>
+            <div className="inline-flex items-center gap-2">
+                <MdCalendarToday/>
+                <p className="font-medium">
+                    { activity.date.toString() }
+                </p>
+            </div>
         </div>
 
-        <div>
-            <p>
+        <div className="py-3 px-4">
+            <p className="text-sm">
                 {activity.details}
             </p>
         </div>

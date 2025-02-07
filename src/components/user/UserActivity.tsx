@@ -1,6 +1,6 @@
-import UserCardTitle from "./UserCardTitle";
-import { mockActivity } from '../../data/mockData';
-import UserActivityElement from "./UserActivityElement";
+import { mockActivity } from '@/data/mockData';
+import UserCardTitle from "@/components/user/UserCardTitle";
+import UserActivityElement from "@/components/user/UserActivityElement";
 
 const UserActivity = () => {
   return (
@@ -10,7 +10,7 @@ const UserActivity = () => {
         subtitle="Historial de acciones recientes en tu cuenta"
       />
 
-      <ul className="">
+      <ul className="px-5 space-y-3 mt-5">
         {
           mockActivity.map((activity) => (
             <li key={activity.id}>
