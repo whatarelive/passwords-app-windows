@@ -10,7 +10,7 @@ const UserActivityElement: FC<Props> = ({ activity }) => {
     <div className="bg-[#1f1f21] py-2 px-4">
         <div className="flex justify-between">
             <h3>
-                {activity.action}
+                { activity.action }
             </h3>
             <p>
                 { activity.date.toString() }
