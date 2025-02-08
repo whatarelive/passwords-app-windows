@@ -16,6 +16,16 @@ CREATE TABLE "WebsAccounts" (
     CONSTRAINT "WebsAccounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+-- CreateTable
+CREATE TABLE "Activity" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "action" TEXT NOT NULL,
+    "date" DATETIME NOT NULL,
+    "details" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    CONSTRAINT "Activity_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
@@ -24,3 +34,6 @@ CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "WebsAccounts_id_key" ON "WebsAccounts"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Activity_id_key" ON "Activity"("id");
