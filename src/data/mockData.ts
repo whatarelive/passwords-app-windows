@@ -13,12 +13,27 @@ export const mockData = [{
     webUrl: "https://facebook.com/" 
 },
 {
-    id: "1",
+    id: "3",
     webName: "Uci",
     webUser: "PepeCojo612",
     webPassword: "32dfavxfsdfa",
     webUrl: "http://uci.cu/" 
-}]
+},
+{
+    id: "4",
+    webName: "Youtube",
+    webUser: "PepeCojo23",
+    webPassword: "324414rfsdfa",
+    webUrl: "https://youtube.com/" 
+},
+{
+    id: "5",
+    webName: "Facebook",
+    webUser: "PepeCojo61",
+    webPassword: "324414afsdafa",
+    webUrl: "https://facebook.com/" 
+},
+]
 
 export const mockActivity = [
     { 
