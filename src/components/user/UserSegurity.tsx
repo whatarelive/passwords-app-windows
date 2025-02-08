@@ -24,20 +24,21 @@ const UserSegurity = () => {
           Formulario de Actualización
         </h3>
 
-        <form action="" className="px-4">
+        <form action="">
           <TextInput label="Contraseña actual" name="password" placeholder="Ingrese su contraseña"/>
           <TextInputWithPassword label="Nueva Contraseña" name="newPassword" placeholder="Ingrese su nueva contraseña"/>
           <TextInputWithPassword label="Confirmar Nueva Contraseña" name="confirmPassword" placeholder="Confirme su nueva contraseña" />
 
           <ButtonForm
             children="Actualizar Contraseña" 
+            className="mt-2"
           />
         </form>
 
         <div className="flex flex-col items-center gap-1 mt-2">
           <p className="inline-flex items-center gap-3 font-medium">
             <MdInfoOutline size={22}/>
-            Si necesitas crear o cambiar de cuenta
+            Si necesitas crear o cambiar de cuenta 
           </p>
 
           <button onClick={handleClick} className="max-w-fit px-5 cursor-pointer text-neutral-300 font-semibold hover:text-red-500 rounded-md">

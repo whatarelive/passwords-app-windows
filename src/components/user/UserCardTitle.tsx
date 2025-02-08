@@ -7,7 +7,7 @@ interface Props {
 
 const UserCardTitle: FC<Props> = ({ title, subtitle }) => {
   return (
-    <div className="flex flex-col px-5 pt-5">
+    <div className="flex flex-col px-5 pt-3">
       <h2 className="text-2xl font-semibold">
         { title }
       </h2>
