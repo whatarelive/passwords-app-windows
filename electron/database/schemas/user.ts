@@ -1,14 +1,15 @@
 import type { UUID } from "node:crypto";
 import type { ActivitySchema } from "./activity";
+import type { WebAccountSchema } from "./web-account";
 
 export class User {
     constructor(
         public readonly id: UUID,
         public name: string,
         public password: string,
-        public activities: ActivitySchema[],
-        public webAccounts: [],
+        public activities?: ActivitySchema[],
+        public webAccounts?: WebAccountSchema[],
     ) {}
 }
 
-export type UserScema = typeof User;
+export type UserSchema = InstanceType<typeof User>;

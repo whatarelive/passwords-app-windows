@@ -20,5 +20,5 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   },
 
   // You can expose other APTs you need here.
-  // ...
+  addUser: (user: { name: string, password: string }) => ipcRenderer.send('user-add', user),
 })

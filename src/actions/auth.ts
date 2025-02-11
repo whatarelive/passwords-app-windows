@@ -18,6 +18,8 @@ async function register(_prevState: RegisterState, formData: FormData) {
     }
 
     try {
+        const { user, password } = validatedFields.data;
+        window.ipcRenderer.invoke('user-add', { name: user, password })
         
     } catch (error) {
         return {
@@ -26,7 +28,7 @@ async function register(_prevState: RegisterState, formData: FormData) {
         };
     }
 
-    return {};
+    return {}
 }
 
 export {
