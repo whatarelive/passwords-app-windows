@@ -58,7 +58,7 @@ async function addUser(name: string, password: string) {
 
     // Hash de la contraseña del usuario.
     const passwordHash = await createHash(password);
-   
+
     // Creamos el nuevo usuario según el Schema.
     const newUser = new User(crypto.randomUUID(), name, passwordHash)
 
