@@ -2,6 +2,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { readFile, writeFile } from "node:fs/promises";
+import { createHash } from "../helpers/hsah";
 import { type UserSchema, User } from "../schemas/user";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -56,7 +57,7 @@ async function addUser(name: string, password: string) {
     }
 
     // Hash de la contraseña del usuario.
-    const passwordHash = '';
+    const passwordHash = await createHash(password);
    
     // Creamos el nuevo usuario según el Schema.
     const newUser = new User(crypto.randomUUID(), name, passwordHash)
