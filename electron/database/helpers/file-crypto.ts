@@ -1,7 +1,7 @@
-import fs from "node:fs";
-import crypto from "node:crypto";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { readFile, writeFile } from "./file";
 
 // Clave secreta de 256 bytes.
 const secretKey = crypto.randomBytes(32);
@@ -20,19 +20,29 @@ function encryptFile<T>(data: T, file: string) {
     const cipher = crypto.createCipheriv("aes-256-cbc", secretKey, iv);
     
     let encrypted = cipher.update(JSON.stringify(data), "utf-8", "hex");
-    
     encrypted += cipher.final("hex");
     
-    fs.writeFileSync(filePath, JSON.stringify({ iv: iv.toString("hex"), data: encrypted }));
+    writeFile(filePath, encrypted, iv);
 }
 
-// function decryptFile(file: string) {
-//     const filePath = createPath(file);
+function decryptFile<T>(file: string) {
+    const filePath = createPath(file);
 
-//     // const {} = ;
-// }
+    const result = readFile(filePath);
+
+    if (!result) return null;
+
+    const decipher = crypto.createDecipheriv("aes-256-cbc", secretKey, Buffer.from(result.iv, "hex"));
+
+    let decrypted = decipher.update(result.data, "hex", "utf8");
+    decrypted += decipher.final("utf8");
+    
+    const data = JSON.parse(decrypted) as T;
+
+    return data
+}
 
 export {
     encryptFile,
-    // decryptFile,
+    decryptFile,
 }

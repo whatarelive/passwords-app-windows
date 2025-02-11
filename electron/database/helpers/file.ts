@@ -1,5 +1,10 @@
 import fs from "node:fs";
 
+interface IFile {
+    iv: string;
+    data: string;
+}
+
 function readFile(filePath: string) {
     // Comprobamos que el archivo a leer exista.
     if (!fs.existsSync(filePath)) return null;
@@ -8,10 +13,10 @@ function readFile(filePath: string) {
     const data = fs.readFileSync(filePath, "utf-8");
     
     // Retornamos la data parseada.
-    return JSON.parse(data);
+    return JSON.parse(data) as IFile;
 }
 
-function writeFile<T>(filePath: string, data: T, iv: Buffer<ArrayBufferLike>) {
+function writeFile(filePath: string, data: string, iv: Buffer<ArrayBufferLike>) {
     // Se escribe la información en el archivo.
     fs.writeFileSync(
         filePath, 
