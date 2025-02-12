@@ -1,5 +1,6 @@
 import crypto from "node:crypto";
 
+// Interfaz para la creación del JWT.
 interface ICreateJwt {
     payload: {
         userId: crypto.UUID,
@@ -7,12 +8,19 @@ interface ICreateJwt {
     expiresIn: number;
 }
 
+// Interfaz para la verificación del JWT.
 interface IVerifyJwt {
     token: string;
 }
 
+// Algoritmo de encriptación utilizado.
 const algoritm = "HS256";
 
+/**
+ * Codifica un objeto a base64 URL-safe.
+ * @param obj - Objeto a codificar.
+ * @returns Cadena codificada en base64 URL-safe.
+ */
 function createEncode(obj: any) {
     return Buffer.from(JSON.stringify(obj))
     .toString("base64")
@@ -21,6 +29,12 @@ function createEncode(obj: any) {
     .replace("/\//g", "_");
 }
 
+/**
+ * Crea una firma HMAC-SHA256 para el JWT.
+ * @param headerEncoded - Header codificado en base64.
+ * @param payloadEncoded - Payload codificado en base64.
+ * @returns Firma HMAC en formato base64 URL-safe.
+ */
 function createEncrypted(headerEncoded: string, payloadEncoded: string) {
     const signaturedBase = `${headerEncoded}.${payloadEncoded}`;
     const secret = process.env.SECRET_JWT;
@@ -33,7 +47,11 @@ function createEncrypted(headerEncoded: string, payloadEncoded: string) {
         .replace("/\//g", "_");
 }
 
-// Función para crear el JSON Web Token.
+/**
+ * Función para crear el JSON Web Token.
+ * @param param0 - Objeto con el payload y el tiempo de expiración.
+ * @returns Cadena de texto que define al JSON Web Token.
+ */
 function createJwt({ payload, expiresIn }: ICreateJwt) {
     // Creación del header encriptado con la información del hash de encriptación.
     const headerEncoded = createEncode({ alg: algoritm, typ: "jwt" });
@@ -51,7 +69,11 @@ function createJwt({ payload, expiresIn }: ICreateJwt) {
     return `${headerEncoded}.${payloadEncoded}.${signature}`;
 }
 
-// Función para verificar el JSON Web Token. 
+/**
+ * Función para verificar el JSON Web Token.
+ * @param param0 - Objeto con el token a verificar.
+ * @returns Payload del token si es válido, de lo contrario null.
+ */
 function verifyJwt({ token }: IVerifyJwt) {
     // Se deviden las partes que componen al token.
     const [ headerEncoded, payloadEncoded, signature ] = token.split(".");

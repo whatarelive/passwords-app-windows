@@ -2,7 +2,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { readFile, writeFile } from "node:fs/promises";
-import { createHash } from "../helpers/hsah";
+import { createHash } from "../helpers/hash";
 import { type UserSchema, User } from "../schemas/user";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
