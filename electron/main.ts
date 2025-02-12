@@ -1,8 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { addUser } from "./database/functions/users";
-// import { encryptSession } from "./database/helpers/file-crypto";
+import { app, BrowserWindow } from 'electron';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -51,10 +49,6 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
-
-ipcMain.handle('user-add', async (_, user: { name: string, password: string }) => {  
-  addUser(user.name, user.password);
-})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

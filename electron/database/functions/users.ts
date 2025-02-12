@@ -2,10 +2,11 @@ import crypto from "node:crypto";
 import { createHash } from "../helpers/hash";
 import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
+import type { IAddUser } from "electron/interfaces";
 
 const dbPath = '../electron/database/config/users.enc';
 
-function addUser(name: string, password: string) {    
+function addUser({ name, password }: IAddUser) {    
     try {
         // Recuperamos la colección de usuarios.
         let data = decryptFile<UserSchema[]>(dbPath) || [];
