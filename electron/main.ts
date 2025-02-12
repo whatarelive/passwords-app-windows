@@ -53,7 +53,7 @@ function createWindow() {
 }
 
 ipcMain.handle('user-add', async (_, user: { name: string, password: string }) => {  
-  await addUser(user.name, user.password);
+  addUser(user.name, user.password);
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -74,7 +74,4 @@ app.on('activate', () => {
   }
 })
 
-app.whenReady().then(() => {
-  // encryptSession({ message: "Hola" })
-  createWindow()
-}) 
+app.whenReady().then(createWindow) 

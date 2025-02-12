@@ -6,7 +6,7 @@ export class User {
     constructor(
         public readonly id: UUID,
         public name: string,
-        public password: string,
+        public password: { hash: string, salt: string },
         public activities?: ActivitySchema[],
         public webAccounts?: WebAccountSchema[],
     ) {}
