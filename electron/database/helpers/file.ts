@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 
 // Interfaz para la estructura del archivo.
 interface IFile {
@@ -31,6 +32,10 @@ function readFile(filePath: string) {
  * @param iv - Vector de inicialización.
  */
 function writeFile(filePath: string, data: string, signature: string, iv: Buffer<ArrayBufferLike>) {
+      // Si el archivo no existe lo creamos.
+    if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    }
     // Se escribe la información en el archivo.
     fs.writeFileSync(
         filePath, 

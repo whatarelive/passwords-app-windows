@@ -4,7 +4,7 @@ import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
 import type { IAddUser } from "electron/interfaces";
 
-const dbPath = '../electron/database/config/users.enc';
+const dbPath = 'users.enc';
 
 function addUser({ name, password }: IAddUser) {    
     try {

@@ -1,7 +1,6 @@
-// import os from "node:os";
+import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
-import { fileURLToPath } from "node:url";
 import { readFile, writeFile } from "./file";
 import { createhashFile } from "./file-hash";
 
@@ -17,9 +16,7 @@ const iv = crypto.randomBytes(16);
  * @returns Ruta completa del archivo.
  */
 function createPath(file: string) {
-    // const filePath = path.join(os.homedir(), ".config", "PasswordManager", file);
-    const __dirname = path.dirname(fileURLToPath(import.meta.url));
-    return path.join(__dirname, file);
+    return path.join(os.homedir(), ".config", "PasswordManager", file);
 }
 
 /**
