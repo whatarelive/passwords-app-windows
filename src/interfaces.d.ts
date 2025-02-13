@@ -22,7 +22,7 @@ export interface FormError {
 }
 
 export type RegisterState = {
-    errors?: FormError;
+    errors?: string[];
     message?: string | null;
 }
 

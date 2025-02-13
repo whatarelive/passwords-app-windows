@@ -46,7 +46,6 @@ function addUser({ name, password }: IAddUser) {
         return { 
             ok: false,
             message: "Error al agregar el usuario",
-            error: error,
         };
     }
 }

@@ -12,23 +12,29 @@ async function register(_prevState: RegisterState, formData: FormData) {
 
     if (!validatedFields.success) {
         return {
-            errors: validatedFields.error.flatten().fieldErrors,
-            message: 'Missing Fields. Faile to Register User',
+            errors: validatedFields.error.errors.flatMap((e) => e.message),
+            message: "Campos de texto faltantes.",
         }
     }
 
     try {
         const { user, password } = validatedFields.data;
-        window.ipcRenderer.invoke('user-add', { name: user, password })
+        const { ok, message } = await window.ipcRenderer.invoke('user-add', { name: user, password })
         
+        if (!ok) {
+            return { errors: [message as string] };
+        }
+
+        return { 
+            message: message as string,
+        };
     } catch (error) {
+        console.log(error);
+        
         return {
-            error,
-            message: 'Database Error: Failed to Register User.'
+            message: "Error de conexión.",
         };
     }
-
-    return {}
 }
 
 export {
