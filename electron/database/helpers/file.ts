@@ -18,10 +18,13 @@ function readFile(filePath: string) {
     if (!fs.existsSync(filePath)) return null;
 
     // Leemos la información del archivo.
-    const data = fs.readFileSync(filePath, "utf-8");
+    const readData = fs.readFileSync(filePath, "utf-8");
     
+    // Desestructuración de la  data.
+    const [ iv, data, signature ] = readData.split(".");
+
     // Retornamos la data parseada.
-    return JSON.parse(data) as IFile;
+    return { iv, data, signature } as IFile;
 }
 
 /**
@@ -37,14 +40,7 @@ function writeFile(filePath: string, data: string, signature: string, iv: Buffer
         fs.mkdirSync(path.dirname(filePath), { recursive: true });
     }
     // Se escribe la información en el archivo.
-    fs.writeFileSync(
-        filePath, 
-        JSON.stringify({ 
-            iv: iv.toString("hex"), 
-            data,
-            signature,
-        })
-    );
+    fs.writeFileSync(filePath, `${iv.toString("hex")}.${data}.${signature}`);
 
     // Ajustar permisos (solo el propietario puede leer/escribir)
     fs.chmodSync(filePath, 0o600);
