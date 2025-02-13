@@ -5,7 +5,7 @@ import { ButtonForm } from "@/components/ui/buttons";
 function LoginPage() {
   return (
     <section className="flex flex-col justify-center w-[340px] mb-12">
-      <div className="flex flex-col items-center mb-12">
+      <div className="flex flex-col items-center mb-6">
         <img src="/password.svg" alt="Logo" className="w-16 h-16" />
         <h1 className="text-green-500 font-bold text-2xl">
           Password Manager
@@ -13,7 +13,7 @@ function LoginPage() {
       </div>
 
       <div className="mb-8">
-        <h2 className="text-3xl text-center font-semibold text-green-400">
+        <h2 className="text-3xl text-center font-semibold text-green-500">
           Bienvenido de Nuevo
         </h2>
         <p className="text-gray-200 text-center">

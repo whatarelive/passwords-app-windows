@@ -22,7 +22,10 @@ async function register(_prevState: RegisterState, formData: FormData) {
         const { ok, message } = await window.ipcRenderer.invoke('user-add', { name: user, password })
         
         if (!ok) {
-            return { errors: [message as string] };
+            return {
+                message: message as string, 
+                errors: [message as string] 
+            };
         }
 
         return { 
