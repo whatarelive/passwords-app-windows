@@ -13,7 +13,7 @@ function AddAccountPage() {
 
   return (
     <>
-      <section className="px-8">
+      <section className="px-14">
         <WebFormTitle 
           title="Formulario de Creación" 
           subtitle="Registre una nueva cuenta con una contraseña segura."

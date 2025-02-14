@@ -1,3 +1,4 @@
+import { Form, Formik } from 'formik';
 import { MdAdminPanelSettings, MdLockPerson, MdSupervisedUserCircle } from "react-icons/md";
 import UserCardTitle from "@/components/user/UserCardTitle";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
@@ -16,11 +17,17 @@ const UserInfo = () => {
           Información de la Sesión
         </h3>
 
-        <TextInput label="Usuario" name="user" defaultValue={"Jose Luis"} disabled/>
-        <TextInputWithPassword label="Contraseña" name="password" defaultValue={"asdfads8gasdgafd888dfad88888"} disabled/>
+        <Formik initialValues={{ name: "Livan Rodriguez", password: "asdfads8gasdgafd888dfad88888" }} onSubmit={() => {}}>
+          {() => (
+            <Form>
+              <TextInput label="Usuario" name="name" classContainer="h-auto" disabled/>
+              <TextInputWithPassword label="Contraseña" name="password" classContainer="h-auto" disabled/>
+            </Form>
+          )}
+        </Formik>
       </div>
 
-      <div className="flex flex-col bg-[#1F1F21] mx-4 mt-2 p-4 rounded-2xl">
+      <div className="flex flex-col bg-[#1F1F21] mx-4 mt-4 p-4 rounded-2xl">
         <h3 className="inline-flex items-center mb-1 gap-2 text-xl font-bold">
           <MdSupervisedUserCircle size={22}/>
           Resumen de la Sesión del Usuario
@@ -37,7 +44,7 @@ const UserInfo = () => {
         </div>
       </div> 
 
-      <div className="bg-[#1F1F21] mx-4 mt-2 p-4 rounded-2xl">
+      <div className="bg-[#1F1F21] mx-4 mt-4 p-4 rounded-2xl">
         <h3 className="inline-flex items-center mb-2 gap-2 text-xl font-bold">
           <MdLockPerson size={22}/>
           Acciones

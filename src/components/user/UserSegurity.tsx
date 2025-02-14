@@ -1,6 +1,8 @@
+import { Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import { MdInfoOutline, MdOutlineSecurity } from "react-icons/md";
-import { ButtonForm } from "@/components/ui/buttons";
+import { PasswordSchema } from "@/validations/user";
+import { ButtonForm, ButtonFormReset } from "@/components/ui/buttons";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 import UserCardTitle from "@/components/user/UserCardTitle";
 
@@ -10,7 +12,6 @@ const UserSegurity = () => {
   const handleClick = () => {
     navigate('/auth/register');
   }
-
   return (
     <div className="bg-[#3b3b3e] w-full h-[569px] rounded-xl">
        <UserCardTitle 
@@ -24,28 +25,49 @@ const UserSegurity = () => {
           Formulario de Actualización
         </h3>
 
-        <form action="">
-          <TextInput label="Contraseña actual" name="password" placeholder="Ingrese su contraseña"/>
-          <TextInputWithPassword label="Nueva Contraseña" name="newPassword" placeholder="Ingrese su nueva contraseña"/>
-          <TextInputWithPassword label="Confirmar Nueva Contraseña" name="confirmPassword" placeholder="Confirme su nueva contraseña" />
+        <Formik 
+          initialValues={{ password: "", newPassword: "", confirmPassword: "" }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={PasswordSchema}
+        >
+          {() => (
+            <Form className="">
+              <TextInput 
+                label="Contraseña actual" 
+                name="password" 
+                placeholder="Ingrese su contraseña"
+              />
+              
+              <TextInputWithPassword 
+                label="Nueva Contraseña" 
+                name="newPassword" 
+                placeholder="Ingrese su nueva contraseña"
+              />
+              
+              <TextInputWithPassword 
+                label="Confirmar Nueva Contraseña" 
+                name="confirmPassword" 
+                placeholder="Confirme su nueva contraseña" 
+              />  
 
-          <ButtonForm
-            children="Actualizar Contraseña" 
-            className="mt-2"
-          />
-        </form>
-
-        <div className="flex flex-col items-center gap-1 mt-2">
-          <p className="inline-flex items-center gap-3 font-medium">
-            <MdInfoOutline size={22}/>
-            Si necesitas crear o cambiar de cuenta 
-          </p>
-
-          <button onClick={handleClick} className="max-w-fit px-5 cursor-pointer text-neutral-300 font-semibold hover:text-red-500 rounded-md">
-            Ir al Registro de Usuario
-          </button>
-        </div>
+              <div className="flex gap-4 mt-5">
+                <ButtonForm>
+                  Actualizar Contraseña
+                </ButtonForm>
+                <ButtonFormReset>
+                  Cancelar
+                </ButtonFormReset>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
+
+      <button onClick={handleClick} className="flex w-full items-center justify-center gap-2 mt-6 cursor-pointer text-neutral-300 font-semibold">
+        <MdInfoOutline size={20}/>
+        Si necesitas crear o cambiar de cuenta : 
+        <span className="hover:text-red-500">Registro de Usuario</span>
+      </button>
     </div>
   )
 }

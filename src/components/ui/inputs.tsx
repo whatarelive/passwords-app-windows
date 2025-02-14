@@ -4,17 +4,18 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 interface ITextInput extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
     label?: string;
+    classContainer?: string;
 } 
 
 interface IRangeInput extends ITextInput {
     range: number;
 }
 
-const TextInput: FC<ITextInput> = ({ label, ...props }) => {
+const TextInput: FC<ITextInput> = ({ label, classContainer, ...props }) => {
     const [ field ] = useField(props);
 
     return (
-        <div className="flex flex-col mb-2">
+        <div className={`flex flex-col mb-2 h-[85px] ${classContainer}`}>
             <label className="font-semibold mb-1 select-none" htmlFor={props.name}>
                 { label }
             </label>
@@ -30,12 +31,12 @@ const TextInput: FC<ITextInput> = ({ label, ...props }) => {
     )
 }
 
-const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
+const TextInputWithPassword: FC<ITextInput> = ({ label, classContainer, ...props }) => {
     const [ field ] = useField(props);
     const [viewPass, setViewPass] = useState(false);
     
     return (
-        <div className="flex flex-col w-full mb-2">
+        <div className={`flex flex-col mb-2 w-full h-[85px] ${classContainer}`}>
             <label className="font-semibold mb-1 select-none" htmlFor={props.name}>
                 { label }
             </label>

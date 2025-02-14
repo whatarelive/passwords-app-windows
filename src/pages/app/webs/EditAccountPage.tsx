@@ -21,7 +21,7 @@ function EditAccountPage() {
 
   return (
     <>
-      <section className="px-8">
+      <section className="px-14">
         <WebFormTitle 
           title="Formulario de Edición" 
           subtitle="Edite los datos y génere una nueva contraseña más segura."
