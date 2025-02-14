@@ -15,7 +15,7 @@ const TextInput: FC<ITextInput> = ({ label, ...props }) => {
 
     return (
         <div className="flex flex-col mb-2">
-            <label className="font-semibold mb-1" htmlFor={props.name}>
+            <label className="font-semibold mb-1 select-none" htmlFor={props.name}>
                 { label }
             </label>
             <input
@@ -25,7 +25,7 @@ const TextInput: FC<ITextInput> = ({ label, ...props }) => {
                 { ...field }
                 { ...props }
             />
-            <ErrorMessage className="text-red-500 text-sm" name={props.name!} component="span"/>
+            <ErrorMessage className="text-red-500 text-sm select-none" name={props.name!} component="span"/>
         </div>
     )
 }
@@ -36,7 +36,7 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
     
     return (
         <div className="flex flex-col w-full mb-2">
-            <label className="font-semibold mb-1" htmlFor={props.name}>
+            <label className="font-semibold mb-1 select-none" htmlFor={props.name}>
                 { label }
             </label>
             <div className="inline-flex border rounded-md border-neutral-400 focus-within:border-white">
@@ -51,7 +51,7 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
                     { !viewPass ? <MdVisibility size={24}/> : <MdVisibilityOff size={24}/> }
                 </i>
             </div>
-            <ErrorMessage className="text-red-500 text-sm" name={props.name!} component="span"/>
+            <ErrorMessage className="text-red-500 text-sm select-none" name={props.name!} component="span"/>
         </div>
     )
 }
@@ -59,7 +59,7 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
 const RangeInput: FC<IRangeInput> = ({ range, className, ...props }) => {
     return (
         <div className="flex flex-col w-full mb-2">
-            <label htmlFor="passwordlarge" className="font-semibold mb-1">
+            <label htmlFor="passwordlarge" className="font-semibold mb-1 select-none">
                 Longitud de caracteres: { range }
             </label>
             <input 

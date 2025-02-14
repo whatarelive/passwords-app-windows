@@ -1,27 +1,19 @@
 import type { FC } from "react";
-import { MdArrowBack } from "react-icons/md";
-import { NavLink } from "react-router";
 
 interface IWebFormTitle {
-    title: string;
+  title: string;
+  subtitle: string;
 }
 
-const WebFormTitle: FC<IWebFormTitle> = ({ title }) => {
+export const WebFormTitle: FC<IWebFormTitle> = ({ title, subtitle }) => {
   return (
-    <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold">
-          { title }
-        </h1>
-
-        <NavLink 
-          to="/" 
-          className="inline-flex gap-1 cursor-pointer text-neutral-400 hover:text-white p-1.5 rounded font-medium"
-        >
-            <MdArrowBack size={24}/>
-            Regresar
-        </NavLink>
-      </div>
+    <div className="flex flex-col items-center mt-10 mb-12 select-none">
+      <h3 className="text-3xl text-green-500 font-bold">
+        { title }
+      </h3>
+      <p className="text-gray-300 text-center">
+        { subtitle }
+      </p>
+    </div>
   )
 }
-
-export default WebFormTitle;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import WebFormTitle from "@/components/webs/WebFormTitle";
 import UserInfo from "@/components/user/UserInfo";
 import UserSegurity from "@/components/user/UserSegurity";
 import UserActivity from "@/components/user/UserActivity";
@@ -10,8 +9,6 @@ function UserInfoPage() {
 
   return (
     <section className="px-8 py-10">
-      <WebFormTitle title="Perfil de usuario"/>
-
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 gap-2 bg-[#3b3b3e]">
           <TabsTrigger 

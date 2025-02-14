@@ -2,14 +2,14 @@ import { useState, type FC } from "react";
 import { RangeInput } from "@/components/ui/inputs";
 import { SwitchWebAccount } from "@/components/ui/switch";
 import { ModalContainer, ModalHeader, ModalButton } from "@/components/ui/modals";
-import { useMenuStore } from "@/store/menu-store";
+import { useMenuPasswordStore } from "@/store/menu-store";
 
 interface IProps {
     webPassword?: string;
 }
 
-const SettingsModal: FC<IProps> = ({ webPassword }) => {
-    const setOpen = useMenuStore((state) => state.setOpen);
+export const SettingsModal: FC<IProps> = ({ webPassword }) => {
+    const setOpen = useMenuPasswordStore((state) => state.setOpen);
     const [rangePass, setRangePass] = useState(webPassword?.length || 15);
     const [specialCaract, setSpecialCaract] = useState(webPassword?.includes("#$%@!*&^.") || false);
 
@@ -47,5 +47,3 @@ const SettingsModal: FC<IProps> = ({ webPassword }) => {
         </ModalContainer>
     )
 }
-
-export default SettingsModal;
