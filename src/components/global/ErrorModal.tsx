@@ -1,32 +1,37 @@
 import type { FC } from "react";
 import { MdErrorOutline } from "react-icons/md";
-import { ModalButton, ModalContainer, ModalHeader, ModalList } from "@/components/ui/modals";
-import type { RegisterState } from "@/interfaces";
+import { useAuthStore } from "@/store/auth-store";
+import { ModalButton, ModalContainer, ModalHeader } from "@/components/ui/modals";
 
 interface IModalError {
-    title: string;
-    errors: RegisterState;
-    onClick: () => void;
+  title: string;
+  message?: string;
 }
 
-const ErrorModal: FC<IModalError> = ({ title, errors, onClick }) => {
-    return (
-        <ModalContainer>
-            <ModalHeader>
-                <MdErrorOutline size={32} className="text-red-400"/>
-                
-                <h2 className="text-md font-bold text-center text-red-400">
-                    { title } <br/>
-                    { errors.message }
-                </h2>
-            </ModalHeader>
+const ErrorModal: FC<IModalError> = ({ title, message }) => {
+  const disableView = useAuthStore((state) => state.disableView);
 
-            <ModalList errors={errors.errors || []}/>
-            <ModalButton className="bg-red-400 hover:bg-red-500" onClick={onClick}>
-                Reintentar
-            </ModalButton>
-        </ModalContainer>
-    )
+  return (
+    <ModalContainer>
+      <div className="p-4">
+        <ModalHeader>
+            <MdErrorOutline size={24} className="text-red-500"/>
+            
+            <h2 className="text-xl font-bold text-center text-red-500">
+              { title } <br/>
+            </h2>
+        </ModalHeader>
+
+        <p className="text-white text-md font-bold text-center">
+          ( { message } ) 
+        </p>
+      </div>
+
+      <ModalButton className="bg-red-500 hover:bg-white hover:text-red-500" onClick={disableView}>
+          Reintentar
+      </ModalButton>
+    </ModalContainer>
+  )
 }
 
 export default ErrorModal;

@@ -1,31 +1,29 @@
-import z from "zod";
+import * as Yup from 'yup';
 
-const RegisterSchema = z.object({
-    user:  z.string()
-        .min(8, { message: "El usuario debe tener al menos 8 caracteres." })
-        .max(15, { message: "El usuario debe tener menos 15 de caracteres." }),
-    password: z.string()
-        .min(8, { message: "La contraseña debe tener al menos 8 caracteres." })
-        .regex(/[a-z]/, { message: "La contraseña debe contener al menos una letra minúscula." })
-        .regex(/[A-Z]/, { message: "La contraseña debe contener al menos una letra mayúscula." })
-        .regex(/[0-9]/, { message: "La contraseña debe contener al menos un número." }),
-    confirmPassword: z.string()
-})
-.refine((data) => data.password === data.confirmPassword, {
-    message: "Las contraseñas no coinciden",
-    path: ["confirmPassword"],
+const RegisterSchema = Yup.object({
+    name: Yup.string()
+        .max(15, "El usuario debe tener menos 15 de caracteres.")
+        .required("El usuario es requerido."),
+    password: Yup.string()
+        .min(8, "La contraseña debe tener al menos 8 caracteres.")
+        .max(25, "La contraseña debe tener menos 25 de caracteres.")
+        .required("La contraseña es requerida."),
+    confirmPassword: Yup.string()
+        .oneOf([ Yup.ref('password') ], "Las contraseñas deben ser iguales.")
+        .required("La confirmarción de la contraseña es requerida."),
 });
 
-const AuthenticateSchema = z.object({
-    user:  z.string(),
-    password: z.string()
-        .min(8, { message: "La contraseña debe tener al menos 8 caracteres" })
-        .regex(/[a-z]/, { message: "La contraseña debe contener al menos una letra minúscula" })
-        .regex(/[A-Z]/, { message: "La contraseña debe contener al menos una letra mayúscula" })
-        .regex(/[0-9]/, { message: "La contraseña debe contener al menos un número" }),
+const LoginSchema = Yup.object({
+    name: Yup.string()
+        .max(15, "El usuario debe tener menos 15 de caracteres.")
+        .required("El usuario es requerido."),
+    password: Yup.string()
+        .min(8, "La contraseña debe tener al menos 8 caracteres.")
+        .max(25, "La contraseña debe tener menos 25 de caracteres.")
+        .required("La contraseña es requerida."),
 });
 
 export {
     RegisterSchema,
-    AuthenticateSchema,
+    LoginSchema,
 }

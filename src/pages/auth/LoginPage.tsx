@@ -1,6 +1,8 @@
+import { Form, Formik } from "formik";
 import { NavLink } from "react-router";
-import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
+import { LoginSchema } from "@/validations/auth";
 import { ButtonForm } from "@/components/ui/buttons";
+import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 
 function LoginPage() {
   return (
@@ -21,12 +23,20 @@ function LoginPage() {
         </p>
       </div>
 
-      <form action="">
-        <TextInput label="Usuario" name="user" placeholder="Ingrese su nombre de usuario"/>
-        <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
-
-        <ButtonForm children="Iniciar Sesión" className="text-lg mt-3"/>
-      </form>
+      <Formik
+        initialValues={{ name: "", password: "" }}
+        onSubmit={async({ name, password }) => console.log(name, password)}
+        validationSchema={LoginSchema}
+      >
+        {() => (
+          <Form>
+            <TextInput label="Usuario" name="name" placeholder="Ingrese su nombre de usuario"/>
+            <TextInputWithPassword label="Contraseña" name="password" placeholder="Ingrese su contraseña"/>
+    
+            <ButtonForm children="Iniciar Sesión" className="text-lg mt-3"/>
+          </Form>
+        )}
+      </Formik>
 
       <div className="flex flex-col items-center mt-12">
         <b>¿ No tienes una cuenta ?</b>

@@ -1,30 +1,42 @@
 import type { FC } from "react";
 import { useNavigate } from "react-router";
 import { MdCheck } from "react-icons/md";
+import { useAuthStore } from "@/store/auth-store";
 import { ModalButton, ModalContainer, ModalHeader } from "@/components/ui/modals";
 
-interface IModalError {
+interface IModalSucess {
     title: string;
+    message: string;
 }
 
-const SucessModal: FC<IModalError> = ({ title }) => {
+const SucessModal: FC<IModalSucess> = ({ title, message }) => {
     const navigate = useNavigate();
+    const disableView = useAuthStore((state) => state.disableView);
 
     return (
         <ModalContainer>
+          <div className="p-4">
             <ModalHeader>
-                <span className="bg-green-500 rounded-full p-1">
-                    <MdCheck size={28} className="text-white"/>
+                <span className="border-green-500 border-2 rounded-full p-0.5">
+                    <MdCheck size={12} className="text-green-500"/>
                 </span>
                 
-                <h2 className="text-md font-bold text-center text-green-500">
+                <h2 className="text-xl font-bold text-center text-green-500">
                     { title }
                 </h2>
             </ModalHeader>
 
+            <p className="text-white text-md font-bold text-center">
+              ( { message } ) 
+            </p>
+          </div>
+
             <ModalButton 
-                className="bg-green-500 hover:bg-green-400 mt-5" 
-                onClick={() => navigate("/")}
+                className="bg-green-500 hover:bg-white hover:text-green-500" 
+                onClick={() => {
+                  disableView();
+                  navigate("/");
+                }}
             >
                 Continuar
             </ModalButton>
