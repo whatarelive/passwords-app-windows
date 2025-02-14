@@ -22,8 +22,8 @@ const TextInput: FC<ITextInput> = ({ label, ...props }) => {
                 id={props.name} 
                 className={`p-2 border border-neutral-400 rounded-md bg-transparent 
                 focus-visible:border-white focus-visible:outline-none ${props.className}`}
-                { ...props }
                 { ...field }
+                { ...props }
             />
             <ErrorMessage className="text-red-500 text-sm" name={props.name!} component="span"/>
         </div>
@@ -44,8 +44,8 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
                     id={props.name}
                     type={viewPass ? "text" : "password"} 
                     className="p-2 w-full rounded-md bg-transparent focus-visible:outline-none"
-                    { ...props }
                     { ...field }
+                    { ...props }
                 />
                 <i className="flex items-center justify-center w-12 cursor-pointer" onClick={() => setViewPass(!viewPass)}>
                     { !viewPass ? <MdVisibility size={24}/> : <MdVisibilityOff size={24}/> }
@@ -58,7 +58,7 @@ const TextInputWithPassword: FC<ITextInput> = ({ label, ...props }) => {
 
 const RangeInput: FC<IRangeInput> = ({ range, className, ...props }) => {
     return (
-        <div className="flex flex-col mt-8 mb-2">
+        <div className="flex flex-col w-full mb-2">
             <label htmlFor="passwordlarge" className="font-semibold mb-1">
                 Longitud de caracteres: { range }
             </label>

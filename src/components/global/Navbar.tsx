@@ -1,5 +1,5 @@
 import { MdPerson } from "react-icons/md";
-import { useMenuStore } from "@/store/menuStore";
+import { useMenuStore } from "@/store/menu-store";
 import DropdownMenu from "@/components/global/DropdownMenu";
 
 const Navbar = () => {

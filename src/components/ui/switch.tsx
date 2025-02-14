@@ -14,7 +14,7 @@ const SwitchWebAccount: FC<ISwitchWebAccountProps> = ({ specialCaract, onClick }
         id="specialCaract"
         onClick={onClick} 
         className={clsx(
-          "flex p-0.5 w-16 rounded-2xl border-2 bg-neutral-700 transition-transform duration-1000",
+          "flex p-0.5 w-12 rounded-2xl border-2 bg-neutral-700 transition-transform duration-1000",
           {
             "justify-end": specialCaract,
             "justify-start" : !specialCaract,
@@ -32,8 +32,8 @@ const SwitchWebAccount: FC<ISwitchWebAccountProps> = ({ specialCaract, onClick }
           >
             {
               specialCaract 
-                ? <MdCheck size={22}/> 
-                : <MdClose size={22}/>
+                ? <MdCheck size={16}/> 
+                : <MdClose size={16}/>
             }
           </i>
         </span>

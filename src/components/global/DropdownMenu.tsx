@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { NavLink, useNavigate } from "react-router";
 import { MdEdit, MdLogout } from "react-icons/md";
-import { useMenuStore } from "@/store/menuStore";
+import { useMenuStore } from "@/store/menu-store";
 
 const DropdownMenu = () => {
     const navigate = useNavigate();
