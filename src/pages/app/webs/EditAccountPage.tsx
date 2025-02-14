@@ -47,7 +47,7 @@ function EditAccountPage() {
           validationSchema={EditWebAccountSchema}
         >
           {() => (
-            <Form className="flex flex-col">
+            <Form>
               <TextInput 
                 label="Sitio Web" 
                 name="webName" 
