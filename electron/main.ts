@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { addUser } from "./database/functions/users";
+import { addUser, verifyUser } from "./database/functions/users";
 import type { IAddUser } from "./interfaces";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -71,5 +71,6 @@ app.on('activate', () => {
 })
 
 ipcMain.handle('user-add', (_event, user: IAddUser) => addUser(user));
+ipcMain.handle('user-verify', (_event, user:IAddUser) => verifyUser(user));
 
 app.whenReady().then(createWindow) 

@@ -10,7 +10,7 @@ interface State {
     
     register: (name: string, password: string) => Promise<void>;
     
-    login: (name: string, password: string) => void;
+    login: (name: string, password: string) => Promise<void>;
     
     disableView: () => void;
 }
@@ -29,8 +29,13 @@ export const useAuthStore = create<State>()((set) => ({
         });
     },
 
-    login: async (_name, _password) => {
+    async login(name, password) {
+        const { ok, message } = await window.ipcRenderer.invoke('user-verify', { name, password });
 
+        set({ 
+            view: ok ? "SUCESS" : "ERROR",
+            message 
+        });
     },
 
     disableView() {
