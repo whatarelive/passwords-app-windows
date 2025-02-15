@@ -1,7 +1,8 @@
 import crypto from "node:crypto";
+import { getHmacKey } from "./secrets";
 
 // Generar una clave HMAC de 256 bits (32 bytes) para la firma.
-const HMAC_KEY = crypto.randomBytes(32);   
+const HMAC_KEY = getHmacKey();   
 
 /**
  * Firma los datos con HMAC-SHA256.

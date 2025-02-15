@@ -3,9 +3,10 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { readFile, writeFile } from "./file";
 import { createhashFile } from "./file-hash";
+import { getSecretKey } from "./secrets";
 
 // Clave secreta de 256 bytes.
-const secretKey = crypto.randomBytes(32);
+const secretKey = getSecretKey();
 
 // Vector de inicialización de 16 bytes.
 const iv = crypto.randomBytes(16);
@@ -55,7 +56,9 @@ function decryptFile<T>(file: string) {
     const result = readFile(filePath);
 
     if (!result) return null;
-
+    
+    const p = createhashFile(result.data);
+    console.log({ p, s: result.signature});
     // Verificar la firma antes de descifrar
     if (createhashFile(result.data) !== result.signature) return null;
     

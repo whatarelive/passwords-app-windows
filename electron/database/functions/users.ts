@@ -11,6 +11,8 @@ function addUser({ name, password }: IAddUser) {
         // Recuperamos la colección de usuarios.
         const data = decryptFile<UserSchema[]>(dbPath) || [];
         
+        console.log({ data });
+
         // Comprobamos que haya un usuario con este nuevo @(name)
         const existsUser = data.find((user) => user.name === name);
         
@@ -54,6 +56,8 @@ function verifyUser({ name, password }: IAddUser) {
     try {
         // Recuperamos la colección de usuarios.
         const data = decryptFile<UserSchema[]>(dbPath) || [];
+
+        console.log({ data });
 
         // Comprobamos que haya un usuario con este nuevo @(name)
         const existsUser = data.find((user) => user.name === name);
