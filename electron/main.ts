@@ -4,7 +4,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { addUser, verifyUser } from "./database/functions/users";
 import { changeReadWritePermissions } from "./database/helpers/file-permissions";
 import type { IAddUser, IAddWebAccount } from "./interfaces";
-import { addWebAccount } from './database/functions/web-accounts';
+import { addWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -75,6 +75,7 @@ app.on('activate', () => {
 ipcMain.handle('user-add', (_event, user: IAddUser) => addUser(user));
 ipcMain.handle('user-verify', (_event, user:IAddUser) => verifyUser(user));
 ipcMain.handle('webAccount-add', (_event, account: IAddWebAccount) => addWebAccount(account));
+ipcMain.handle('webAccount-getAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => getAllWebAccounts({ userId }));
 
 app.whenReady().then(() => {
   // Habilitamos los permisos de lectura y escritura.

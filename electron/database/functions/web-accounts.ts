@@ -1,5 +1,5 @@
 import { decryptFile, encryptFile } from "../helpers/file-crypto";
-import { createHash } from "../helpers/hash";
+import { convertHash, createHash } from "../helpers/hash";
 import { WebAccount, type WebAccountSchema } from "../schemas/web-account";
 import type { IAddWebAccount } from "electron/interfaces";
 
@@ -7,7 +7,7 @@ const dbPath = "web_accounts.enc";
 
 function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWebAccount) {
     try {
-        // Recuperamos la colección de usuarios.
+        // Recuperamos la colección de cuentas.
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
         // Comprobamos que para esta @(webUrl) no haya un usuario con este nuevo @(webUser)
@@ -53,6 +53,49 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
     }
 }
 
+function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
+    try {
+        // Recuperamos la colección de usuarios.
+        const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
+        
+        // Filtramos por el id del usuario @(userId)
+        const accountForUser = data.filter((account) => account.userId === userId); 
+           
+        // Si existe se notifica a la UI.
+        if (!accountForUser || accountForUser.length === 0) {
+            return { 
+                ok: false,
+                message: "No hay cuentas existentes para este usuario." 
+            };
+        }
+        
+        // Dehash de las contraseñas de las cuentas.
+        const accountsWithConvertHashPassword = accountForUser.map((account) => {
+            const { hash, salt } = account.webPassword;
+
+            return {
+                ...account,
+                webPassword: convertHash(hash, salt),
+            }
+        });
+        
+        // Se notifica del resultado a la UI
+        return { 
+            ok: true,
+            data: accountsWithConvertHashPassword,
+        };
+    } catch (error) {
+        // Manejo de errores
+        console.log(error);
+        
+        return { 
+            ok: false,
+            message: "Error al recuperar las cuentas",
+        };
+    }
+}
+
 export {
     addWebAccount,
+    getAllWebAccounts,
 }

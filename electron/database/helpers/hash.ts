@@ -35,7 +35,13 @@ function verifyPassword(password: string, hash: string, salt: string) {
     return derivedKey.toString("hex") === hash;
 }
 
+function convertHash(hash: string, salt: string) {
+    const derivedKey = crypto.pbkdf2Sync(hash, salt, iterations, keylen, digest);
+    return derivedKey.toString("utf-8");
+}
+
 export {
     createHash,
     verifyPassword,
+    convertHash,
 }
