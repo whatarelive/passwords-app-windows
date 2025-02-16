@@ -23,7 +23,7 @@ export const useAccountsStore = create<State>()((set, get) => ({
     async getAccounts() {
         const userId = get().userId;
 
-        const { ok, message, data } = await window.ipcRenderer.invoke('getAll-webAccount', { userId });
+        const { ok, message, data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
 
         set({
             view: ok ? null : "ERROR",
@@ -35,7 +35,7 @@ export const useAccountsStore = create<State>()((set, get) => ({
     async addAccount(webName, webPassword, webUrl, webUser) {
         const userId = get().userId;
 
-        const { ok, message } = await window.ipcRenderer.invoke('add-webAccount', { userId, webName, webPassword, webUrl, webUser });
+        const { ok, message } = await window.ipcRenderer.invoke('webAccount-add', { userId, webName, webPassword, webUrl, webUser });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
@@ -44,7 +44,7 @@ export const useAccountsStore = create<State>()((set, get) => ({
     },
 
     async editAccount(id, webName, webPassword, webUrl, webUser) {
-        const { ok, message } = await window.ipcRenderer.invoke('edit-webAccount', { id, webName, webPassword, webUrl, webUser });
+        const { ok, message } = await window.ipcRenderer.invoke('webAccount-edit', { id, webName, webPassword, webUrl, webUser });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
@@ -53,7 +53,7 @@ export const useAccountsStore = create<State>()((set, get) => ({
     },
 
     async deleteAccount(id) {
-        const { ok, message } = await window.ipcRenderer.invoke('delete-webAccount', { id });
+        const { ok, message } = await window.ipcRenderer.invoke('webAccount-delete', { id });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
