@@ -13,13 +13,13 @@ const UserSegurity = () => {
     navigate('/auth/register');
   }
   return (
-    <div className="bg-[#3b3b3e] w-full h-[569px] rounded-xl">
+    <div className="bg-secondary w-full h-[569px] rounded-xl">
        <UserCardTitle 
         title="Configuración de Seguridad" 
         subtitle="Gestiona tu contraseña y opciones de seguridad"
       />
 
-      <div className="flex flex-col gap-4 bg-[#1F1F21] mx-4 mt-4 p-4 rounded-2xl">
+      <div className="flex flex-col gap-4 bg-primary mx-4 mt-4 p-4 rounded-2xl">
         <h3 className="inline-flex items-center gap-2 text-xl font-bold">
           <MdOutlineSecurity size={22}/>
           Formulario de Actualización

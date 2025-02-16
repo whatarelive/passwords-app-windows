@@ -8,22 +8,22 @@ function UserInfoPage() {
   const [activeTab, setActiveTab] = useState<string>("personal");
 
   return (
-    <section className="px-8 py-10">
+    <section className="px-8 py-10 select-none">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 gap-2 bg-[#3b3b3e]">
+        <TabsList className="grid w-full grid-cols-3 gap-2 bg-secondary">
           <TabsTrigger 
             value="personal" 
-            className={ activeTab === 'personal' ? "bg-[#1f1f21]" : "bg-transparent" }>
+            className={ activeTab === 'personal' ? "bg-primary" : "bg-transparent" }>
               Información Personal
             </TabsTrigger>
           <TabsTrigger 
             value="security" 
-            className={ activeTab === 'security' ? "bg-[#1f1f21]" : "bg-transparent" }>
+            className={ activeTab === 'security' ? "bg-primary" : "bg-transparent" }>
               Seguridad
           </TabsTrigger>
           <TabsTrigger 
             value="activity" 
-            className={ activeTab === 'activity' ? "bg-[#1f1f21]" : "bg-transparent" }>
+            className={ activeTab === 'activity' ? "bg-primary" : "bg-transparent" }>
               Actividad
           </TabsTrigger>
         </TabsList>

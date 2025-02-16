@@ -4,7 +4,7 @@ import UserActivityElement from "@/components/user/UserActivityElement";
 
 const UserActivity = () => {
   return (
-    <div className="flex flex-col bg-[#3b3b3e] w-full h-[569px] rounded-xl">
+    <div className="flex flex-col bg-secondary w-full h-[569px] rounded-xl">
       <UserCardTitle 
         title="Registro de Actividad" 
         subtitle="Historial de acciones recientes en tu cuenta"

@@ -10,7 +10,7 @@ const ModalContainer: FC<Pick<IProps, "children">> = ({ children }) => {
     return (
         <div className="absolute z-50 w-full h-[761px] top-0" style={{ backgroundColor: "rgba(1, 1, 1, 75%)" }}>
             <div className="flex justify-center items-center w-full h-full">
-                <div className="flex flex-col items-center justify-between w-[340px] min-h-fit bg-[#1F1F27] rounded-xl shadow-xl shadow-gray-800">
+                <div className="flex flex-col items-center justify-between w-[340px] min-h-fit bg-primary rounded-xl shadow-xl shadow-gray-800">
                     { children }
                 </div>
             </div>

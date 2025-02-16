@@ -5,13 +5,13 @@ import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 
 const UserInfo = () => {
   return (
-    <div className="bg-[#3b3b3e] w-full h-[569px] rounded-xl">
+    <div className="bg-secondary w-full h-[569px] rounded-xl">
       <UserCardTitle 
         title="Información Personal" 
         subtitle="Gestiona tu información personal y de contacto"
       />
 
-      <div className="bg-[#1F1F21] mx-4 mt-3 p-4 rounded-2xl">
+      <div className="bg-primary mx-4 mt-3 p-4 rounded-2xl">
         <h3 className="inline-flex items-center mb-1 gap-2 text-xl font-bold">
           <MdAdminPanelSettings size={22}/>
           Información de la Sesión
@@ -27,7 +27,7 @@ const UserInfo = () => {
         </Formik>
       </div>
 
-      <div className="flex flex-col bg-[#1F1F21] mx-4 mt-4 p-4 rounded-2xl">
+      <div className="flex flex-col bg-primary mx-4 mt-4 p-4 rounded-2xl">
         <h3 className="inline-flex items-center mb-1 gap-2 text-xl font-bold">
           <MdSupervisedUserCircle size={22}/>
           Resumen de la Sesión del Usuario
@@ -44,18 +44,18 @@ const UserInfo = () => {
         </div>
       </div> 
 
-      <div className="bg-[#1F1F21] mx-4 mt-4 p-4 rounded-2xl">
+      <div className="bg-primary mx-4 mt-4 p-4 rounded-2xl">
         <h3 className="inline-flex items-center mb-2 gap-2 text-xl font-bold">
           <MdLockPerson size={22}/>
           Acciones
         </h3>
 
         <div className="inline-flex gap-4 w-full justify-between">
-          <button className="w-full p-2 rounded-md font-medium bg-red-500 hover:bg-red-600 hover:cursor-pointer">
+          <button className="w-full p-2 rounded-md font-medium bg-red-500 hover:bg-white hover:text-red-500 cursor-pointer">
             Eliminar Usuario
           </button>
           
-          <button className="w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-orange-600 hover:cursor-pointer">
+          <button className="w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-white hover:text-orange-500 cursor-pointer">
             Eliminar todas las cuentas
           </button>
         </div>

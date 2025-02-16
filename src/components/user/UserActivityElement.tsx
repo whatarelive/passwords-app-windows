@@ -8,7 +8,7 @@ interface Props {
 
 const UserActivityElement: FC<Props> = ({ activity }) => {
   return (
-    <div className="bg-[#1f1f21] rounded-md">
+    <div className="bg-primary rounded-md">
         <div className="flex bg-white text-black justify-between py-1 px-4 rounded-t-md">
             <h3 className="text-lg font-bold">
                 { activity.action }

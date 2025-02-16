@@ -29,14 +29,16 @@ const DropdownMenu = () => {
         <div className="flex items-center justify-between">
         <p className="text-lg font-medium">Livan Perez</p>
         
-        <NavLink to={`/user/${1214}`} className="max-w-max p-1 rounded cursor-pointer hover:bg-white hover:text-[#1F1F27] transition-all">
+        <NavLink to={`/user/${1214}`} className="max-w-max p-1 rounded cursor-pointer hover:bg-white hover:text-primary transition-all">
             <MdEdit size={16}/>
         </NavLink>
         </div>
 
         <button
             onClick={handlerClick} 
-            className="flex justify-center items-center w-full mt-6 font-semibold border py-1 gap-1 px-2 text-red-400 rounded cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all">
+            className={`flex justify-center items-center w-full mt-6 font-semibold py-1 gap-1 px-2 text-white 
+            rounded cursor-pointer bg-red-500 hover:text-red-500 hover:bg-white transition-all`}
+        >
                 <MdLogout/>
                 Cerrar Sesión
         </button>
