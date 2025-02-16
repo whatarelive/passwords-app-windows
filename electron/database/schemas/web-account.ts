@@ -6,9 +6,9 @@ export class WebAccount {
         public readonly userId: UUID,
         public readonly webName: string,
         public readonly webUser: string,
-        public readonly webPassword: string,
+        public readonly webPassword: { hash: string, salt: string },
         public readonly webUrl: string 
     ) {}
 }
 
-export type WebAccountSchema = typeof WebAccount;
+export type WebAccountSchema = InstanceType<typeof WebAccount>;
