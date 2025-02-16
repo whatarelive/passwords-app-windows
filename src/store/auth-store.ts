@@ -9,14 +9,11 @@ interface State {
     } | null;
     
     register: (name: string, password: string) => Promise<void>;
-    
     login: (name: string, password: string) => Promise<void>;
-    
     disableView: () => void;
 }
 
 export const useAuthStore = create<State>()((set) => ({
-    result: null,
     session: null,
     view: null,
 
