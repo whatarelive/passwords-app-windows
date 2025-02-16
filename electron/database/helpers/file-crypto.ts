@@ -5,9 +5,6 @@ import { readFile, writeFile } from "./file";
 import { createhashFile } from "./file-hash";
 import { getSecretKey } from "./secrets";
 
-// Clave secreta de 256 bytes.
-const secretKey = getSecretKey();
-
 // Vector de inicialización de 16 bytes.
 const iv = crypto.randomBytes(16);
 
@@ -15,17 +12,20 @@ const iv = crypto.randomBytes(16);
  * Crea una ruta completa para el archivo dado.
  * @param file - Nombre del archivo.
  * @returns Ruta completa del archivo.
- */
+*/
 function createPath(file: string) {
-    return path.join(os.homedir(), ".config", "PasswordManager", file);
+    return path.join(os.homedir(), "PasswordManager", ".data", file);
 }
 
 /**
  * Cifra los datos y los guarda en un archivo.
  * @param data - Datos a cifrar.
  * @param file - Nombre del archivo donde se guardarán los datos cifrados.
- */
+*/
 function encryptFile<T>(data: T, file: string) {
+    // Clave secreta de 256 bytes.
+    const secretKey = getSecretKey();
+    
     // Ruta completa para el archivo dado.
     const filePath = createPath(file); 
     
@@ -49,6 +49,9 @@ function encryptFile<T>(data: T, file: string) {
  * @returns Datos descifrados o null si la verificación falla.
  */
 function decryptFile<T>(file: string) {
+    // Clave secreta de 256 bytes.
+    const secretKey = getSecretKey();
+
     // Ruta completa para el archivo dado.
     const filePath = createPath(file);
 
@@ -57,8 +60,6 @@ function decryptFile<T>(file: string) {
 
     if (!result) return null;
     
-    const p = createhashFile(result.data);
-    console.log({ p, s: result.signature});
     // Verificar la firma antes de descifrar
     if (createhashFile(result.data) !== result.signature) return null;
     
