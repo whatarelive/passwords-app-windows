@@ -1,5 +1,5 @@
 import { decryptFile, encryptFile } from "../helpers/file-crypto";
-import { convertHash, createHash } from "../helpers/hash";
+import { encryptPassword, decryptPassword } from "../helpers/hash";
 import { WebAccount, type WebAccountSchema } from "../schemas/web-account";
 import type { IAddWebAccount, IEditWebAccount } from "electron/interfaces";
 
@@ -25,8 +25,8 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
             };
         }
         
-        // Hash de la contraseña de la cuenta.
-        const passwordHash = createHash(webPassword);
+        // Encriptado de la contraseña de la cuenta.
+        const passwordHash = encryptPassword(webPassword);
         
         // Creamos la nueva cuenta según el Schema.
         const newWebAccount = new WebAccount(crypto.randomUUID(), userId, webName, webUser, passwordHash, webUrl);
@@ -75,7 +75,7 @@ function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebA
             return {
                 ...account,
                 webUrl, webName, webUser,
-                webPassword: createHash(webPassword),  // Hash de la contraseña de la cuenta.
+                webPassword: encryptPassword(webPassword),  // Encriptado de la contraseña de la cuenta.
             }
         });
 
@@ -117,12 +117,12 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
             if (account.userId !== userId) return;
 
             // Extraemos las propiedades.
-            const { hash, salt } = account.webPassword;
+            const { iv, password } = account.webPassword;
     
             // Se retornan las cuentas con sus contraseñas desencriptadas.
             return {
                 ...account,
-                webPassword: convertHash(hash, salt), // Dehash de las contraseñas de las cuentas.
+                webPassword: decryptPassword(password, iv), // Desencriptado de las contraseñas de las cuentas.
             }
         }); 
            

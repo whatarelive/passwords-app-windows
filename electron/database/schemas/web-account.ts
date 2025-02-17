@@ -6,7 +6,7 @@ export class WebAccount {
         public readonly userId: UUID,
         public readonly webName: string,
         public readonly webUser: string,
-        public readonly webPassword: { hash: string, salt: string },
+        public readonly webPassword: { iv: string, password: string },
         public readonly webUrl: string 
     ) {}
 }
