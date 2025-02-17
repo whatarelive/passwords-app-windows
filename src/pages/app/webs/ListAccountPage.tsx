@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router";
 import { MdAdd } from "react-icons/md";
+import { useAuthStore } from "@/store/auth-store";
 import { useAccountsStore } from "@/store/accounts-store";
 import Search from "@/components/global/Search";
 import WebAccountsList from "@/components/webs/WebAccountsList";
-import { useAuthStore } from "@/store/auth-store";
 
 function ListAccountPage() {
   const userId = useAuthStore((state) => state.session?.userId);

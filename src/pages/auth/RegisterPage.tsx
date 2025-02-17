@@ -8,18 +8,18 @@ import ErrorModal from "@/components/global/ErrorModal";
 import SucessModal from "@/components/global/SucessModal";
 
 function RegisterPage() {
-  const { view, message, register } = useAuthStore();
+  const { view, message, register, disableView } = useAuthStore();
 
   return (
     <>
       { 
         view === "ERROR" && (
-          <ErrorModal title="Error de Registro" message={message!} />
+          <ErrorModal title="Error de Registro" message={message!} disableView={disableView}/>
         )
       }
       {
         view === "SUCESS" && (
-          <SucessModal title={message!} message="Inicio de Sesión exitoso"/>
+          <SucessModal title={message!} message="Inicio de Sesión exitoso" disableView={disableView}/>
         )
       }
 

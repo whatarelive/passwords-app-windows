@@ -6,6 +6,10 @@ import "@/styles/scrollbar-style.css";
 const WebAccountsList = () => {
   const accounts = useAccountsStore((state) => state.accounts); 
 
+  if (!accounts) {
+    return <h1>Vacio</h1>
+  }
+
   return (
     <ul className="relative space-y-4 max-h-[560px] overflow-y-auto elegant-scrollbar">
       {

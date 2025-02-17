@@ -1,17 +1,16 @@
 import type { FC } from "react";
 import { useNavigate } from "react-router";
 import { MdCheck } from "react-icons/md";
-import { useAuthStore } from "@/store/auth-store";
 import { ModalButton, ModalContainer, ModalHeader } from "@/components/ui/modals";
 
 interface IModalSucess {
     title: string;
     message: string;
+    disableView: () => void;
 }
 
-const SucessModal: FC<IModalSucess> = ({ title, message }) => {
+const SucessModal: FC<IModalSucess> = ({ title, message, disableView }) => {
     const navigate = useNavigate();
-    const disableView = useAuthStore((state) => state.disableView);
 
     return (
         <ModalContainer>

@@ -20,11 +20,9 @@ export const useAccountsStore = create<State>()((set, get) => ({
     userId: null,
 
     async getAccounts(userId) {
-        const { ok, message, data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
+        const { data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
 
         set({
-            view: ok ? null : "ERROR",
-            message,
             userId,
             accounts: data,
         })  

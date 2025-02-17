@@ -1,16 +1,14 @@
 import type { FC } from "react";
 import { MdErrorOutline } from "react-icons/md";
-import { useAuthStore } from "@/store/auth-store";
 import { ModalButton, ModalContainer, ModalHeader } from "@/components/ui/modals";
 
 interface IModalError {
   title: string;
   message?: string;
+  disableView: () => void;
 }
 
-const ErrorModal: FC<IModalError> = ({ title, message }) => {
-  const disableView = useAuthStore((state) => state.disableView);
-
+const ErrorModal: FC<IModalError> = ({ title, message, disableView }) => {
   return (
     <ModalContainer>
       <div className="p-4">

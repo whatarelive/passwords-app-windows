@@ -12,7 +12,7 @@ import ErrorModal from "@/components/global/ErrorModal";
 
 function AddAccountPage() {
   const { isOpen, setOpen } = useMenuPasswordStore();
-  const { view, message, addAccount } = useAccountsStore();
+  const { view, message, addAccount, disableView } = useAccountsStore();
 
   const handleCreateRandomPassword = () => {}
 
@@ -20,12 +20,12 @@ function AddAccountPage() {
     <>
       { 
         view === "ERROR" && (
-          <ErrorModal title="Error de Creación de Cuenta" message={message!} />
+          <ErrorModal title="Error de Creación de Cuenta" message={message!} disableView={disableView}/>
         )
       }
       {
         view === "SUCESS" && (
-          <SucessModal title={message!} message="Cuenta creada correctamente"/>
+          <SucessModal title={message!} message="Cuenta creada correctamente" disableView={disableView}/>
         )
       }
       

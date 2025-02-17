@@ -8,18 +8,18 @@ import ErrorModal from "@/components/global/ErrorModal";
 import SucessModal from "@/components/global/SucessModal";
 
 function LoginPage() {
-  const { view, message, login } = useAuthStore();
+  const { view, message, login, disableView } = useAuthStore();
 
   return (
     <>
       { 
         view === "ERROR" && (
-          <ErrorModal title="Error de Inicio de Sesión" message={message!} />
+          <ErrorModal title="Error de Inicio de Sesión" message={message!} disableView={disableView}/>
         )
       }
       {
         view === "SUCESS" && (
-          <SucessModal title={message!} message="Inicio de Sesión exitoso"/>
+          <SucessModal title={message!} message="Inicio de Sesión exitoso" disableView={disableView}/>
         )
       }
 
