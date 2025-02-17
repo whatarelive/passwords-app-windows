@@ -38,6 +38,7 @@ function addUser({ name, password }: IAddUser) {
         return { 
             ok: true,
             message: "Usuario registrado",
+            userId: newUser.id,
         };
     } catch (error) {
         // Manejo de errores
@@ -78,6 +79,7 @@ function verifyUser({ name, password }: IAddUser) {
         return { 
             ok: true,
             message: "Usuario valido",
+            userId: existsUser.id,
         };
 
     } catch (error) {

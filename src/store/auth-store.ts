@@ -18,19 +18,21 @@ export const useAuthStore = create<State>()((set) => ({
     view: null,
 
     async register(name, password) {
-        const { ok, message } = await window.ipcRenderer.invoke('user-add', { name, password });
+        const { ok, message, userId } = await window.ipcRenderer.invoke('user-add', { name, password });
 
         set({ 
             view: ok ? "SUCESS" : "ERROR",
+            session: { userId, expiresTime: Date.now() * 1000 },
             message 
         });
     },
 
     async login(name, password) {
-        const { ok, message } = await window.ipcRenderer.invoke('user-verify', { name, password });
+        const { ok, message, userId } = await window.ipcRenderer.invoke('user-verify', { name, password });
 
         set({ 
             view: ok ? "SUCESS" : "ERROR",
+            session: { userId, expiresTime: Date.now() * 1000 },
             message 
         });
     },
