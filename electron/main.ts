@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { changeReadWritePermissions } from "./database/helpers/file-permissions";
 import { addUser, verifyUser } from "./database/functions/users";
-import { addWebAccount, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
+import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
 import type { IAddUser, IAddWebAccount, IEditWebAccount } from "./interfaces";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -78,6 +78,7 @@ ipcMain.handle('webAccount-add', (_event, account: IAddWebAccount) => addWebAcco
 ipcMain.handle('webAccount-edit', (_event, account: IEditWebAccount) => editWebAccount(account));
 ipcMain.handle('webAccount-getAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => getAllWebAccounts({ userId }));
 ipcMain.handle('webAccount-delete', (_event, { id }: Pick<IEditWebAccount, 'id'>) => deleteWebAccount({ id }));
+ipcMain.handle('webAccount-deleteAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => deleteAllWebAccounts({ userId }));
 
 app.whenReady().then(() => {
   // Habilitamos los permisos de lectura y escritura.

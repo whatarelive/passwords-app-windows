@@ -186,9 +186,46 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
     }   
 }
 
+function deleteAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
+    try {
+        // Recuperamos la colección de cuentas.
+        const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
+        
+        // Comprobamos que para esta @(userId) haya una cuenta;
+        // Si se encuentra la cuenta se elimina de la colección.
+        const updateData = data.filter((account) => account.userId !== userId);
+
+        // Si no se elimino se notifica a la UI.
+        if (data.length === updateData.length) {
+            return { 
+                ok: false,
+                message: "No hay una cuentas existentes para ese usuario." 
+            };
+        }
+        
+        // Se actualiza la colección de cuentas.
+        encryptFile<WebAccountSchema[]>(updateData, dbPath);
+        
+        // Se notifica del resultado a la UI
+        return { 
+            ok: true,
+            message: "Cuentas del usuario eliminadas",
+        };
+    } catch (error) {
+        // Manejo de errores
+        console.log(error);
+        
+        return { 
+            ok: false,
+            message: "Error al eliminar todas las cuentas",
+        };
+    }   
+}
+
 export {
     addWebAccount,
     editWebAccount,
     getAllWebAccounts,
     deleteWebAccount,
+    deleteAllWebAccounts,
 }
