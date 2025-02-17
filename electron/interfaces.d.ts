@@ -12,3 +12,11 @@ export interface IAddWebAccount {
     webPassword: string;
     webUrl: string;
 }
+
+export interface IEditWebAccount {
+    id: UUID;
+    webName: string;
+    webUser: string;
+    webPassword: string;
+    webUrl: string;
+}

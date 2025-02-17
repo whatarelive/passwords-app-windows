@@ -1,7 +1,7 @@
 import { decryptFile, encryptFile } from "../helpers/file-crypto";
 import { convertHash, createHash } from "../helpers/hash";
 import { WebAccount, type WebAccountSchema } from "../schemas/web-account";
-import type { IAddWebAccount } from "electron/interfaces";
+import type { IAddWebAccount, IEditWebAccount } from "electron/interfaces";
 
 const dbPath = "web_accounts.enc";
 
@@ -53,6 +53,57 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
     }
 }
 
+function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebAccount) {
+    try {
+        // Variable auxiliar.
+        let isChanged: boolean = false;
+
+        // Recuperamos la colección de cuentas.
+        const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
+        
+        // Si se encuentra la cuenta se actuliza sus propiedades.
+        const updateData = data.map((account) => {
+            // Comprobamos que para esta @(id) haya una cuenta;
+            if (account.id !== id) return account;
+            
+            // Se actualiza la variable auxiliar para notificar que si se pudo actualizar.
+            isChanged = true;
+            
+            // Se agrega la cuenta a la colección con la información actualizada.
+            return {
+                ...account,
+                webUrl, webName, webUser,
+                webPassword: createHash(webPassword),  // Hash de la contraseña de la cuenta.
+            }
+        });
+
+        // Si no existe se notifica a la UI.
+        if (!isChanged) {
+            return { 
+                ok: false,
+                message: "No hay una cuenta existente con este id." 
+            };
+        }
+        
+        // Se actualiza la colección de cuentas.
+        encryptFile<WebAccountSchema[]>(updateData, dbPath);
+        
+        // Se notifica del resultado a la UI
+        return { 
+            ok: true,
+            message: "Cuenta actualizada",
+        };
+    } catch (error) {
+        // Manejo de errores
+        console.log(error);
+        
+        return { 
+            ok: false,
+            message: "Error al actualizar la cuenta",
+        };
+    }
+}
+
 function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
     try {
         // Recuperamos la colección de usuarios.
@@ -97,5 +148,6 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
 
 export {
     addWebAccount,
+    editWebAccount,
     getAllWebAccounts,
 }
