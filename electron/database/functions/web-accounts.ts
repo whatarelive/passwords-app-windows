@@ -132,9 +132,6 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
                 message: "No hay cuentas existentes para este usuario." 
             };
         }
-
-        console.log(accountForUser);
-        
         
         // Se notifica del resultado a la UI
         return { 
