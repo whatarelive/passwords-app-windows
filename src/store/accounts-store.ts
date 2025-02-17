@@ -20,9 +20,10 @@ export const useAccountsStore = create<State>()((set, get) => ({
     userId: null,
 
     async getAccounts(userId) {
-        const { data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
+        const { message, data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
 
         set({
+            message,
             userId,
             accounts: data,
         })  

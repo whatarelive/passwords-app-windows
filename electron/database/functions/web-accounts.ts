@@ -129,14 +129,15 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         // Si existe se notifica a la UI.
         if (!accountForUser || accountForUser.length === 0) {
             return { 
-                ok: false,
                 message: "No hay cuentas existentes para este usuario." 
             };
         }
+
+        console.log(accountForUser);
+        
         
         // Se notifica del resultado a la UI
         return { 
-            ok: true,
             data: accountForUser,
         };
     } catch (error) {
@@ -144,7 +145,6 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         console.log(error);
         
         return { 
-            ok: false,
             message: "Error al recuperar las cuentas",
         };
     }
