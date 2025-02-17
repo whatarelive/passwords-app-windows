@@ -11,9 +11,11 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
         // Comprobamos que para esta @(webUrl) no haya un usuario con este nuevo @(webUser)
-        const existsAccountForUrl = data
-            .filter((account) => account.userId === userId) // Primero filtramos por el id del Usuario.
-            .find((account) => account.webUrl === webUrl && account.webUser === webUser); // Luego comprobamos la existencia.
+        const existsAccountForUrl = data.find((account) => 
+            account.userId === userId // Las cuentas que tengan pertenescan a este usuario.
+            && account.webUrl === webUrl // Que pertenescan a la misma página web.
+            && account.webUser === webUser // Que tengan el mismo usuario.
+        );
 
         // Si existe se notifica a la UI.
         if (existsAccountForUrl) {
@@ -109,8 +111,20 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         // Recuperamos la colección de usuarios.
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
-        // Filtramos por el id del usuario @(userId)
-        const accountForUser = data.filter((account) => account.userId === userId); 
+        // Cuentas del Usuario con el valor del parametro @(userId).
+        const accountForUser = data.filter((account) => {
+            // Filtramos por el id del usuario @(userId)
+            if (account.userId !== userId) return;
+
+            // Extraemos las propiedades.
+            const { hash, salt } = account.webPassword;
+    
+            // Se retornan las cuentas con sus contraseñas desencriptadas.
+            return {
+                ...account,
+                webPassword: convertHash(hash, salt), // Dehash de las contraseñas de las cuentas.
+            }
+        }); 
            
         // Si existe se notifica a la UI.
         if (!accountForUser || accountForUser.length === 0) {
@@ -120,20 +134,10 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
             };
         }
         
-        // Dehash de las contraseñas de las cuentas.
-        const accountsWithConvertHashPassword = accountForUser.map((account) => {
-            const { hash, salt } = account.webPassword;
-
-            return {
-                ...account,
-                webPassword: convertHash(hash, salt),
-            }
-        });
-        
         // Se notifica del resultado a la UI
         return { 
             ok: true,
-            data: accountsWithConvertHashPassword,
+            data: accountForUser,
         };
     } catch (error) {
         // Manejo de errores
@@ -146,8 +150,45 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
     }
 }
 
+function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
+    try {
+        // Recuperamos la colección de cuentas.
+        const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
+        
+        // Comprobamos que para esta @(id) haya una cuenta;
+        // Si se encuentra la cuenta se elimina de la colección.
+        const updateData = data.filter((account) => account.id !== id);
+
+        // Si no se elimino se notifica a la UI.
+        if (data.length === updateData.length) {
+            return { 
+                ok: false,
+                message: "No hay una cuenta existente con este id." 
+            };
+        }
+        
+        // Se actualiza la colección de cuentas.
+        encryptFile<WebAccountSchema[]>(updateData, dbPath);
+        
+        // Se notifica del resultado a la UI
+        return { 
+            ok: true,
+            message: "Cuenta eliminada",
+        };
+    } catch (error) {
+        // Manejo de errores
+        console.log(error);
+        
+        return { 
+            ok: false,
+            message: "Error al eliminar la cuenta",
+        };
+    }   
+}
+
 export {
     addWebAccount,
     editWebAccount,
     getAllWebAccounts,
+    deleteWebAccount,
 }
