@@ -1,14 +1,13 @@
 import { create } from "zustand";
-import { useAuthStore } from "./auth-store";
 import type { WebAccount } from "@/interfaces";
 
 interface State {
     message?: string;
     view: "ERROR" | "SUCESS" | null;
-    userId: string, 
+    userId: string | null, 
     accounts: WebAccount[] | null;
 
-    getAccounts: () => Promise<void>;
+    getAccounts: (userId: string) => Promise<void>;
     addAccount: (webName: string, webPassword:string, webUrl: string, webUser: string) => Promise<void>;
     editAccount: (id: string, webName: string, webPassword: string, webUrl: string, webUser: string) => Promise<void>;
     deleteAccount: (id: string) => Promise<void>;
@@ -17,17 +16,16 @@ interface State {
 
 export const useAccountsStore = create<State>()((set, get) => ({
     view: null,
-    accounts: null,
-    userId: useAuthStore((state) => state.session?.userId!),
+    accounts: [],
+    userId: null,
 
-    async getAccounts() {
-        const userId = get().userId;
-
+    async getAccounts(userId) {
         const { ok, message, data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
 
         set({
             view: ok ? null : "ERROR",
             message,
+            userId,
             accounts: data,
         })  
     },

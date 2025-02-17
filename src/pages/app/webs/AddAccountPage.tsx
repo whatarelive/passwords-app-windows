@@ -6,13 +6,29 @@ import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 import { ButtonForm, ButtonFormReset, ButtonPassword } from "@/components/ui/buttons";
 import { SettingsModal } from "@/components/global/SettingsModal";
 import { WebFormTitle } from "@/components/webs/WebFormTitle";
+import { useAccountsStore } from "@/store/accounts-store";
+import SucessModal from "@/components/global/SucessModal";
+import ErrorModal from "@/components/global/ErrorModal";
 
 function AddAccountPage() {
   const { isOpen, setOpen } = useMenuPasswordStore();
+  const { view, message, addAccount } = useAccountsStore();
+
   const handleCreateRandomPassword = () => {}
 
   return (
     <>
+      { 
+        view === "ERROR" && (
+          <ErrorModal title="Error de Creación de Cuenta" message={message!} />
+        )
+      }
+      {
+        view === "SUCESS" && (
+          <SucessModal title={message!} message="Cuenta creada correctamente"/>
+        )
+      }
+      
       <section className="px-14">
         <WebFormTitle 
           title="Formulario de Creación" 
@@ -21,7 +37,7 @@ function AddAccountPage() {
         
         <Formik
           initialValues={{ webName: "", webUrl: "", webUser: "", webPassword: "" }}
-          onSubmit={async(values) => console.log(values)}
+          onSubmit={async({ webUrl, webName, webUser, webPassword }) => await addAccount(webName, webPassword, webUrl, webUser)}
           validationSchema={AddWebAccountSchema}
         >
           {({ handleReset }) => (

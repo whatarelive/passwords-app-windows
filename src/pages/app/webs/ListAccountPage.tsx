@@ -1,10 +1,20 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router";
 import { MdAdd } from "react-icons/md";
-
+import { useAccountsStore } from "@/store/accounts-store";
 import Search from "@/components/global/Search";
 import WebAccountsList from "@/components/webs/WebAccountsList";
+import { useAuthStore } from "@/store/auth-store";
 
 function ListAccountPage() {
+  const userId = useAuthStore((state) => state.session?.userId);
+  const getAccounts = useAccountsStore((state) => state.getAccounts);
+
+  useEffect(() => {
+    if (!userId) return;
+    getAccounts(userId);
+  }, []);
+
   return (
     <section className="w-full h-[701px] px-6 py-8 bg-auxiliar">
       {/* Add and Seacrh section */}
