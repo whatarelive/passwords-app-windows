@@ -64,10 +64,9 @@ function EditAccountPage() {
         <Formik
           initialValues={{ ...webAccount }}
           onSubmit={handleSubmit}
-          initialStatus={false}
           validationSchema={EditWebAccountSchema}
         >
-          {({ handleReset, initialStatus }) => (
+          {({ handleReset }) => (
             <Form className="flex flex-col justify-between h-[500px]">
               <div>
                 <TextInput 
@@ -107,7 +106,7 @@ function EditAccountPage() {
               </div>
 
               <div className="flex gap-4">
-                <ButtonForm type="submit" className="text-lg" disabled={initialStatus}>
+                <ButtonForm type="submit" className="text-lg">
                   Guardar Cambios
                 </ButtonForm>
                 

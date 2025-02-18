@@ -112,19 +112,21 @@ function getAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
         // Cuentas del Usuario con el valor del parametro @(userId).
-        const accountForUser = data.filter((account) => {
+        const accountForUser = [];
+
+        for (const account of data) {
             // Filtramos por el id del usuario @(userId)
-            if (account.userId !== userId) return;
+            if (account.userId !== userId) continue;
 
             // Extraemos las propiedades.
             const { iv, password } = account.webPassword;
     
             // Se retornan las cuentas con sus contraseñas desencriptadas.
-            return {
+            accountForUser.push({
                 ...account,
                 webPassword: decryptPassword(password, iv), // Desencriptado de las contraseñas de las cuentas.
-            }
-        }); 
+            })
+        }
            
         // Si existe se notifica a la UI.
         if (!accountForUser || accountForUser.length === 0) {
