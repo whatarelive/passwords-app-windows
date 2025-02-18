@@ -5,15 +5,17 @@ interface State {
     view: "ERROR" | "SUCESS" | null; 
     session: {
         userId: string;
-        expiresTime: number; 
+        createTime: number; 
     } | null;
     
     register: (name: string, password: string) => Promise<void>;
     login: (name: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    checkSession: () => void;
     disableView: () => void;
 }
 
-export const useAuthStore = create<State>()((set) => ({
+export const useAuthStore = create<State>()((set, get) => ({
     session: null,
     view: null,
 
@@ -22,19 +24,36 @@ export const useAuthStore = create<State>()((set) => ({
 
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, expiresTime: Date.now() * 1000 },
+            session: { userId, createTime: Date.now()},
             message 
         });
     },
 
     async login(name, password) {
         const { ok, message, userId } = await window.ipcRenderer.invoke('user-verify', { name, password });
-
+        
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, expiresTime: Date.now() * 1000 },
+            session: { userId, createTime: Date.now()},
             message 
         });
+    },
+
+    async logout() {
+        set({ session: null });
+    },
+
+    checkSession() {
+        const createTime = get().session?.createTime;
+        
+        if (!createTime) return;
+        
+        const timeNow = Date.now();
+        const result = timeNow - createTime;
+
+        if (result <= 3600000) return;
+
+        set({ session: null });
     },
 
     disableView() {

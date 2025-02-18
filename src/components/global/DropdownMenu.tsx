@@ -1,15 +1,12 @@
 import clsx from "clsx";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 import { MdEdit, MdLogout } from "react-icons/md";
 import { useMenuStore } from "@/store/menu-store";
+import { useAuthStore } from '../../store/auth-store';
 
 const DropdownMenu = () => {
-    const navigate = useNavigate();
     const { isOpen, setOpen } = useMenuStore();
-
-    const handlerClick = () => {
-        navigate("/auth/login");
-    }
+    const logout = useAuthStore((state) => state.logout);
 
   return (
     <div 
@@ -35,7 +32,7 @@ const DropdownMenu = () => {
         </div>
 
         <button
-            onClick={handlerClick} 
+            onClick={async() => await logout()} 
             className={`flex justify-center items-center w-full mt-6 font-semibold py-1 gap-1 px-2 text-white 
             rounded cursor-pointer bg-red-500 hover:text-red-500 hover:bg-white transition-all`}
         >
