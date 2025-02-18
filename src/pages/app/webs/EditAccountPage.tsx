@@ -3,24 +3,58 @@ import { useParams } from "react-router";
 import { MdRefresh, MdSettings } from "react-icons/md";
 import { useMenuPasswordStore } from '@/store/menu-store';
 import { EditWebAccountSchema } from "@/validations/webs";
-import { getWebAccountForId } from "@/actions/accounts";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 import { ButtonForm, ButtonFormReset, ButtonPassword } from "@/components/ui/buttons";
 import { SettingsModal } from "@/components/global/SettingsModal";
 import { WebFormTitle } from "@/components/webs/WebFormTitle";
+import { useAccountsStore } from "@/store/accounts-store";
+import ErrorModal from "@/components/global/ErrorModal";
+import SucessModal from "@/components/global/SucessModal";
+import WarningModal from "@/components/global/WarningModal";
+import type { WebAccount } from "@/interfaces";
 
 function EditAccountPage() {
   const { id } = useParams();
-  const webAccount = getWebAccountForId(id as string);
+  const { view, message, getAccountWithId, editAccount, dispatchError, disableView } = useAccountsStore();
+  const webAccount = getAccountWithId(id);
   
   if (!webAccount) return <h1>Hola</h1>
 
   const { isOpen, setOpen } = useMenuPasswordStore();
 
-  const handleCreateRandomPassword = () => {}  
+  const handleCreateRandomPassword = () => {}
+  
+  const handleSubmit = async ({ id, webName, webUrl, webUser, webPassword }: Omit<WebAccount, 'userId'>) => {
+    if (
+      webAccount.webName === webName 
+      && webAccount.webUrl === webUrl
+      && webAccount.webUser === webUser
+      && webAccount.webPassword === webPassword
+    ) {
+      return dispatchError("Los datos no han sido cambiados");
+    }
+
+    await editAccount(id, webName, webPassword, webUrl, webUser);
+  }
 
   return (
     <>
+      { 
+        view === "ERROR" && (
+          <ErrorModal title="Error de Creación de Cuenta" message={message!} disableView={disableView}/>
+        )
+      }
+      {
+        view === "SUCESS" && (
+          <SucessModal title="Cuenta creada correctamente" message={message!} disableView={disableView}/>
+        )
+      }
+      {
+        view === "WARNING" && (
+          <WarningModal title="Advertencia de Actualización" message={message!} disableView={disableView}/>
+        )
+      }
+
       <section className="px-14">
         <WebFormTitle 
           title="Formulario de Edición" 
@@ -29,10 +63,11 @@ function EditAccountPage() {
 
         <Formik
           initialValues={{ ...webAccount }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
+          initialStatus={false}
           validationSchema={EditWebAccountSchema}
         >
-          {({ handleReset}) => (
+          {({ handleReset, initialStatus }) => (
             <Form className="flex flex-col justify-between h-[500px]">
               <div>
                 <TextInput 
@@ -72,7 +107,7 @@ function EditAccountPage() {
               </div>
 
               <div className="flex gap-4">
-                <ButtonForm type="submit" className="text-lg">
+                <ButtonForm type="submit" className="text-lg" disabled={initialStatus}>
                   Guardar Cambios
                 </ButtonForm>
                 

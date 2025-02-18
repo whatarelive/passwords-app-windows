@@ -3,15 +3,17 @@ import type { WebAccount } from "@/interfaces";
 
 interface State {
     message?: string;
-    view: "ERROR" | "SUCESS" | null;
+    view: "ERROR" | "SUCESS" | "WARNING" | null;
     userId: string | null, 
-    accounts: WebAccount[] | null;
+    accounts: WebAccount[];
 
     getAccounts: (userId: string) => Promise<void>;
+    getAccountWithId: (id?: string) => WebAccount | undefined;
     addAccount: (webName: string, webPassword:string, webUrl: string, webUser: string) => Promise<void>;
     editAccount: (id: string, webName: string, webPassword: string, webUrl: string, webUser: string) => Promise<void>;
     deleteAccount: (id: string) => Promise<void>;
     disableView: () => void;
+    dispatchError: (message: string) => void;
 }
 
 export const useAccountsStore = create<State>()((set, get) => ({
@@ -27,6 +29,10 @@ export const useAccountsStore = create<State>()((set, get) => ({
             userId,
             accounts: data,
         })  
+    },
+
+    getAccountWithId(id) {
+        return get().accounts.find((account) => account.id === id);
     },
 
     async addAccount(webName, webPassword, webUrl, webUser) {
@@ -61,4 +67,8 @@ export const useAccountsStore = create<State>()((set, get) => ({
     disableView() {
         set({ view: null })
     },
+
+    dispatchError(message) {
+        set({ view: "WARNING", message });
+    }
 }))

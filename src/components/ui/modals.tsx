@@ -20,7 +20,7 @@ const ModalContainer: FC<Pick<IProps, "children">> = ({ children }) => {
 
 const ModalHeader: FC<Pick<IProps, "children">> = ({ children }) => {
     return (
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center justify-center gap-2 mb-3">
             { children }
         </div>
     )
