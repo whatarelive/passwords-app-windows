@@ -21,10 +21,14 @@ export const useAuthStore = create<State>()((set, get) => ({
 
     async register(name, password) {
         const { ok, message, userId } = await window.ipcRenderer.invoke('user-add', { name, password });
+        
+        const createTime = Date.now();
 
+        localStorage.setItem('session', JSON.stringify({ userId, createTime }));
+        
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, createTime: Date.now()},
+            session: { userId, createTime },
             message 
         });
     },
@@ -32,22 +36,38 @@ export const useAuthStore = create<State>()((set, get) => ({
     async login(name, password) {
         const { ok, message, userId } = await window.ipcRenderer.invoke('user-verify', { name, password });
         
+        const createTime = Date.now();
+
+        localStorage.setItem('session', JSON.stringify({ userId, createTime }));
+
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, createTime: Date.now()},
+            session: { userId, createTime },
             message 
         });
     },
 
     async logout() {
+        localStorage.clear();
+
         set({ session: null });
     },
 
     checkSession() {
-        const createTime = get().session?.createTime;
+        const session = localStorage.getItem('session');
+
+        if (!session) return;
         
-        if (!createTime) return;
+        const { userId, createTime } = JSON.parse(session);
         
+        if (!userId) return;
+        
+        if (get().session === null) {
+            set({ 
+                session: { userId, createTime } 
+            });
+        }
+
         const timeNow = Date.now();
         const result = timeNow - createTime;
 
