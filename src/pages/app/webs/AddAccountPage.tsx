@@ -1,20 +1,20 @@
 import { Formik, Form } from "formik";
 import { MdRefresh, MdSettings } from "react-icons/md";
 import { useMenuPasswordStore } from "@/store/menu-store";
+import { useAccountsStore } from "@/store/accounts-store";
+import { useRandomPassword } from "@/store/random-password-store";
 import { AddWebAccountSchema } from "@/validations/webs";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 import { ButtonForm, ButtonFormReset, ButtonPassword } from "@/components/ui/buttons";
 import { SettingsModal } from "@/components/global/SettingsModal";
 import { WebFormTitle } from "@/components/webs/WebFormTitle";
-import { useAccountsStore } from "@/store/accounts-store";
 import SucessModal from "@/components/global/SucessModal";
 import ErrorModal from "@/components/global/ErrorModal";
 
 function AddAccountPage() {
   const { isOpen, setOpen } = useMenuPasswordStore();
   const { view, message, addAccount, disableView } = useAccountsStore();
-
-  const handleCreateRandomPassword = () => {}
+  const createRandomPassword = useRandomPassword((state) => state.createRandomPassword);
 
   return (
     <>
@@ -40,7 +40,7 @@ function AddAccountPage() {
           onSubmit={async({ webUrl, webName, webUser, webPassword }) => await addAccount(webName, webPassword, webUrl, webUser)}
           validationSchema={AddWebAccountSchema}
         >
-          {({ handleReset }) => (
+          {({ handleReset, setFieldValue }) => (
             <Form className="flex flex-col justify-between h-[500px]">
               <div>
                 <TextInput 
@@ -65,11 +65,15 @@ function AddAccountPage() {
                 <div className="flex gap-4">
                   <TextInputWithPassword 
                     label="Contraseña" 
-                    name="webPassword" 
+                    name="webPassword"
                     placeholder="Ingrese su contraseña"
                   />
 
-                  <ButtonPassword type="button" onClick={handleCreateRandomPassword}>
+                  <ButtonPassword type="button" 
+                    onClick={() => {
+                      const password = createRandomPassword();
+                      setFieldValue("webPassword", password);
+                    }}>
                     <MdRefresh size={20}/>
                   </ButtonPassword>
                   

@@ -2,12 +2,13 @@ import { Formik, Form } from "formik";
 import { useParams } from "react-router";
 import { MdRefresh, MdSettings } from "react-icons/md";
 import { useMenuPasswordStore } from '@/store/menu-store';
+import { useAccountsStore } from "@/store/accounts-store";
+import { useRandomPassword } from "@/store/random-password-store";
 import { EditWebAccountSchema } from "@/validations/webs";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
 import { ButtonForm, ButtonFormReset, ButtonPassword } from "@/components/ui/buttons";
 import { SettingsModal } from "@/components/global/SettingsModal";
 import { WebFormTitle } from "@/components/webs/WebFormTitle";
-import { useAccountsStore } from "@/store/accounts-store";
 import ErrorModal from "@/components/global/ErrorModal";
 import SucessModal from "@/components/global/SucessModal";
 import WarningModal from "@/components/global/WarningModal";
@@ -16,13 +17,13 @@ import type { WebAccount } from "@/interfaces";
 function EditAccountPage() {
   const { id } = useParams();
   const { view, message, getAccountWithId, editAccount, dispatchError, disableView } = useAccountsStore();
+  
   const webAccount = getAccountWithId(id);
   
   if (!webAccount) return <h1>Hola</h1>
-
+  
   const { isOpen, setOpen } = useMenuPasswordStore();
-
-  const handleCreateRandomPassword = () => {}
+  const createRandomPassword = useRandomPassword((state) => state.createRandomPassword);
   
   const handleSubmit = async ({ id, webName, webUrl, webUser, webPassword }: Omit<WebAccount, 'userId'>) => {
     if (
@@ -33,7 +34,7 @@ function EditAccountPage() {
     ) {
       return dispatchError("Los datos no han sido cambiados");
     }
-
+    
     await editAccount(id, webName, webPassword, webUrl, webUser);
   }
 
@@ -66,7 +67,7 @@ function EditAccountPage() {
           onSubmit={handleSubmit}
           validationSchema={EditWebAccountSchema}
         >
-          {({ handleReset }) => (
+          {({ handleReset, setFieldValue }) => (
             <Form className="flex flex-col justify-between h-[500px]">
               <div>
                 <TextInput 
@@ -91,11 +92,16 @@ function EditAccountPage() {
                 <div className="flex gap-4">
                   <TextInputWithPassword 
                     label="Contraseña" 
-                    name="webPassword" 
+                    name="webPassword"
                     placeholder="Ingrese su contraseña"
                   />
 
-                  <ButtonPassword type="button" onClick={handleCreateRandomPassword}>
+                  <ButtonPassword type="button" 
+                    onClick={() => { 
+                      const password = createRandomPassword();
+                      setFieldValue("webPassword", password);
+                    }}
+                    >
                     <MdRefresh size={20}/>
                   </ButtonPassword>
                   

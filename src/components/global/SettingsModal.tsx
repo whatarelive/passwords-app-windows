@@ -1,8 +1,9 @@
-import { useState, type FC } from "react";
+import { useEffect, type FC } from "react";
 import { RangeInput } from "@/components/ui/inputs";
 import { SwitchWebAccount } from "@/components/ui/switch";
 import { ModalContainer, ModalHeader, ModalButton } from "@/components/ui/modals";
 import { useMenuPasswordStore } from "@/store/menu-store";
+import { useRandomPassword } from "@/store/random-password-store";
 
 interface IProps {
     webPassword?: string;
@@ -10,8 +11,15 @@ interface IProps {
 
 export const SettingsModal: FC<IProps> = ({ webPassword }) => {
     const setOpen = useMenuPasswordStore((state) => state.setOpen);
-    const [rangePass, setRangePass] = useState(webPassword?.length || 15);
-    const [specialCaract, setSpecialCaract] = useState(webPassword?.includes("#$%@!*&^.") || false);
+    const { rangePassword, specialCaracters, setConfigValue } = useRandomPassword();
+    
+    useEffect(() => {
+        if(!webPassword) return;
+        
+        const includedSpecialCaract = webPassword.includes("!@#$%^&*()_+{}[]|:;<>,.?"); 
+
+        setConfigValue(includedSpecialCaract, webPassword.length);
+    }, [webPassword])
 
     return (
         <ModalContainer>
@@ -25,15 +33,15 @@ export const SettingsModal: FC<IProps> = ({ webPassword }) => {
 
             <div className="w-full px-8">
                 <RangeInput 
-                    range={rangePass}
-                    onChange={(e) => setRangePass(Number(e.target.value))}
+                    range={rangePassword}
+                    onChange={(e) => setConfigValue(specialCaracters ,Number(e.target.value))}
                 />
                 
                 <SwitchWebAccount 
-                    specialCaract={specialCaract} 
+                    specialCaract={specialCaracters} 
                     onClick={(e) => {
                         e.preventDefault();
-                        setSpecialCaract(!specialCaract);
+                        setConfigValue(!specialCaracters, rangePassword)
                     }}
                 />
             </div>
@@ -42,7 +50,7 @@ export const SettingsModal: FC<IProps> = ({ webPassword }) => {
                 className="bg-green-500 hover:bg-white hover:text-green-500" 
                 onClick={setOpen}
             >
-                Continuar
+                Guardar
             </ModalButton>
         </ModalContainer>
     )
