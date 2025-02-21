@@ -24,7 +24,7 @@ function EditAccountPage() {
   
   const { isOpen, setOpen } = useMenuPasswordStore();
   const createRandomPassword = useRandomPassword((state) => state.createRandomPassword);
-  
+
   const handleSubmit = async ({ id, webName, webUrl, webUser, webPassword }: Omit<WebAccount, 'userId'>) => {
     if (
       webAccount.webName === webName 
@@ -125,7 +125,7 @@ function EditAccountPage() {
         </Formik>
       </section>
 
-      { isOpen && <SettingsModal webPassword={webAccount.webPassword}/> }
+      { isOpen && <SettingsModal/> }
     </>
   )
 }

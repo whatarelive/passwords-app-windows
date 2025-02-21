@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface State {
     rangePassword: number;
     specialCaracters: boolean;
-    setConfigValue: (specialCaracters?: boolean, rangePassword?: number) => void;
+    setConfigValue: (params: {specialCaracters?: boolean, rangePassword?: number}) => void;
     createRandomPassword: () => string;
 }
 
@@ -14,11 +14,14 @@ export const useRandomPassword = create<State>()((set, get) => ({
     rangePassword: 8,
     specialCaracters: false,
     
-    setConfigValue(specialCaracters, rangePassword) {
-        set((state) => ({ 
-            specialCaracters: specialCaracters || state.specialCaracters, 
-            rangePassword: rangePassword || state.rangePassword,
-        }));
+    setConfigValue({ specialCaracters, rangePassword }) {
+        if (specialCaracters !== undefined) {
+            set({ specialCaracters: !specialCaracters });
+        }
+        
+        if (rangePassword) {
+            set({ rangePassword });
+        }
     },
 
     createRandomPassword() {
