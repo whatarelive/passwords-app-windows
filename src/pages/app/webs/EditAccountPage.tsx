@@ -1,7 +1,6 @@
 import { Formik, Form } from "formik";
 import { useParams } from "react-router";
 import { MdRefresh, MdSettings } from "react-icons/md";
-import { useMenuPasswordStore } from '@/store/menu-store';
 import { useAccountsStore } from "@/store/accounts-store";
 import { useRandomPassword } from "@/store/random-password-store";
 import { EditWebAccountSchema } from "@/validations/webs";
@@ -16,15 +15,13 @@ import type { WebAccount } from "@/interfaces";
 
 function EditAccountPage() {
   const { id } = useParams();
+  const { isOpen, setOpen, createRandomPassword } = useRandomPassword();
   const { view, message, getAccountWithId, editAccount, dispatchError, disableView } = useAccountsStore();
   
   const webAccount = getAccountWithId(id);
   
   if (!webAccount) return <h1>Hola</h1>
   
-  const { isOpen, setOpen } = useMenuPasswordStore();
-  const createRandomPassword = useRandomPassword((state) => state.createRandomPassword);
-
   const handleSubmit = async ({ id, webName, webUrl, webUser, webPassword }: Omit<WebAccount, 'userId'>) => {
     if (
       webAccount.webName === webName 

@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
 interface State {
+    isOpen: boolean;
     rangePassword: number;
     specialCaracters: boolean;
+    setOpen: () => void;
     setConfigValue: (params: {specialCaracters?: boolean, rangePassword?: number}) => void;
     createRandomPassword: () => string;
 }
@@ -11,9 +13,14 @@ const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 const caracters = "!@#$%^&*()_+{}[]|:;<>,.?";
 
 export const useRandomPassword = create<State>()((set, get) => ({
+    isOpen: false,
     rangePassword: 8,
     specialCaracters: false,
     
+    setOpen: () => {
+        set((state) => ({ isOpen: !state.isOpen }));
+    },
+
     setConfigValue({ specialCaracters, rangePassword }) {
         if (specialCaracters !== undefined) {
             set({ specialCaracters: !specialCaracters });

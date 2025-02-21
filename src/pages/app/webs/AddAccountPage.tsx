@@ -1,6 +1,5 @@
 import { Formik, Form } from "formik";
 import { MdRefresh, MdSettings } from "react-icons/md";
-import { useMenuPasswordStore } from "@/store/menu-store";
 import { useAccountsStore } from "@/store/accounts-store";
 import { useRandomPassword } from "@/store/random-password-store";
 import { AddWebAccountSchema } from "@/validations/webs";
@@ -12,9 +11,8 @@ import SucessModal from "@/components/global/SucessModal";
 import ErrorModal from "@/components/global/ErrorModal";
 
 function AddAccountPage() {
-  const { isOpen, setOpen } = useMenuPasswordStore();
   const { view, message, addAccount, disableView } = useAccountsStore();
-  const createRandomPassword = useRandomPassword((state) => state.createRandomPassword);
+  const { isOpen, setOpen, createRandomPassword } = useRandomPassword();
 
   return (
     <>

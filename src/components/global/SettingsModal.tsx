@@ -2,12 +2,10 @@ import type { FC } from "react";
 import { RangeInput } from "@/components/ui/inputs";
 import { SwitchWebAccount } from "@/components/ui/switch";
 import { ModalContainer, ModalHeader, ModalButton } from "@/components/ui/modals";
-import { useMenuPasswordStore } from "@/store/menu-store";
 import { useRandomPassword } from "@/store/random-password-store";
 
 export const SettingsModal: FC = () => {
-    const setOpen = useMenuPasswordStore((state) => state.setOpen);
-    const { rangePassword, specialCaracters, setConfigValue } = useRandomPassword();
+    const { rangePassword, specialCaracters, setOpen, setConfigValue } = useRandomPassword();
 
     return (
         <ModalContainer>

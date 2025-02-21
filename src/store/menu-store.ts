@@ -11,10 +11,3 @@ export const useMenuStore = create<State>()((set) => ({
         set((state) => ({ isOpen: !state.isOpen }));
     } 
 }))
-
-export const useMenuPasswordStore = create<State>()((set) => ({
-    isOpen: false,
-    setOpen: () => {
-        set((state) => ({ isOpen: !state.isOpen }));
-    } 
-}))
