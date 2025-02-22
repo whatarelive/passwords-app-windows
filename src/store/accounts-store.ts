@@ -7,11 +7,12 @@ interface State {
     userId: string | null, 
     accounts: WebAccount[];
 
-    getAccounts: (userId: string) => Promise<void>;
+    getAccounts: (userIdSession?: string) => Promise<void>;
     getAccountWithId: (id?: string) => WebAccount | undefined;
     addAccount: (webName: string, webPassword:string, webUrl: string, webUser: string) => Promise<void>;
     editAccount: (id: string, webName: string, webPassword: string, webUrl: string, webUser: string) => Promise<void>;
     deleteAccount: (id: string) => Promise<void>;
+    searchAccounts: (param: string) => void;
     disableView: () => void;
     dispatchError: (message: string) => void;
 }
@@ -21,13 +22,20 @@ export const useAccountsStore = create<State>()((set, get) => ({
     accounts: [],
     userId: null,
 
-    async getAccounts(userId) {
-        const { data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
+    async getAccounts(userIdSesion) {
+        const userIdStore = get().userId;
+        
+        const { data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId: userIdStore || userIdSesion });
 
-        set({
-            userId,
-            accounts: data,
-        })  
+        if (userIdStore) {
+            set({ accounts: data });              
+        
+        } else {
+            set({
+                userId: userIdSesion,
+                accounts: data,
+            });  
+        }
     },
 
     getAccountWithId(id) {
@@ -61,6 +69,22 @@ export const useAccountsStore = create<State>()((set, get) => ({
             view: ok ? "SUCESS" : "ERROR",
             message,
         })
+    },
+
+    searchAccounts(param) {
+        const accounts = get().accounts;
+        const paramLowerCase = param.toLowerCase();
+        let webNameIncluded: boolean, webUrlIncluded: boolean, webUserIncluded: boolean;
+
+        const accountsWithParam = accounts.filter((account) => {
+            webNameIncluded = account.webName.toLowerCase().includes(paramLowerCase);
+            webUrlIncluded = account.webUrl.toLowerCase().includes(paramLowerCase);
+            webUserIncluded = account.webUser.toLowerCase().includes(paramLowerCase);
+
+            if (webNameIncluded || webUrlIncluded || webUserIncluded) return account;
+        });
+
+        set({ accounts: accountsWithParam });
     },
 
     disableView() {
