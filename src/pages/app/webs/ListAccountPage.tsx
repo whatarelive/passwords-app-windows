@@ -31,7 +31,7 @@ function ListAccountPage() {
       }
       {
         view === "SUCESS" && (
-          <SucessModal title={message!} message="Cuenta eliminada correctamente" disableView={disableView}/>
+          <SucessModal title="Cuenta eliminada correctamente" message={message!} disableView={disableView}/>
         )
       }
       <section className="w-full h-[701px] px-6 py-8 bg-auxiliar">

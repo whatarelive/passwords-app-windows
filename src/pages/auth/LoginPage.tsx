@@ -19,7 +19,7 @@ function LoginPage() {
       }
       {
         view === "SUCESS" && (
-          <SucessModal title={message!} message="Inicio de Sesión exitoso" disableView={disableView}/>
+          <SucessModal title="Inicio de Sesión exitoso" message={message!} disableView={disableView}/>
         )
       }
 
