@@ -10,6 +10,7 @@ import ListAccountPage from "@/pages/app/webs/ListAccountPage";
 import AddAccountPage from "@/pages/app/webs/AddAccountPage";
 import EditAccountPage from "@/pages/app/webs/EditAccountPage";
 import UserInfoPage from "@/pages/app/user/UserInfoPage";
+import NotFoundPage from "@/pages/app/webs/NotFoundPage";
 
 function AppRouter() {
   const { session, checkSession } = useAuthStore((state) => state);
@@ -33,6 +34,7 @@ function AppRouter() {
                 <Route path="/" element={<ListAccountPage/>}/>
                 <Route path="/add" element={<AddAccountPage/>}/>
                 <Route path="/edit/:id" element={<EditAccountPage/>}/>
+                <Route path="/edit/notfound" element={<NotFoundPage/>}/>
               </Route>
             </Route>    
           )

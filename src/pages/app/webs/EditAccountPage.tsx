@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import { MdRefresh, MdSettings } from "react-icons/md";
 import { useAccountsStore } from "@/store/accounts-store";
 import { useRandomPassword } from "@/store/random-password-store";
@@ -20,7 +20,7 @@ function EditAccountPage() {
   
   const webAccount = getAccountWithId(id);
   
-  if (!webAccount) return <h1>Hola</h1>
+  if (!webAccount) return <Navigate to="/edit/notfound"/>
   
   const handleSubmit = async ({ id, webName, webUrl, webUser, webPassword }: Omit<WebAccount, 'userId'>) => {
     if (
