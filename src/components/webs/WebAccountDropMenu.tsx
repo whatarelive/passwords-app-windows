@@ -4,9 +4,11 @@ import { LuExternalLink } from "react-icons/lu";
 import { MdDelete, MdEdit, MdMoreVert } from "react-icons/md";
 import type { WebAccount } from "@/interfaces";
 import { useCardMenuStore } from "@/store/menu-store";
+import { useAccountsStore } from "@/store/accounts-store";
 
 export const WebAccountDropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) => {
     const { idKey, setOpen } = useCardMenuStore();
+    const deleteAccount = useAccountsStore((state) => state.deleteAccount);
 
     return (
         <>
@@ -36,7 +38,7 @@ export const WebAccountDropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, 
                                     Vsitar
                                 </a>
                                 
-                                <button onClick={() => {}} className="web-account-menu-item hover:bg-white hover:text-red-600">
+                                <button onClick={async () => await deleteAccount(id)} className="web-account-menu-item hover:bg-white hover:text-red-600">
                                     <MdDelete size={18}/>
                                     Eliminar
                                 </button>
