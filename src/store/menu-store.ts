@@ -11,3 +11,15 @@ export const useMenuStore = create<State>()((set) => ({
         set((state) => ({ isOpen: !state.isOpen }));
     } 
 }))
+
+interface CardMenuState {
+    idKey: string | null;
+    setOpen: (id: string | null) => void;
+}
+
+export const useCardMenuStore = create<CardMenuState>()((set) => ({
+    idKey: null,
+    setOpen: (id) => {
+        set({ idKey: id });
+    },
+}))

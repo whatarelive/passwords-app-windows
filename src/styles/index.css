@@ -5,7 +5,6 @@
   --color-auxiliar: #19191C;
 }
 
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -17,4 +16,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.web-account-menu-item {
+  @apply inline-flex p-1 gap-2 w-full items-center font-semibold rounded cursor-pointer
 }

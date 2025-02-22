@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { useState, type FC } from "react";
-import { NavLink } from "react-router";
-import { LuExternalLink } from "react-icons/lu";
-import { MdContentCopy, MdVisibility, MdVisibilityOff, MdEdit } from "react-icons/md";
+import { MdContentCopy, MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { WebAccountDropMenu } from "@/components/webs/WebAccountDropMenu";
 import type { WebAccount } from "@/interfaces";
+import { useCardMenuStore } from "@/store/menu-store";
 
 interface Props {
   account: WebAccount;
@@ -82,23 +82,20 @@ const PasswordRow: FC< Pick<WebAccount, 'webPassword'>> = ({ webPassword }) => {
 }
 
 const WebAccountCard: FC<Props> = ({ account }) => {
+  const { idKey, setOpen } = useCardMenuStore();
+
   return (
-    <article className="border rounded border-neutral-100">
+    <article 
+      className="border rounded border-neutral-100" 
+      onClick={() => idKey === account.id && setOpen(null)}
+    >
       {/* Title bar */}
       <div className="flex justify-between items-center py-3 px-4 bg-neutral-100">
         <h3 className="font-bold text-xl text-black">
           {account.webName}
         </h3>
 
-        <div className="flex gap-4">
-          <NavLink to={`/edit/${account.id}`} className="p-1.5 rounded cursor-pointer border border-neutral-100 text-[#19191c] hover:bg-gray-300 hover:border-gray-300">
-            <MdEdit size={20}/>
-          </NavLink>
-
-          <a href={account.webUrl} target="_blank" className="p-1.5 rounded cursor-pointer border border-neutral-100 text-[#19191c] hover:bg-gray-300 hover:border-gray-300">
-            <LuExternalLink size={20}/>
-          </a>
-        </div>
+        <WebAccountDropMenu id={account.id} webUrl={account.webUrl}/>
       </div>
 
       {/* Content */}
@@ -117,6 +114,7 @@ const WebAccountCard: FC<Props> = ({ account }) => {
           <PasswordRow webPassword={account.webPassword}/>
         </div>
       </div>
+
     </article>
   )
 }
