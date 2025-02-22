@@ -17,6 +17,11 @@ function ListAccountPage() {
     getAccounts(userId);
   }, []);
 
+  useEffect(() => {
+    if (!userId) return;
+    getAccounts(userId);
+  }, [message]);
+
   return (
     <>
       { 

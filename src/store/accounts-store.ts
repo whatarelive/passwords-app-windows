@@ -22,10 +22,9 @@ export const useAccountsStore = create<State>()((set, get) => ({
     userId: null,
 
     async getAccounts(userId) {
-        const { data, message } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
+        const { data } = await window.ipcRenderer.invoke('webAccount-getAll', { userId });
 
         set({
-            message,
             userId,
             accounts: data,
         })  
@@ -56,12 +55,11 @@ export const useAccountsStore = create<State>()((set, get) => ({
     },
 
     async deleteAccount(id) {
-        const { ok, message, data } = await window.ipcRenderer.invoke('webAccount-delete', { id });
+        const { ok, message } = await window.ipcRenderer.invoke('webAccount-delete', { id });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
             message,
-            accounts: data,
         })
     },
 
