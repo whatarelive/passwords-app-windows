@@ -21,7 +21,7 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
         if (existsAccountForUrl) {
             return { 
                 ok: false,
-                message: "Cuenta existente para esta página web." 
+                message: "Cuenta existente para este sitio web" 
             };
         }
         
@@ -42,7 +42,7 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
         // Se notifica del resultado a la UI
         return { 
             ok: true,
-            message: "Cuenta creada",
+            message: `Cuenta de ${webName} creada`,
         };
     } catch (error) {
         // Manejo de errores
@@ -50,7 +50,7 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
         
         return { 
             ok: false,
-            message: "Error al crear la cuenta",
+            message: `Error al crear la cuenta ${webName}`,
         };
     }
 }
@@ -93,7 +93,7 @@ function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebA
         // Se notifica del resultado a la UI
         return { 
             ok: true,
-            message: "Cuenta actualizada",
+            message: `Actualizada la cuenta ${webName}`,
         };
     } catch (error) {
         // Manejo de errores
@@ -154,9 +154,14 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
         // Recuperamos la colección de cuentas.
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
+        let webName: string = "";
+
         // Comprobamos que para esta @(id) haya una cuenta;
         // Si se encuentra la cuenta se elimina de la colección.
-        const updateData = data.filter((account) => account.id !== id);
+        const updateData = data.filter((account) => {
+            if (account.id !== id) return account;
+            webName = account.webName;
+        });
 
         // Si no se elimino se notifica a la UI.
         if (data.length === updateData.length) {
@@ -172,7 +177,7 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
         // Se notifica del resultado a la UI
         return { 
             ok: true,
-            message: "Cuenta eliminada",
+            message: `Eliminada la cuenta ${webName}`,
         };
     } catch (error) {
         // Manejo de errores

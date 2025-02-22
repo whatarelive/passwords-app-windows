@@ -26,12 +26,12 @@ function ListAccountPage() {
     <>
       { 
         view === "ERROR" && (
-          <ErrorModal title="Error de Eliminación de Cuenta" message={message!} disableView={disableView}/>
+          <ErrorModal title="Error de Eliminación" message={message!} disableView={disableView}/>
         )
       }
       {
         view === "SUCESS" && (
-          <SucessModal title="Cuenta eliminada correctamente" message={message!} disableView={disableView}/>
+          <SucessModal title="Cuenta eliminada" message={message!} disableView={disableView}/>
         )
       }
       <section className="w-full h-[701px] px-6 py-8 bg-auxiliar">

@@ -63,7 +63,7 @@ function verifyUser({ name, password }: IAddUser) {
         if (!existsUser) {
             return { 
                 ok: false,
-                message: "El usuario no existente" 
+                message: "El usuario no existe" 
             };
         }
 

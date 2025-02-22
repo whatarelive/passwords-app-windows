@@ -23,7 +23,7 @@ function AddAccountPage() {
       }
       {
         view === "SUCESS" && (
-          <SucessModal title="Cuenta creada correctamente" message={message!} disableView={disableView}/>
+          <SucessModal title="Cuenta creada" message={message!} disableView={disableView}/>
         )
       }
       

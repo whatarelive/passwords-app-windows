@@ -44,7 +44,7 @@ function EditAccountPage() {
       }
       {
         view === "SUCESS" && (
-          <SucessModal title="Cuenta creada correctamente" message={message!} disableView={disableView}/>
+          <SucessModal title="Cuenta actualizada" message={message!} disableView={disableView}/>
         )
       }
       {
