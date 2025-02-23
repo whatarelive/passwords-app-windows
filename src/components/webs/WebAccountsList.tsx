@@ -1,5 +1,6 @@
-import WebAccountCard from "@/components/webs/WebAccountCard";
+import clsx from 'clsx';
 import { useAccountsStore } from "@/store/accounts-store";
+import WebAccountCard from "@/components/webs/WebAccountCard";
 
 import "@/styles/scrollbar-style.css";
 
@@ -11,7 +12,13 @@ const WebAccountsList = () => {
   }
 
   return (
-    <ul className="relative space-y-4 max-h-[560px] overflow-y-auto elegant-scrollbar">
+    <ul className={clsx(
+      "relative space-y-4 max-h-[560px]",
+      {
+        "overflow-y-scroll elegant-scrollbar": accounts.length > 3,
+        "overflow-hidden": accounts.length <= 3,
+      }
+    )}>
       {
         accounts!.map((account) => (
           <li key={account.id} className="mr-1">
