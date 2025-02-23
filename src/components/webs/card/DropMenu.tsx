@@ -2,11 +2,11 @@ import { type FC } from "react";
 import { NavLink } from "react-router";
 import { LuExternalLink } from "react-icons/lu";
 import { MdDelete, MdEdit, MdMoreVert } from "react-icons/md";
-import type { WebAccount } from "@/interfaces";
 import { useCardMenuStore } from "@/store/menu-store";
 import { useAccountsStore } from "@/store/accounts-store";
+import type { WebAccount } from "@/interfaces";
 
-export const WebAccountDropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) => {
+export const DropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) => {
     const { idKey, setOpen } = useCardMenuStore();
     const deleteAccount = useAccountsStore((state) => state.deleteAccount);
 
