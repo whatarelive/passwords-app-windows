@@ -34,7 +34,7 @@ function ListAccountPage() {
           <SucessModal title="Cuenta eliminada" message={message!} disableView={disableView}/>
         )
       }
-      <section className="w-full h-[701px] px-6 py-8 bg-auxiliar">
+      <section className="w-full h-[701px] px-6 py-8">
         {/* Add and Seacrh section */}
         <div className="flex gap-4 mb-8">
           <Search/>
