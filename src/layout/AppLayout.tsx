@@ -1,10 +1,12 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { Navbar } from "@/components/global/Navbar";
 
 function AppLayout() {
+  const { pathname } = useLocation();
+
   return (
     <main className="h-[761px] bg-primary">
-      <Navbar/>
+      { pathname !== "/edit/notfound" && <Navbar/>}
       <Outlet/>
     </main>
   )
