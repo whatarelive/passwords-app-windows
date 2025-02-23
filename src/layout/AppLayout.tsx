@@ -14,7 +14,7 @@ function AppLayout() {
 
       {
         isView && (
-          <div className="fixed bottom-4 right-4 p-4 font-semibold rounded-md bg-green-600 transition-all animate-bounce">
+          <div className="fixed z-10 bottom-4 right-4 p-4 font-semibold rounded-md bg-green-600 transition-all animate-bounce">
             { notification }
           </div>
         )
