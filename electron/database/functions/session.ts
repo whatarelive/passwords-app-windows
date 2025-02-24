@@ -3,6 +3,7 @@ import { Session, SessionSchema } from "../schemas/session";
 
 const dbPath = "session.enc";
 
+
 function createSession({ userId }: Pick<SessionSchema, 'userId'>) {
     try {
         // Recuperamos la sessión guradada en el archivo.
@@ -43,7 +44,7 @@ function checkSession() {
 
         // Si el resultado excede la 1 hora se elimina la session guardada.
         if (result > 3600000) {
-            encryptFile({}, dbPath);
+            encryptFile({ userId: null, createTime: undefined }, dbPath);
             
             return null;
         };
@@ -60,7 +61,28 @@ function checkSession() {
     }
 }
 
+function clearSession() {
+    try {
+        // Recuperamos la sessión guradada en el archivo.
+        const session = decryptFile<SessionSchema>(dbPath);
+
+        // Si la session no existe devuelve null.
+        if (!session) return null;
+
+        // Se elimina la session guardada.
+        encryptFile({ userId: null, createTime: undefined }, dbPath);
+    
+        return null;
+        
+    } catch (error) {
+        console.log(error);
+        
+        return null;
+    }
+}
+
 export {
     createSession,
-    checkSession
+    checkSession,
+    clearSession,
 }

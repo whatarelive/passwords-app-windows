@@ -12,7 +12,7 @@ interface State {
     disableView: () => void;
 }
 
-export const useAuthStore = create<State>()((set, get) => ({
+export const useAuthStore = create<State>()((set) => ({
     userId: null,
     view: null,
 
@@ -37,23 +37,19 @@ export const useAuthStore = create<State>()((set, get) => ({
     },
 
     async logout() {
-        await window.ipcRenderer.invoke('user-session-clear');
+        await window.ipcRenderer.invoke('session-clear');
 
         set({ userId: null });
     },
 
     async checkSession() {
-        const userIdInStore = get().userId;
-
-        const { userId } = await window.ipcRenderer.invoke('user-session');
+        const session = await window.ipcRenderer.invoke('session-check');
         
-        if (!userId) {
+        if (!session) {
             return set({ userId: null });
         } 
 
-        if (!userIdInStore) {
-            set({ userId });
-        }
+        set({ userId: session.userId }); 
     },
 
     disableView() {

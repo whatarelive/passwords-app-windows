@@ -2,7 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { changeReadWritePermissions } from "./database/helpers/file-permissions";
-import { checkSession } from './database/functions/session';
+import { checkSession, clearSession } from './database/functions/session';
 import { addUser, verifyUser } from "./database/functions/users";
 import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
 import type { IAddUser, IAddWebAccount, IEditWebAccount } from "./interfaces";
@@ -75,7 +75,8 @@ app.on('activate', () => {
 
 ipcMain.handle('user-add', (_event, user: IAddUser) => addUser(user));
 ipcMain.handle('user-verify', (_event, user:IAddUser) => verifyUser(user));
-ipcMain.handle('user-session', (_event) => checkSession());
+ipcMain.handle('session-check', (_event) => checkSession());
+ipcMain.handle('session-clear', (_event) => clearSession());
 ipcMain.handle('webAccount-add', (_event, account: IAddWebAccount) => addWebAccount(account));
 ipcMain.handle('webAccount-edit', (_event, account: IEditWebAccount) => editWebAccount(account));
 ipcMain.handle('webAccount-getAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => getAllWebAccounts({ userId }));

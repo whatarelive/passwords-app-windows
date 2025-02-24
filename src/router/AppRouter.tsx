@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { useAuthStore } from "@/store/auth-store";
 import AuthLayout from "@/layout/AuthLayout";
 import AppLayout from "@/layout/AppLayout";
@@ -13,26 +13,20 @@ import UserInfoPage from "@/pages/app/user/UserInfoPage";
 import NotFoundPage from "@/pages/app/webs/NotFoundPage";
 
 function AppRouter() {
-  const navigate = useNavigate();
   const { userId, checkSession } = useAuthStore((state) => state);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      checkSession().then();
-      
-      if (!userId) navigate('/');
-
-    }, 3600);
-
-    return () => clearInterval(interval);
+    checkSession()
   }, []);
 
   return (
     <Routes>
       {
         userId !== null 
-          ? (
+          ? (   
             <Route element={<AppLayout/>}>
+              <Route path="/*" element={<Navigate to="/"/>}/>
+              
               <Route path="user/:id" element={<UserInfoPage/>}/>
             
               <Route>
@@ -41,17 +35,17 @@ function AppRouter() {
                 <Route path="/edit/:id" element={<EditAccountPage/>}/>
                 <Route path="/edit/notfound" element={<NotFoundPage/>}/>
               </Route>
-            </Route>    
+            </Route>             
           )
           : (
-            <Route path="/*" element={<Navigate to="/auth/login"/>}/>
-          )
-      }
+            <Route element={<AuthLayout/>}>
+              <Route path="/*" element={<Navigate to="/auth/login"/>}/>
 
-      <Route element={<AuthLayout/>}>
-        <Route path="/auth/login" element={<LoginPage/>}/>
-        <Route path="/auth/register" element={<RegisterPage/>}/>  
-      </Route>
+              <Route path="/auth/login" element={<LoginPage/>}/>
+              <Route path="/auth/register" element={<RegisterPage/>}/>  
+            </Route>
+          )
+        }
     </Routes>
   )
 }
