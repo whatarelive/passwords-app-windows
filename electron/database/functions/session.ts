@@ -1,0 +1,66 @@
+import { decryptFile, encryptFile } from "../helpers/file-crypto";
+import { Session, SessionSchema } from "../schemas/session";
+
+const dbPath = "session.enc";
+
+function createSession({ userId }: Pick<SessionSchema, 'userId'>) {
+    try {
+        // Recuperamos la sessión guradada en el archivo.
+        let session = decryptFile<SessionSchema>(dbPath);
+
+        // Instate de tiempo en que se crea la session.
+        const createTime = Date.now();
+
+        // Creacíon del objeto que representa la session.
+        session = new Session(userId, createTime);
+
+        // Se guarda la información de la session en el archivo seguro.
+        encryptFile(session, dbPath);
+
+        // Se retorna la session.
+        return session;
+
+    } catch (error) {
+        console.log(error);
+        
+        return null;
+    }
+}
+
+function checkSession() {
+    try {
+        // Recuperamos la sessión guradada en el archivo.
+        const session = decryptFile<SessionSchema>(dbPath);
+
+        // Si la session no existe devuelve null.
+        if (!session) return null;
+
+        // Instate de tiempo en que se crea la session.
+        const instantNow = Date.now();
+
+        // Calculo del tiempo restante de la session.
+        const result = instantNow - session.createTime;
+
+        // Si el resultado excede la 1 hora se elimina la session guardada.
+        if (result > 3600000) {
+            encryptFile({}, dbPath);
+            
+            return null;
+        };
+        
+        // Se retorna la session.
+        return {
+            userId: session.userId
+        };
+
+    } catch (error) {
+        console.log(error);
+        
+        return null;
+    }
+}
+
+export {
+    createSession,
+    checkSession
+}

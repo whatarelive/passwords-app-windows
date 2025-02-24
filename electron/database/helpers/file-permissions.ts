@@ -13,6 +13,7 @@ const HOME_DIR = os.homedir();
 const filesTo = [
   path.join(HOME_DIR, "PasswordManager", ".config", "secret.key"),
   path.join(HOME_DIR, "PasswordManager", ".config", "hmac.key"),
+  path.join(HOME_DIR, "PasswordManager", ".data", "session.enc"),
   path.join(HOME_DIR, "PasswordManager", ".data", "users.enc"),
   path.join(HOME_DIR, "PasswordManager", ".data", "activities.enc"),
   path.join(HOME_DIR, "PasswordManager", ".data", "web_accounts.enc"),

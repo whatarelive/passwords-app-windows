@@ -1,4 +1,5 @@
 import crypto from "node:crypto";
+import { createSession } from "./session";
 import { createHash, verifyPassword } from "../helpers/hash";
 import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
@@ -34,11 +35,21 @@ function addUser({ name, password }: IAddUser) {
         // Se actualiza la colección de usuarios.
         encryptFile<UserSchema[]>(data, dbPath);
         
+        // Se crea la session del usuario
+        const session = createSession({ userId: newUser.id });
+
+        if (!session) {
+            return {
+                ok: false,
+                message: "Error al agregar el usuario",
+            }   
+        }
+
         // Se notifica del resultado a la UI
         return { 
             ok: true,
             message: "Usuario registrado",
-            userId: newUser.id,
+            userId: session.userId,
         };
     } catch (error) {
         // Manejo de errores
