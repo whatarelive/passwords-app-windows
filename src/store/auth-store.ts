@@ -3,80 +3,60 @@ import { create } from "zustand";
 interface State {
     message?: string;
     view: "ERROR" | "SUCESS" | null; 
-    session: {
-        userId: string;
-        createTime: number; 
-    } | null;
+    userId: string | null;
     
     register: (name: string, password: string) => Promise<void>;
     login: (name: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
-    checkSession: () => void;
+    checkSession: () => Promise<void>;
     disableView: () => void;
 }
 
 export const useAuthStore = create<State>()((set, get) => ({
-    session: null,
+    userId: null,
     view: null,
 
     async register(name, password) {
         const { ok, message, userId } = await window.ipcRenderer.invoke('user-add', { name, password });
         
-        const createTime = Date.now();
-
-        localStorage.setItem('session', JSON.stringify({ userId, createTime }));
-        
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, createTime },
+            userId,
             message 
         });
     },
 
     async login(name, password) {
         const { ok, message, userId } = await window.ipcRenderer.invoke('user-verify', { name, password });
-        
-        const createTime = Date.now();
-
-        localStorage.setItem('session', JSON.stringify({ userId, createTime }));
 
         set({ 
             view: ok ? "SUCESS" : "ERROR",
-            session: { userId, createTime },
+            userId,
             message 
         });
     },
 
     async logout() {
-        localStorage.clear();
+        await window.ipcRenderer.invoke('user-session-clear');
 
-        set({ session: null });
+        set({ userId: null });
     },
 
-    checkSession() {
-        const session = localStorage.getItem('session');
+    async checkSession() {
+        const userIdInStore = get().userId;
 
-        if (!session) return;
+        const { userId } = await window.ipcRenderer.invoke('user-session');
         
-        const { userId, createTime } = JSON.parse(session);
-        
-        if (!userId) return;
-        
-        if (get().session === null) {
-            set({ 
-                session: { userId, createTime } 
-            });
+        if (!userId) {
+            return set({ userId: null });
+        } 
+
+        if (!userIdInStore) {
+            set({ userId });
         }
-
-        const timeNow = Date.now();
-        const result = timeNow - createTime;
-
-        if (result <= 3600000) return;
-
-        set({ session: null });
     },
 
     disableView() {
-        set({ view: null })
+        set({ view: null });
     },
 }))

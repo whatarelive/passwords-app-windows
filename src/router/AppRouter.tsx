@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useNavigate } from "react-router";
 import { useAuthStore } from "@/store/auth-store";
 import AuthLayout from "@/layout/AuthLayout";
 import AppLayout from "@/layout/AppLayout";
@@ -13,20 +13,25 @@ import UserInfoPage from "@/pages/app/user/UserInfoPage";
 import NotFoundPage from "@/pages/app/webs/NotFoundPage";
 
 function AppRouter() {
-  const { session, checkSession } = useAuthStore((state) => state);
+  const navigate = useNavigate();
+  const { userId, checkSession } = useAuthStore((state) => state);
 
   useEffect(() => {
-    checkSession();
-  }, [])
+    const interval = setInterval(() => {
+      checkSession().then();
+      
+      if (!userId) navigate('/');
+
+    }, 3600);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Routes>
       {
-        session === null 
+        userId !== null 
           ? (
-            <Route path="/*" element={ <Navigate to="/auth/login"/> }/> 
-          ) 
-          : (
             <Route element={<AppLayout/>}>
               <Route path="user/:id" element={<UserInfoPage/>}/>
             
@@ -38,8 +43,11 @@ function AppRouter() {
               </Route>
             </Route>    
           )
+          : (
+            <Route path="/*" element={<Navigate to="/auth/login"/>}/>
+          )
       }
-      
+
       <Route element={<AuthLayout/>}>
         <Route path="/auth/login" element={<LoginPage/>}/>
         <Route path="/auth/register" element={<RegisterPage/>}/>  

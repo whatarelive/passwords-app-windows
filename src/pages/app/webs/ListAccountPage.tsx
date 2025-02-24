@@ -9,7 +9,7 @@ import ErrorModal from "@/components/global/ErrorModal";
 import SucessModal from "@/components/global/SucessModal";
 
 function ListAccountPage() {
-  const userId = useAuthStore((state) => state.session?.userId);
+  const userId = useAuthStore((state) => state.userId);
   const { view, message, getAccounts, disableView } = useAccountsStore();
 
   useEffect(() => {

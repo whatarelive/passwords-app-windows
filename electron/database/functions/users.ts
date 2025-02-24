@@ -41,7 +41,7 @@ function addUser({ name, password }: IAddUser) {
         if (!session) {
             return {
                 ok: false,
-                message: "Error al agregar el usuario",
+                message: "Error al crear la session del usuario",
             }   
         }
 
@@ -86,11 +86,21 @@ function verifyUser({ name, password }: IAddUser) {
             };
         }
 
+        // Se crea la session del usuario
+        const session = createSession({ userId: existsUser.id });
+
+        if (!session) {
+            return {
+                ok: false,
+                message: "Error al crear la session del usuario",
+            }   
+        }
+
         // Se notifica del resultado a la UI
         return { 
             ok: true,
             message: "Usuario valido",
-            userId: existsUser.id,
+            userId: session.userId,
         };
 
     } catch (error) {
