@@ -5,20 +5,15 @@ import { Activity, ActivitySchema } from "../schemas/activity";
 const dbPath = "activities.enc";
 
 function createActivity({ userId, action, details }: Omit<ActivitySchema, "id" | "date">) {
-    try {
-        const data = decryptFile<ActivitySchema[]>(dbPath) || [];
+    const data = decryptFile<ActivitySchema[]>(dbPath) || [];
 
-        const date = new Date();
+    const date = new Date();
 
-        const newActivity = new Activity(crypto.randomUUID(), userId, action, date, details);
+    const newActivity = new Activity(crypto.randomUUID(), userId, action, date, details);
 
-        data.push(newActivity);
+    data.push(newActivity);
 
-        encryptFile(data, dbPath);
-
-    } catch (error) {
-        console.log("Error al registrar una acitivdad:" ,error);
-    }
+    encryptFile(data, dbPath);
 }
 
 function getAllActivity({ userId }: Pick<ActivitySchema, "userId">) {
@@ -27,24 +22,30 @@ function getAllActivity({ userId }: Pick<ActivitySchema, "userId">) {
 
         const acititiesExcludedId = data.filter((actv) => actv.userId === userId);
         
-        return acititiesExcludedId.slice(0, 10);
+        return {
+            ok: true,
+            data: acititiesExcludedId.slice(
+                acititiesExcludedId.length - 11, 
+                acititiesExcludedId.length - 1
+            ),
+        } 
 
     } catch (error) {
-        console.log("Error al devolver las actividades del ususario", error);
+        console.log(error);
+
+        return {
+            ok: false,
+            message: "Error al recuperar la actividad de este usuario"
+        }
     }
 }
 
 function deleteAllActivity({ userId }: Pick<ActivitySchema, "userId">) {
-    try {
-        const data = decryptFile<ActivitySchema[]>(dbPath) || [];
+    const data = decryptFile<ActivitySchema[]>(dbPath) || [];
 
-        const acititiesExcludedId = data.filter((actv) => actv.userId !== userId);
+    const acititiesExcludedId = data.filter((actv) => actv.userId !== userId);
 
-        encryptFile(acititiesExcludedId, dbPath);
-
-    } catch (error) {
-        console.log("Error al eliminar las actividades del usuario:", error);
-    }
+    encryptFile(acititiesExcludedId, dbPath);
 }
 
 export {
