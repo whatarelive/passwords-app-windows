@@ -199,7 +199,7 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
         // Se registra la actividad de eliminación de la cuenta.
         createActivity({
             action: WebAccountActivity.DELETE,
-            details: `Has creado la cuenta web: ${webName}`,
+            details: `Has eliminado la cuenta web: ${webName}`,
             userId: userId!,
         });
         
@@ -239,7 +239,7 @@ function deleteAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         // Se actualiza la colección de cuentas.
         encryptFile<WebAccountSchema[]>(updateData, dbPath);
         
-        // Se registra la actividad de creación de la cuenta.
+        // Se registra la actividad de la eliminación de todas las cuentas.
         createActivity({
             action: WebAccountActivity.DELETE_ALL,
             details: `Has eliminado todas las cuentas web de tu usuario.`,

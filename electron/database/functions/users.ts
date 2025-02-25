@@ -3,12 +3,17 @@ import { createSession } from "./session";
 import { createHash, verifyPassword } from "../helpers/hash";
 import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
-import type { IAddUser } from "electron/interfaces";
 import { createActivity } from "./activities";
 import { UserActivity } from "../enums/activities";
+import type { IAddUser } from "electron/interfaces";
 
 const dbPath = 'users.enc';
 
+/**
+ * Agrega un nuevo usuario a la base de datos.
+ * @param param0 - Objeto que contiene el nombre y la contraseña del usuario.
+ * @returns Objeto con el estado de la operación y un mensaje.
+ */
 function addUser({ name, password }: IAddUser) {    
     try {
         // Recuperamos la colección de usuarios.
@@ -71,6 +76,11 @@ function addUser({ name, password }: IAddUser) {
     }
 }
 
+/**
+ * Verifica las credenciales de un usuario.
+ * @param param0 - Objeto que contiene el nombre y la contraseña del usuario.
+ * @returns Objeto con el estado de la operación y un mensaje.
+ */
 function verifyUser({ name, password }: IAddUser) {
     try {
         // Recuperamos la colección de usuarios.
