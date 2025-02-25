@@ -1,6 +1,9 @@
+import type { UUID } from "crypto";
 import { decryptFile, encryptFile } from "../helpers/file-crypto";
 import { encryptPassword, decryptPassword } from "../helpers/hash";
 import { WebAccount, type WebAccountSchema } from "../schemas/web-account";
+import { createActivity } from "./activities";
+import { WebAccountActivity } from "../enums/activities";
 import type { IAddWebAccount, IEditWebAccount } from "electron/interfaces";
 
 const dbPath = "web_accounts.enc";
@@ -37,7 +40,12 @@ function addWebAccount({ userId, webName, webPassword, webUrl, webUser }: IAddWe
         // Se actualiza la colección de cuentas.
         encryptFile<WebAccountSchema[]>(data, dbPath);
 
-        console.log(data);
+        // Se registra la actividad de creación de la cuenta.
+        createActivity({
+            action: WebAccountActivity.CREATE,
+            details: `Has creado la cuenta web: ${newWebAccount.webName}`,
+            userId: newWebAccount.userId,
+        });
         
         // Se notifica del resultado a la UI
         return { 
@@ -59,6 +67,7 @@ function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebA
     try {
         // Variable auxiliar.
         let isChanged: boolean = false;
+        let userId: UUID;
 
         // Recuperamos la colección de cuentas.
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
@@ -70,6 +79,7 @@ function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebA
             
             // Se actualiza la variable auxiliar para notificar que si se pudo actualizar.
             isChanged = true;
+            userId = account.userId;
             
             // Se agrega la cuenta a la colección con la información actualizada.
             return {
@@ -90,6 +100,13 @@ function editWebAccount({ id, webName, webPassword, webUrl, webUser }: IEditWebA
         // Se actualiza la colección de cuentas.
         encryptFile<WebAccountSchema[]>(updateData, dbPath);
         
+        // Se registra la actividad de modificaciíon de la cuenta.
+        createActivity({
+            action: WebAccountActivity.UPDATE,
+            details: `Has modificado la cuenta web: ${webName}`,
+            userId: userId!,
+        });
+
         // Se notifica del resultado a la UI
         return { 
             ok: true,
@@ -155,12 +172,17 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
         const data = decryptFile<WebAccountSchema[]>(dbPath) || [];
         
         let webName: string = "";
+        let userId: UUID;
 
         // Comprobamos que para esta @(id) haya una cuenta;
         // Si se encuentra la cuenta se elimina de la colección.
         const updateData = data.filter((account) => {
             if (account.id !== id) return account;
-            webName = account.webName;
+            
+            if (!webName || !userId) {
+                webName = account.webName;
+                userId = account.userId;
+            }
         });
 
         // Si no se elimino se notifica a la UI.
@@ -173,6 +195,13 @@ function deleteWebAccount({ id }: Pick<IEditWebAccount, 'id'>) {
         
         // Se actualiza la colección de cuentas.
         encryptFile<WebAccountSchema[]>(updateData, dbPath);
+
+        // Se registra la actividad de eliminación de la cuenta.
+        createActivity({
+            action: WebAccountActivity.DELETE,
+            details: `Has creado la cuenta web: ${webName}`,
+            userId: userId!,
+        });
         
         // Se notifica del resultado a la UI
         return { 
@@ -210,6 +239,13 @@ function deleteAllWebAccounts({ userId }: Pick<IAddWebAccount, 'userId'>) {
         // Se actualiza la colección de cuentas.
         encryptFile<WebAccountSchema[]>(updateData, dbPath);
         
+        // Se registra la actividad de creación de la cuenta.
+        createActivity({
+            action: WebAccountActivity.DELETE_ALL,
+            details: `Has eliminado todas las cuentas web de tu usuario.`,
+            userId,
+        });
+
         // Se notifica del resultado a la UI
         return { 
             ok: true,
