@@ -10,4 +10,4 @@ export class Activity {
     ) {}
 }
 
-export type ActivitySchema = typeof Activity;
+export type ActivitySchema = InstanceType<typeof Activity>;
