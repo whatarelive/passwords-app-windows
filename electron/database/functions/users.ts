@@ -4,6 +4,8 @@ import { createHash, verifyPassword } from "../helpers/hash";
 import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
 import type { IAddUser } from "electron/interfaces";
+import { createActivity } from "./activities";
+import { UserActivity } from "../enums/activities";
 
 const dbPath = 'users.enc';
 
@@ -44,6 +46,13 @@ function addUser({ name, password }: IAddUser) {
                 message: "Error al crear la session del usuario",
             }   
         }
+
+        // Se registra la actividad de creación de la cuenta.
+        createActivity({
+            action: UserActivity.REGISTER,
+            details: `Has creado el usuario: ${newUser.name}`,
+            userId: session.userId,
+        });
 
         // Se notifica del resultado a la UI
         return { 
@@ -95,6 +104,13 @@ function verifyUser({ name, password }: IAddUser) {
                 message: "Error al crear la session del usuario",
             }   
         }
+
+        // Se registra la actividad de creación de la cuenta.
+        createActivity({
+            action: UserActivity.LOGIN,
+            details: `Has iniciado sesión con el usuario: ${existsUser.name}`,
+            userId: session.userId,
+        });
 
         // Se notifica del resultado a la UI
         return { 
