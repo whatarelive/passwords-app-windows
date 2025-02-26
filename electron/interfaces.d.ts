@@ -5,6 +5,10 @@ export interface IAddUser {
     password: string;
 }
 
+export interface IDeleteUser {
+    id: UUID;
+}
+
 export interface IAddWebAccount {
     userId: UUID;
     webName: string;

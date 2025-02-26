@@ -3,9 +3,9 @@ import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { changeReadWritePermissions } from "./database/helpers/file-permissions";
 import { checkSession, clearSession } from './database/functions/session';
-import { addUser, verifyUser } from "./database/functions/users";
+import { addUser, deleteUser, verifyUser } from "./database/functions/users";
 import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
-import type { IAddActivity, IAddUser, IAddWebAccount, IEditWebAccount } from "./interfaces";
+import type { IAddActivity, IAddUser, IAddWebAccount, IDeleteUser, IEditWebAccount } from "./interfaces";
 import { getAllActivity } from './database/functions/activities';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -76,6 +76,7 @@ app.on('activate', () => {
 
 ipcMain.handle('user-add', (_event, user: IAddUser) => addUser(user));
 ipcMain.handle('user-verify', (_event, user:IAddUser) => verifyUser(user));
+ipcMain.handle('user-delete', (_event, { id }: IDeleteUser) => deleteUser({ id }));
 ipcMain.handle('session-check', (_event) => checkSession());
 ipcMain.handle('session-clear', (_event) => clearSession());
 ipcMain.handle('webAccount-add', (_event, account: IAddWebAccount) => addWebAccount(account));

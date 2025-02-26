@@ -3,9 +3,9 @@ import { createSession } from "./session";
 import { createHash, verifyPassword } from "../helpers/hash";
 import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
-import { createActivity } from "./activities";
+import { createActivity, deleteAllActivity } from "./activities";
 import { UserActivity } from "../enums/activities";
-import type { IAddUser } from "electron/interfaces";
+import type { IAddUser, IDeleteUser } from "electron/interfaces";
 
 const dbPath = 'users.enc';
 
@@ -140,7 +140,44 @@ function verifyUser({ name, password }: IAddUser) {
     }
 }
 
+/**
+ * Elimina a un usuario de la base de datos.
+ * @param param0 - Objeto que contiene el id del usuario.
+ * @returns Objeto con el estado de la operación y un mensaje.
+ */
+function deleteUser({ id }: IDeleteUser) {
+    try {
+        // Recuperamos la colección de usuarios.
+        const data = decryptFile<UserSchema[]>(dbPath) || [];
+
+        // Filtramos a los usuarios exeptuando al usuario con ese id.
+        const userWithOutId = data.filter((user) => user.id !== id);
+
+        // Se actualiza la colección de usuarios.
+        encryptFile(userWithOutId, dbPath);
+
+        // Eliminamos todas las actividades del usuario.
+        deleteAllActivity({ userId: id });
+
+        // Se notifica del resultado a la UI
+        return {
+            ok: true,
+            message: "Usuario eliminado",
+        }
+        
+    } catch (error) {
+        // Manejo de errores.
+        console.log(error);
+        
+        return {
+            ok: false,
+            message: "Error en la eliminación del usuario"
+        }
+    }
+}
+
 export {
     addUser,
     verifyUser,
+    deleteUser,
 }
