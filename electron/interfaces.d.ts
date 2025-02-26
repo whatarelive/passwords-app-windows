@@ -20,3 +20,9 @@ export interface IEditWebAccount {
     webPassword: string;
     webUrl: string;
 }
+
+export interface IAddActivity {
+    userId: UUID;
+    action: string;
+    details: string;
+}

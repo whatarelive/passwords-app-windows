@@ -5,7 +5,8 @@ import { changeReadWritePermissions } from "./database/helpers/file-permissions"
 import { checkSession, clearSession } from './database/functions/session';
 import { addUser, verifyUser } from "./database/functions/users";
 import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
-import type { IAddUser, IAddWebAccount, IEditWebAccount } from "./interfaces";
+import type { IAddActivity, IAddUser, IAddWebAccount, IEditWebAccount } from "./interfaces";
+import { getAllActivity } from './database/functions/activities';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -82,6 +83,7 @@ ipcMain.handle('webAccount-edit', (_event, account: IEditWebAccount) => editWebA
 ipcMain.handle('webAccount-getAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => getAllWebAccounts({ userId }));
 ipcMain.handle('webAccount-delete', (_event, { id }: Pick<IEditWebAccount, 'id'>) => deleteWebAccount({ id }));
 ipcMain.handle('webAccount-deleteAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => deleteAllWebAccounts({ userId }));
+ipcMain.handle('activities-getAll', (_event, { userId }: Pick<IAddActivity, "userId">) => getAllActivity({ userId }));
 
 app.whenReady().then(() => {
   // Habilitamos los permisos de lectura y escritura.

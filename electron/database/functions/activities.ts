@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import { decryptFile, encryptFile } from "../helpers/file-crypto";
 import { Activity, type ActivitySchema } from "../schemas/activity";
+import type { IAddActivity } from "electron/interfaces";
 
 const dbPath = "activities.enc";
 
@@ -8,7 +9,7 @@ const dbPath = "activities.enc";
  * Crea una nueva actividad y la guarda en el archivo cifrado.
  * @param param0 - Objeto que contiene userId, action y details de la actividad.
  */
-function createActivity({ userId, action, details }: Omit<ActivitySchema, "id" | "date">) {
+function createActivity({ userId, action, details }: IAddActivity) {
     // Desencripta el archivo y obtiene los datos existentes.
     const data = decryptFile<ActivitySchema[]>(dbPath) || [];
 
