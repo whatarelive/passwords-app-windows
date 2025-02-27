@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useAccountsStore } from "@/store/accounts-store";
+import { EmptyData } from '@/components/webs/EmptyData';
 import WebAccountCard from "@/components/webs/WebAccountCard";
 
 import "@/styles/scrollbar-style.css";
@@ -7,8 +8,8 @@ import "@/styles/scrollbar-style.css";
 const WebAccountsList = () => {
   const accounts = useAccountsStore((state) => state.accounts); 
 
-  if (!accounts) {
-    return <h1>Vacio</h1>
+  if (!accounts || accounts.length === 0) {
+    return <EmptyData/>;
   }
 
   return (
