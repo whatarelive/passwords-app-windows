@@ -6,7 +6,7 @@ import { useAuthStore } from '../../store/auth-store';
 
 const DropdownMenu = () => {
     const { isOpen, setOpen } = useMenuStore();
-    const logout = useAuthStore((state) => state.logout);
+    const { userName, logout } = useAuthStore();
 
   return (
     <div 
@@ -24,7 +24,7 @@ const DropdownMenu = () => {
     {/* Content */}
     <div className="absolute -right-12 w-56 z-10 h-28 p-3 bg-neutral-800 rounded-md">
         <div className="flex items-center justify-between">
-        <p className="text-lg font-medium">Livan Perez</p>
+        <p className="text-lg font-medium">{ userName }</p>
         
         <NavLink to={`/user/${1214}`} className="max-w-max p-1 rounded cursor-pointer hover:bg-white hover:text-primary transition-all">
             <MdEdit size={16}/>
