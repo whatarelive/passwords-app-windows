@@ -16,8 +16,24 @@ function createActivity({ userId, action, details }: IAddActivity) {
     // Obtiene la fecha actual.
     const date = new Date();
 
+    // Formatear la fecha
+    const dateFormat = new Intl.DateTimeFormat('es-ES', {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",}
+    ).format(date);
+
+    const hourFormat = new Intl.DateTimeFormat('es-ES', {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    }).format(date);
+
+    // Concatenar la fecha y hora
+    const dateResult = `${dateFormat} : ${hourFormat}`;
+
     // Crea una nueva actividad.
-    const newActivity = new Activity(crypto.randomUUID(), userId, action, date, details);
+    const newActivity = new Activity(crypto.randomUUID(), userId, action, dateResult, details);
 
     // Agrega la nueva actividad a los datos existentes.
     data.push(newActivity);
@@ -43,8 +59,8 @@ function getAllActivity({ userId }: Pick<ActivitySchema, "userId">) {
         return {
             ok: true,
             data: activitiesExcludedId.slice(
-                activitiesExcludedId.length - 11, 
-                activitiesExcludedId.length - 1
+                activitiesExcludedId.length - 5, 
+                activitiesExcludedId.length
             ),
         };
 

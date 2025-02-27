@@ -5,7 +5,7 @@ export class Activity {
         public readonly id: UUID,
         public readonly userId: UUID,
         public readonly action: string,
-        public readonly date: Date,
+        public readonly date: string,
         public readonly details: string,
     ) {}
 }
