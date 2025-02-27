@@ -8,27 +8,26 @@ import "@/styles/scrollbar-style.css";
 const WebAccountsList = () => {
   const accounts = useAccountsStore((state) => state.accounts); 
 
-  if (!accounts || accounts.length === 0) {
-    return <EmptyData/>;
-  }
-
-  return (
-    <ul className={clsx(
-      "relative space-y-4 max-h-[560px]",
-      {
-        "overflow-y-scroll elegant-scrollbar": accounts.length > 3,
-        "overflow-hidden": accounts.length <= 3,
-      }
-    )}>
-      {
-        accounts!.map((account) => (
-          <li key={account.id} className="mr-1">
-            <WebAccountCard account={account}/>
-          </li>
-        ))
-      }
-    </ul>
-  )
+  return (!accounts || accounts.length === 0) 
+    ? (
+      <EmptyData/>
+    ) : (
+      <ul className={clsx(
+        "relative space-y-4 max-h-[560px]",
+        {
+          "overflow-y-scroll elegant-scrollbar": accounts.length > 3,
+          "overflow-hidden": accounts.length <= 3,
+        }
+      )}>
+        {
+          accounts!.map((account) => (
+            <li key={account.id} className="mr-1">
+              <WebAccountCard account={account}/>
+            </li>
+          ))
+        }
+      </ul> 
+    )
 }
 
 export default WebAccountsList;
