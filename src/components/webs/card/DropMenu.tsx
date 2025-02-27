@@ -11,7 +11,7 @@ export const DropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) 
     const deleteAccount = useAccountsStore((state) => state.deleteAccount);
 
     return (
-        <>
+        <div className="relative">
             <button 
                 className="p-1.5 rounded text-black cursor-pointer hover:bg-gray-300 hover:border-gray-300" 
                 onClick={() => setOpen(id)}
@@ -21,7 +21,7 @@ export const DropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) 
 
             {
                 idKey === id && (
-                    <div className="absolute top-[5px] -left-[115px] w-full">
+                    <div className="absolute -top-[10px] -left-[85px] w-full">
                         {/* Pointer */}
                         <div className="absolute z-0 top-[10px] -right-[70px] rotate-90 border-b-[30px] border-l-[20px] border-r-[20px] w-px border-b-secondary border-l-transparent border-r-transparent"/>
                         
@@ -47,6 +47,6 @@ export const DropMenu: FC<Pick<WebAccount, 'id' | 'webUrl'>> = ({ id, webUrl }) 
                     </div>
                 )
             }
-        </>
+        </div>
     )
 }
