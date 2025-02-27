@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface State {
-    message?: string;
+    message: string | null;
     view: "ERROR" | "SUCESS" | null; 
     userId: string | null;
     userName: string | null;
@@ -17,6 +17,7 @@ export const useAuthStore = create<State>()((set) => ({
     userId: null,
     userName: null,
     view: null,
+    message: null,
 
     async register(name, password) {
         const { ok, message, userId, userName } = await window.ipcRenderer.invoke('user-add', { name, password });
@@ -43,7 +44,7 @@ export const useAuthStore = create<State>()((set) => ({
     async logout() {
         await window.ipcRenderer.invoke('session-clear');
 
-        set({ userId: null, userName: null });
+        set({ userId: null, userName: null, view: null, message: "" });
     },
 
     async checkSession() {

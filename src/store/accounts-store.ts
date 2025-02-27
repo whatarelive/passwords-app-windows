@@ -15,6 +15,7 @@ interface State {
     searchAccounts: (param: string) => void;
     disableView: () => void;
     dispatchError: (message: string) => void;
+    clearState: () => void;
 }
 
 export const useAccountsStore = create<State>()((set, get) => ({
@@ -93,5 +94,9 @@ export const useAccountsStore = create<State>()((set, get) => ({
 
     dispatchError(message) {
         set({ view: "WARNING", message });
-    }
+    },
+    
+    clearState() {
+        set({ accounts: [], userId: null, view: null });
+    },
 }))

@@ -8,16 +8,12 @@ function createSession({ userId, userName }: Omit<SessionSchema, 'createTime'>) 
     try {
         // Recuperamos la sessión guradada en el archivo.
         let session = decryptFile<SessionSchema>(dbPath);
-
-        console.log("Despues de crear la variable:", session);
         
         // Instate de tiempo en que se crea la session.
         const createTime = Date.now();
 
         // Creacíon del objeto que representa la session.
         session = new Session(userId, userName, createTime);
-
-        console.log("Despues de reasignar la variable:", session);
 
         // Se guarda la información de la session en el archivo seguro.
         encryptFile(session, dbPath);

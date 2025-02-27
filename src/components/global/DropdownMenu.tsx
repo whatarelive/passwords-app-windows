@@ -3,10 +3,12 @@ import { NavLink } from "react-router";
 import { MdEdit, MdLogout } from "react-icons/md";
 import { useMenuStore } from "@/store/menu-store";
 import { useAuthStore } from '../../store/auth-store';
+import { useAccountsStore } from "@/store/accounts-store";
 
 const DropdownMenu = () => {
     const { isOpen, setOpen } = useMenuStore();
     const { userName, logout } = useAuthStore();
+    const clearState = useAccountsStore((state) => state.clearState);
 
   return (
     <div 
@@ -32,7 +34,11 @@ const DropdownMenu = () => {
         </div>
 
         <button
-            onClick={async() => await logout()} 
+            onClick={async() => {
+                clearState();
+                await logout();
+            } 
+        } 
             className={`flex justify-center items-center w-full mt-6 font-semibold py-1 gap-1 px-2 text-white 
             rounded cursor-pointer bg-red-500 hover:text-red-500 hover:bg-white transition-all`}
         >

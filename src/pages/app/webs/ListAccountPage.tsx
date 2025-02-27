@@ -15,7 +15,7 @@ function ListAccountPage() {
   useEffect(() => {
     if (!userId) return;
     getAccounts(userId);
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     if (!userId) return;
