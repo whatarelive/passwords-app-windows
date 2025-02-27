@@ -43,7 +43,7 @@ function addUser({ name, password }: IAddUser) {
         encryptFile<UserSchema[]>(data, dbPath);
         
         // Se crea la session del usuario
-        const session = createSession({ userId: newUser.id });
+        const session = createSession({ userId: newUser.id, userName: newUser.name });
 
         if (!session) {
             return {
@@ -64,6 +64,7 @@ function addUser({ name, password }: IAddUser) {
             ok: true,
             message: "Usuario registrado",
             userId: session.userId,
+            userName: session.userName
         };
     } catch (error) {
         // Manejo de errores
@@ -106,7 +107,7 @@ function verifyUser({ name, password }: IAddUser) {
         }
 
         // Se crea la session del usuario
-        const session = createSession({ userId: existsUser.id });
+        const session = createSession({ userId: existsUser.id, userName: existsUser.name });
 
         if (!session) {
             return {
@@ -127,6 +128,7 @@ function verifyUser({ name, password }: IAddUser) {
             ok: true,
             message: "Usuario valido",
             userId: session.userId,
+            userName: session.userName
         };
 
     } catch (error) {
