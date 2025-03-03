@@ -1,6 +1,8 @@
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import { MdInfoOutline, MdOutlineSecurity } from "react-icons/md";
+import { useAuthStore } from "@/store/auth-store";
+import { useAccountsStore } from "@/store/accounts-store";
 import { PasswordSchema } from "@/validations/user";
 import { ButtonForm, ButtonFormReset } from "@/components/ui/buttons";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
@@ -8,10 +10,15 @@ import UserCardTitle from "@/components/user/UserCardTitle";
 
 const UserSegurity = () => {
   const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+  const clearState = useAccountsStore((state) => state.clearState);
 
-  const handleClick = () => {
-    navigate('/auth/register');
+  const handleClick = async () => {
+    clearState();
+    await logout();
+    navigate("/auth/register");
   }
+
   return (
     <div className="bg-secondary w-full h-[569px] rounded-xl">
        <UserCardTitle 
@@ -31,7 +38,7 @@ const UserSegurity = () => {
           validationSchema={PasswordSchema}
         >
           {() => (
-            <Form className="">
+            <Form>
               <TextInput 
                 label="Contraseña actual" 
                 name="password" 
@@ -63,11 +70,17 @@ const UserSegurity = () => {
         </Formik>
       </div>
 
-      <button onClick={handleClick} className="flex w-full items-center justify-center gap-2 mt-6 cursor-pointer text-neutral-300 font-semibold">
+      <div className="flex items-center justify-center gap-2 mt-6">
         <MdInfoOutline size={20}/>
-        Si necesitas crear o cambiar de cuenta : 
-        <span className="hover:text-red-500">Registro de Usuario</span>
-      </button>
+        
+        <span>
+          Si necesitas crear o cambiar de cuenta :
+        </span>
+        
+        <button onClick={handleClick} className="cursor-pointer text-neutral-300 font-semibold hover:text-red-500">
+          Registro de Usuario
+        </button>
+      </div>
     </div>
   )
 }
