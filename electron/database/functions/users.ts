@@ -155,15 +155,17 @@ function editUser({ id, password }: IEditUser) {
         // Se agrega el usuario a la colección. 
         const changeData = data.map((user) => {
             // Comprobamos que haya un usuario con este nuevo @(id)
-            if (user.id === id) {
-                return {
-                    ...user,
-                    // Hash de la contraseña del usuario.
-                    password: createHash(password),
-                }
-            }
+            if (user.id !== id) return user; 
 
-            return user;
+            const { name, activities, webAccounts } = user;
+
+            console.log("Actualización", { id,password });
+            
+            return {
+                id, name, activities, webAccounts,
+                // Hash de la contraseña del usuario.
+                password: createHash(password),
+            }
         });
 
         // Se actualiza la colección de usuarios.

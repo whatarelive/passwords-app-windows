@@ -44,11 +44,12 @@ export const useAuthStore = create<State>()((set, get) => ({
 
     async login(name, password) {
         const { ok, message, userId, userName } = await window.ipcRenderer.invoke('user-verify', { name, password });
-        const { ok: status, data } = await window.ipcRenderer.invoke('activities-getAll', { userId });
-
-        if (status) {
+        
+        if (ok) {
+            const { ok: status, data } = await window.ipcRenderer.invoke('activities-getAll', { userId });
+            
             set({ 
-                view: ok ? "SUCESS" : "ERROR",
+                view: status ? "SUCESS" : "ERROR",
                 userId,
                 userName,
                 userActivities: data,

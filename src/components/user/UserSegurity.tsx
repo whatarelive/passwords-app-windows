@@ -34,7 +34,7 @@ const UserSegurity = () => {
 
         <Formik 
           initialValues={{ password: "", newPassword: "", confirmPassword: "" }}
-          onSubmit={async ({ password }) => await changePassword(password)}
+          onSubmit={async ({ newPassword }) => await changePassword(newPassword)}
           validationSchema={PasswordSchema}
         >
           {() => (
