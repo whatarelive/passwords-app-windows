@@ -9,6 +9,8 @@ export interface IDeleteUser {
     id: UUID;
 }
 
+export interface IEditUser extends IDeleteUser, Pick<IAddUser, 'password'> {}
+
 export interface IAddWebAccount {
     userId: UUID;
     webName: string;

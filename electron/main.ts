@@ -3,10 +3,10 @@ import { fileURLToPath } from 'node:url';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { changeReadWritePermissions } from "./database/helpers/file-permissions";
 import { checkSession, clearSession } from './database/functions/session';
-import { addUser, deleteUser, verifyUser } from "./database/functions/users";
-import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
-import type { IAddActivity, IAddUser, IAddWebAccount, IDeleteUser, IEditWebAccount } from "./interfaces";
+import { addUser, deleteUser, editUser, verifyUser } from "./database/functions/users";
 import { getAllActivity } from './database/functions/activities';
+import { addWebAccount, deleteAllWebAccounts, deleteWebAccount, editWebAccount, getAllWebAccounts } from './database/functions/web-accounts';
+import type { IAddActivity, IAddUser, IEditUser, IAddWebAccount, IDeleteUser, IEditWebAccount } from "./interfaces";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -74,16 +74,24 @@ app.on('activate', () => {
   }
 })
 
+// User Actions 
 ipcMain.handle('user-add', (_event, user: IAddUser) => addUser(user));
+ipcMain.handle('user-edit', (_event, { id, password }: IEditUser) => editUser({ id, password }));
 ipcMain.handle('user-verify', (_event, user:IAddUser) => verifyUser(user));
 ipcMain.handle('user-delete', (_event, { id }: IDeleteUser) => deleteUser({ id }));
+
+// Session Actions
 ipcMain.handle('session-check', (_event) => checkSession());
 ipcMain.handle('session-clear', (_event) => clearSession());
+
+// Web Accounts Actions
 ipcMain.handle('webAccount-add', (_event, account: IAddWebAccount) => addWebAccount(account));
 ipcMain.handle('webAccount-edit', (_event, account: IEditWebAccount) => editWebAccount(account));
 ipcMain.handle('webAccount-getAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => getAllWebAccounts({ userId }));
 ipcMain.handle('webAccount-delete', (_event, { id }: Pick<IEditWebAccount, 'id'>) => deleteWebAccount({ id }));
 ipcMain.handle('webAccount-deleteAll', (_event, { userId }: Pick<IAddWebAccount, 'userId'>) => deleteAllWebAccounts({ userId }));
+
+// Activities Actions
 ipcMain.handle('activities-getAll', (_event, { userId }: Pick<IAddActivity, "userId">) => getAllActivity({ userId }));
 
 app.whenReady().then(() => {

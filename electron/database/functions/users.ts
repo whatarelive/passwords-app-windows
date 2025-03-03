@@ -5,7 +5,7 @@ import { encryptFile, decryptFile } from "../helpers/file-crypto";
 import { type UserSchema, User } from "../schemas/user";
 import { createActivity, deleteAllActivity } from "./activities";
 import { UserActivity } from "../enums/activities";
-import type { IAddUser, IDeleteUser } from "electron/interfaces";
+import type { IAddUser, IDeleteUser, IEditUser } from "electron/interfaces";
 
 const dbPath = 'users.enc';
 
@@ -143,6 +143,56 @@ function verifyUser({ name, password }: IAddUser) {
 }
 
 /**
+ * Cambia la contraseña a un usuario de la base de datos.
+ * @param param0 - Objeto que contiene el id del usuario y la nueva contraseña.
+ * @returns Objeto con el estado de la operación y un mensaje.
+ */
+function editUser({ id, password }: IEditUser) {
+    try {
+        // Recuperamos la colección de usuarios.
+        const data = decryptFile<UserSchema[]>(dbPath) || [];
+
+        // Se agrega el usuario a la colección. 
+        const changeData = data.map((user) => {
+            // Comprobamos que haya un usuario con este nuevo @(id)
+            if (user.id === id) {
+                return {
+                    ...user,
+                    // Hash de la contraseña del usuario.
+                    password: createHash(password),
+                }
+            }
+
+            return user;
+        });
+
+        // Se actualiza la colección de usuarios.
+        encryptFile<UserSchema[]>(changeData, dbPath);
+
+        // Se registra la actividad del cambio de la contraseña.
+        createActivity({
+            action: UserActivity.UPDATE_PASSWORD,
+            details: `Has cambiado la contraseña`,
+            userId: id,
+        });
+
+        // Se notifica del resultado a la UI
+        return { 
+            ok: true,
+            message: "Has cambiado la contraseña",
+        };
+    } catch (error) {
+        // Manejo de errores
+        console.log(error);
+        
+        return { 
+            ok: false,
+            message: "Error al cambiar la contraseña",
+        };
+    }
+}
+
+/**
  * Elimina a un usuario de la base de datos.
  * @param param0 - Objeto que contiene el id del usuario.
  * @returns Objeto con el estado de la operación y un mensaje.
@@ -181,5 +231,6 @@ function deleteUser({ id }: IDeleteUser) {
 export {
     addUser,
     verifyUser,
+    editUser,
     deleteUser,
 }
