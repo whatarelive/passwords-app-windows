@@ -10,6 +10,7 @@ interface State {
     
     register: (name: string, password: string) => Promise<void>;
     login: (name: string, password: string) => Promise<void>;
+    changePassword: (password: string) => Promise<void>;
     getUserActivities: () => Promise<void>;
     logout: () => Promise<void>;
     checkSession: () => Promise<void>;
@@ -60,6 +61,17 @@ export const useAuthStore = create<State>()((set, get) => ({
                 message: "Error al iniciar la sesión" 
             });
         }
+    },
+
+    async changePassword(password) {
+        const { userId } = get();
+
+        const { ok, message } = await window.ipcRenderer.invoke('user-edit', { id: userId, password });
+
+        set({ 
+            view: ok ? "SUCESS" : "ERROR", 
+            message 
+        });
     },
 
     async getUserActivities() {

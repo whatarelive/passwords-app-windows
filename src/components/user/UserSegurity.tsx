@@ -10,8 +10,8 @@ import UserCardTitle from "@/components/user/UserCardTitle";
 
 const UserSegurity = () => {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
   const clearState = useAccountsStore((state) => state.clearState);
+  const { logout, changePassword } = useAuthStore();
 
   const handleClick = async () => {
     clearState();
@@ -34,7 +34,7 @@ const UserSegurity = () => {
 
         <Formik 
           initialValues={{ password: "", newPassword: "", confirmPassword: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={async ({ password }) => await changePassword(password)}
           validationSchema={PasswordSchema}
         >
           {() => (
