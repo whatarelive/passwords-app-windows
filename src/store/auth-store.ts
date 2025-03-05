@@ -109,6 +109,6 @@ export const useAuthStore = create<State>()((set, get) => ({
     },
 
     disableView() {
-        set({ view: null });
+        set({ view: null, message: null });
     },
 }))

@@ -1,29 +1,33 @@
-import { useState } from "react";
-// import { useAuthStore } from "@/store/auth-store";
+import { useEffect, useState } from "react";
+import { useAuthStore } from "@/store/auth-store";
 import UserInfo from "@/components/user/UserInfo";
 import UserSegurity from "@/components/user/UserSegurity";
 import UserActivity from "@/components/user/UserActivity";
-// import ErrorModal from "@/components/global/ErrorModal";
-// import SucessModal from "@/components/global/SucessModal";
+import ErrorModal from "@/components/global/ErrorModal";
+import SucessModal from "@/components/global/SucessModal";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 function UserInfoPage() {
-  const [activeTab, setActiveTab] = useState<string>("personal");
-  // const { view, message, disableView } = useAuthStore();
+  const [ activeTab, setActiveTab ] = useState<string>("personal");
+  const { view, message, disableView } = useAuthStore();
 
+  useEffect(() => {
+    disableView();  
+  }, []);
+  
   return (
     <>
-      {/* { 
+      { 
         view === "ERROR" && (
-          <ErrorModal title="Error de Creación de Cuenta" message={message!} disableView={disableView}/>
+          <ErrorModal title="Error de Actualización" message={message!} disableView={disableView}/>
         )
       }
       {
         view === "SUCESS" && (
-          <SucessModal title="Cuenta creada" message={message!} disableView={disableView}/>
+          <SucessModal title="Actualizada" message={message!} disableView={disableView}/>
         )
       }
-       */}
+      
       <section className="px-8 py-10 select-none">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 gap-2 bg-secondary">
