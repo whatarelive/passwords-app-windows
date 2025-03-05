@@ -2,8 +2,13 @@ import { Form, Formik } from 'formik';
 import { MdAdminPanelSettings, MdLockPerson, MdSupervisedUserCircle } from "react-icons/md";
 import UserCardTitle from "@/components/user/UserCardTitle";
 import { TextInput, TextInputWithPassword } from "@/components/ui/inputs";
+import { useAuthStore } from '@/store/auth-store';
+import { useAccountsStore } from '@/store/accounts-store';
 
 const UserInfo = () => {
+  const { userId, deleteUser } = useAuthStore();
+  const deleteAllAccount = useAccountsStore((state) => state.deleteAllAccount);
+
   return (
     <div className="bg-secondary w-full h-[569px] rounded-xl">
       <UserCardTitle 
@@ -51,11 +56,17 @@ const UserInfo = () => {
         </h3>
 
         <div className="inline-flex gap-4 w-full justify-between">
-          <button className="w-full p-2 rounded-md font-medium bg-red-500 hover:bg-white hover:text-red-500 cursor-pointer">
+          <button 
+            onClick={async () => await deleteUser()}
+            className="w-full p-2 rounded-md font-medium bg-red-500 hover:bg-white hover:text-red-500 cursor-pointer"
+          >
             Eliminar Usuario
           </button>
           
-          <button className="w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-white hover:text-orange-500 cursor-pointer">
+          <button
+            onClick={async () => await deleteAllAccount(userId!)} 
+            className="w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-white hover:text-orange-500 cursor-pointer"
+          >
             Eliminar todas las cuentas
           </button>
         </div>

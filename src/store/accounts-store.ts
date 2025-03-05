@@ -12,6 +12,7 @@ interface State {
     addAccount: (webName: string, webPassword:string, webUrl: string, webUser: string) => Promise<void>;
     editAccount: (id: string, webName: string, webPassword: string, webUrl: string, webUser: string) => Promise<void>;
     deleteAccount: (id: string) => Promise<void>;
+    deleteAllAccount: (id: string) => Promise<void>;
     searchAccounts: (param: string) => void;
     disableView: () => void;
     dispatchError: (message: string) => void;
@@ -65,6 +66,15 @@ export const useAccountsStore = create<State>()((set, get) => ({
 
     async deleteAccount(id) {
         const { ok, message } = await window.ipcRenderer.invoke('webAccount-delete', { id });
+
+        set({
+            view: ok ? "SUCESS" : "ERROR",
+            message,
+        })
+    },
+
+    async deleteAllAccount(id) {
+        const { ok, message } = await window.ipcRenderer.invoke('webAccount-deleteAll', { id });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
