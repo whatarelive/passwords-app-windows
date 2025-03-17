@@ -66,9 +66,11 @@ export const useAuthStore = create<State>()((set, get) => ({
     },
 
     async deleteUser() {
-        const { userId } = get();
+        const { userId, logout } = get();
         
         const { ok, message } = await window.ipcRenderer.invoke('user-delete', { id: userId });
+        
+        await logout();
 
         set({
             view: ok ? "SUCESS" : "ERROR",
