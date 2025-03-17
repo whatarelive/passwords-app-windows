@@ -7,7 +7,7 @@ import { useAccountsStore } from '@/store/accounts-store';
 
 const UserInfo = () => {
   const deleteUser = useAuthStore((state) => state.deleteUser);
-  const { accounts, deleteAllAccount } = useAccountsStore();
+  const { accounts, deleteAllAccount, clearState } = useAccountsStore();
 
   return (
     <div className="bg-secondary w-full h-[569px] rounded-xl">
@@ -57,7 +57,10 @@ const UserInfo = () => {
 
         <div className="inline-flex gap-4 w-full justify-between">
           <button 
-            onClick={async () => await deleteUser()}
+            onClick={async () => {
+              clearState();
+              await deleteUser();
+            }}
             className="w-full p-2 rounded-md font-medium bg-red-500 hover:bg-white hover:text-red-500 cursor-pointer"
           >
             Eliminar Usuario

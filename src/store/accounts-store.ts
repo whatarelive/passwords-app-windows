@@ -74,13 +74,14 @@ export const useAccountsStore = create<State>()((set, get) => ({
     },
 
     async deleteAllAccount() {
-        const { userId } = get();
+        const { userId, accounts } = get();
 
         const { ok, message } = await window.ipcRenderer.invoke('webAccount-deleteAll', { userId });
 
         set({
             view: ok ? "SUCESS" : "ERROR",
             message,
+            accounts: ok ? [] : accounts,
         })
     },
 

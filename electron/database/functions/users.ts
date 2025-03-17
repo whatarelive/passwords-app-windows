@@ -6,6 +6,7 @@ import { type UserSchema, User } from "../schemas/user";
 import { createActivity, deleteAllActivity } from "./activities";
 import { UserActivity } from "../enums/activities";
 import type { IAddUser, IDeleteUser, IEditUser } from "electron/interfaces";
+import { deleteAllWebAccounts } from "./web-accounts";
 
 const dbPath = 'users.enc';
 
@@ -212,6 +213,9 @@ function deleteUser({ id }: IDeleteUser) {
 
         // Eliminamos todas las actividades del usuario.
         deleteAllActivity({ userId: id });
+
+        // Eliminamos todas las cuentas del usuario.
+        deleteAllWebAccounts({ userId: id });
 
         // Se notifica del resultado a la UI
         return {
