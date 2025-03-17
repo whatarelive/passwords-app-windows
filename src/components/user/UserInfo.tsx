@@ -6,8 +6,8 @@ import { useAuthStore } from '@/store/auth-store';
 import { useAccountsStore } from '@/store/accounts-store';
 
 const UserInfo = () => {
-  const { userId, deleteUser } = useAuthStore();
-  const deleteAllAccount = useAccountsStore((state) => state.deleteAllAccount);
+  const deleteUser = useAuthStore((state) => state.deleteUser);
+  const { accounts, deleteAllAccount } = useAccountsStore();
 
   return (
     <div className="bg-secondary w-full h-[569px] rounded-xl">
@@ -64,8 +64,10 @@ const UserInfo = () => {
           </button>
           
           <button
-            onClick={async () => await deleteAllAccount(userId!)} 
-            className="w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-white hover:text-orange-500 cursor-pointer"
+            onClick={async () => await deleteAllAccount()} 
+            disabled={!accounts || accounts.length === 0}
+            className={`w-full p-2 rounded-md font-medium bg-orange-500 hover:bg-white hover:text-orange-500 
+              cursor-pointer disabled:bg-neutral-300 disabled:text-neutral-600 disabled:cursor-not-allowed`}
           >
             Eliminar todas las cuentas
           </button>

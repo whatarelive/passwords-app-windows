@@ -27,7 +27,7 @@ function AppRouter() {
             <Route element={<AppLayout/>}>
               <Route path="/*" element={<Navigate to="/"/>}/>
               
-              <Route path="user/:id" element={<UserInfoPage/>}/>
+              <Route path="/user" element={<UserInfoPage/>}/>
             
               <Route>
                 <Route path="/" element={<ListAccountPage/>}/>

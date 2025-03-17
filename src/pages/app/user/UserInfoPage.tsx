@@ -6,10 +6,12 @@ import UserActivity from "@/components/user/UserActivity";
 import ErrorModal from "@/components/global/ErrorModal";
 import SucessModal from "@/components/global/SucessModal";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { useAccountsStore } from "@/store/accounts-store";
 
 function UserInfoPage() {
   const [ activeTab, setActiveTab ] = useState<string>("personal");
   const { view, message, disableView } = useAuthStore();
+  const { view: accountView, message: accountMessage, disableView: disableViewAccount } = useAccountsStore();
 
   useEffect(() => {
     disableView();  
@@ -25,6 +27,17 @@ function UserInfoPage() {
       {
         view === "SUCESS" && (
           <SucessModal title="Actualizada" message={message!} disableView={disableView}/>
+        )
+      }
+
+      { 
+        accountView === "ERROR" && (
+          <ErrorModal title="Error de Eliminación" message={accountMessage!} disableView={disableViewAccount}/>
+        )
+      }
+      {
+        accountView === "SUCESS" && (
+          <SucessModal title="Eliminación completada" message={accountMessage!} disableView={disableViewAccount}/>
         )
       }
       
